@@ -3,6 +3,7 @@ package hello;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
@@ -13,6 +14,17 @@ public class GreetingController {
 			Model model) {
 		model.addAttribute("name", name);
 		return "greeting";
+	}
+
+	@GetMapping("/login")
+	public String logIn(Model model) {
+		model.addAttribute("user", new User());
+		return "login";
+	}
+
+	@PostMapping("/login")
+	public String greetingSubmit(User user, Model model) {
+		return "result";
 	}
 
 }
