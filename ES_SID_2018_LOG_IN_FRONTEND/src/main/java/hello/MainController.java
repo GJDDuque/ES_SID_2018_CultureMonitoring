@@ -14,7 +14,7 @@ public class MainController {
 		return "login";
 	}
 
-	@PostMapping("/login")
+	@PostMapping("/result")
 	public String greetingSubmit(User user, Model model) {
 		return "result";
 	}
