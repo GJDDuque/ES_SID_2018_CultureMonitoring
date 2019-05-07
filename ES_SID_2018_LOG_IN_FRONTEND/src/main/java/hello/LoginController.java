@@ -1,8 +1,13 @@
 package hello;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import javax.sql.DataSource;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.simple.SimpleJdbcCall;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -18,6 +23,9 @@ public class LoginController {
 	private UserService userService;
 	@Autowired
 	private ProfessionalCategoryService professionalCategoryService;
+	@Autowired
+	private DataSource dataSource;
+	private SimpleJdbcCall jdbcCall;
 
 	@RequestMapping(value = { "/", "/login" }, method = RequestMethod.GET)
 	public ModelAndView login() {
@@ -37,6 +45,13 @@ public class LoginController {
 
 	@RequestMapping(value = "/registration", method = RequestMethod.POST)
 	public ModelAndView createNewUser(@Valid User user, BindingResult bindingResult) {
+		this.jdbcCall = new SimpleJdbcCall(dataSource).withProcedureName("addUser");
+		Map<String, String> map = new HashMap<>();
+		map.put("name", user.getName());
+		map.put("email", user.getEmail());
+		map.put("professional_category", user.getProfessional_category());
+		map.put("password", user.getPassword());
+
 		ModelAndView modelAndView = new ModelAndView();
 		User userExists = userService.findUserByEmail(user.getEmail());
 		if (userExists != null) {
@@ -48,6 +63,7 @@ public class LoginController {
 		} else {
 			if (professionalCategoryService.professionalCategoryExists(user.getProfessional_category())) {
 				userService.saveUser(user);
+				jdbcCall.execute(map);
 				modelAndView.addObject("successMessage", "User has been registered successfully");
 				modelAndView.addObject("user", new User());
 				modelAndView.setViewName("registration");

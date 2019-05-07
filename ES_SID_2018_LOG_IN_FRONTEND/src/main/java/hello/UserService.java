@@ -1,26 +1,21 @@
 package hello;
 
-import java.util.HashSet;
-import java.util.Set;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 @Service("userService")
 public class UserService {
 
 	private UserRepository userRepository;
+	private ProfessionalCategoryRepository professionalCategoryRepository;
 	private BCryptPasswordEncoder bCryptPasswordEncoder;
 
 	@Autowired
-	public UserService(UserRepository userRepository, BCryptPasswordEncoder bCryptPasswordEncoder) {
+	public UserService(UserRepository userRepository, ProfessionalCategoryRepository professionalCategoryRepository,
+			BCryptPasswordEncoder bCryptPasswordEncoder) {
 		this.userRepository = userRepository;
+		this.professionalCategoryRepository = professionalCategoryRepository;
 		this.bCryptPasswordEncoder = bCryptPasswordEncoder;
 	}
 
@@ -31,6 +26,8 @@ public class UserService {
 	public void saveUser(User user) {
 		user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
 		user.setActive(1);
+//		ProfessionalCategory profCat = professionalCategoryRepository.findByProfessionalCategory("ADMIN");
+//		user.setProfessional_categories(new HashSet<ProfessionalCategory>(Arrays.asList(profCat)));
 		userRepository.save(user);
 	}
 
