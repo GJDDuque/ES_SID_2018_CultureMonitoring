@@ -1,9 +1,16 @@
 package hello;
 
+import java.util.HashSet;
+import java.util.Set;
+
+import javax.management.relation.Role;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
-import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 import lombok.Data;
@@ -29,7 +36,16 @@ public class User {
 	private String professional_category;
 	@Column
 	private String password;
+
 	private String enabled;
+
+//	@ManyToMany(cascade = CascadeType.ALL)
+//	@JoinTable(name = "user_roles", joinColumns = @JoinColumn(name = "email"), inverseJoinColumns = @JoinColumn(name = "user_email"))
+//	private Set<ProfessionalCategory> professional_categories;
+
+//	public Set<ProfessionalCategory> getProfessional_categories() {
+//		return professional_categories;
+//	}
 
 	public long getUser_id() {
 		return user_id;
@@ -84,5 +100,9 @@ public class User {
 		// TODO Auto-generated method stub
 
 	}
+
+//	public void setProfessional_categories(HashSet<ProfessionalCategory> hashSet) {
+//		this.professional_categories = hashSet;
+//	}
 
 }
