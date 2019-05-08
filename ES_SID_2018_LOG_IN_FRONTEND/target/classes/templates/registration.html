@@ -18,26 +18,27 @@
 
 	<div class="container">
 
-		<form:form method="POST" modelAttribute="userForm" class="form-signin">
+		<form method="POST" modelAttribute="userForm" class="form-signin"
+			th:action="@{/registration}" th:object="${userForm}">
 			<h2 class="form-signin-heading">Create your account</h2>
 			<spring:bind path="email">
 				<div class="form-group ${status.error ? 'has-error' : ''}">
-					<form:input type="text" path="email" class="form-control"
-						placeholder="Email" autofocus="true"></form:input>
-					<form:errors path="email"></form:errors>
+					<input type="text" path="email" class="form-control"
+						placeholder="Email" autofocus="true" th:field="*{email}"></input>
+					<errors path="email"></errors>
 				</div>
 			</spring:bind>
 
 			<spring:bind path="password">
 				<div class="form-group ${status.error ? 'has-error' : ''}">
-					<form:input type="password" path="password" class="form-control"
-						placeholder="Password"></form:input>
-					<form:errors path="password"></form:errors>
+					<input type="password" path="password" class="form-control"
+						placeholder="Password" th:field="*{password}"></input>
+					<errors path="password"> </errors>
 				</div>
 			</spring:bind>
 
 			<button class="btn btn-lg btn-primary btn-block" type="submit">Submit</button>
-		</form:form>
+		</form>
 
 	</div>
 
