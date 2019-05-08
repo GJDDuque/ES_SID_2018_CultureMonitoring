@@ -362,7 +362,7 @@ CREATE TABLE `logs_users` (
   `migrated` bit(1) NOT NULL DEFAULT b'0',
   `user` varchar(45) NOT NULL,
   PRIMARY KEY (`log_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -371,7 +371,7 @@ CREATE TABLE `logs_users` (
 
 LOCK TABLES `logs_users` WRITE;
 /*!40000 ALTER TABLE `logs_users` DISABLE KEYS */;
-INSERT INTO `logs_users` VALUES (1,1,'luis@teste.pt','luis','borro','2019-04-23 19:24:04','Insert',NULL,_binary '\0','root@localhost'),(2,1,'luis@teste.pt','luis','borro','2019-04-23 21:20:12','Delete',NULL,_binary '\0','root@localhost'),(3,2,'luis@teste.pt','Luis','Investigador','2019-04-23 21:21:04','Insert',NULL,_binary '\0','root@localhost'),(4,2,'luis@teste.pt','Luis','Investigador','2019-04-23 21:23:30','Delete',NULL,_binary '\0','root@localhost'),(5,3,'luis@teste.pt','Luis','Investigador','2019-04-23 21:23:37','Insert',NULL,_binary '\0','root@localhost'),(6,3,'luis@teste.pt','Luis','Investigador','2019-04-23 21:24:24','Delete',NULL,_binary '\0','root@localhost'),(7,4,'ines@teste.pt','Ines','Investigador','2019-04-23 21:25:00','Insert',NULL,_binary '\0','root@localhost'),(8,4,'ines@teste.pt','Ines','Investigador','2019-04-23 21:26:10','Delete',NULL,_binary '\0','root@localhost'),(9,1,'ines@teste.pt','ines','Investigador','2019-04-24 10:03:47','Insert',NULL,_binary '\0','root@localhost'),(10,2,'luis@teste.pt','luis almeida','Investigador','2019-05-06 21:23:47','Insert',NULL,_binary '\0','root@localhost'),(11,3,'teste@teste.pt','teste','Investigador','2019-05-07 13:20:08','Insert',NULL,_binary '\0','root@localhost'),(12,3,'teste@teste.pt','teste','Investigador','2019-05-07 13:24:20','Delete',NULL,_binary '\0','root@localhost'),(13,4,'teste@teste.pt','teste','Investigador','2019-05-07 13:24:51','Insert',NULL,_binary '\0','root@localhost'),(14,5,'pedro@test.pt','pedro','Investigador','2019-05-07 14:41:02','Insert',NULL,_binary '\0','root@localhost');
+INSERT INTO `logs_users` VALUES (1,1,'luis@teste.pt','luis','borro','2019-04-23 19:24:04','Insert',NULL,_binary '\0','root@localhost'),(2,1,'luis@teste.pt','luis','borro','2019-04-23 21:20:12','Delete',NULL,_binary '\0','root@localhost'),(3,2,'luis@teste.pt','Luis','Investigador','2019-04-23 21:21:04','Insert',NULL,_binary '\0','root@localhost'),(4,2,'luis@teste.pt','Luis','Investigador','2019-04-23 21:23:30','Delete',NULL,_binary '\0','root@localhost'),(5,3,'luis@teste.pt','Luis','Investigador','2019-04-23 21:23:37','Insert',NULL,_binary '\0','root@localhost'),(6,3,'luis@teste.pt','Luis','Investigador','2019-04-23 21:24:24','Delete',NULL,_binary '\0','root@localhost'),(7,4,'ines@teste.pt','Ines','Investigador','2019-04-23 21:25:00','Insert',NULL,_binary '\0','root@localhost'),(8,4,'ines@teste.pt','Ines','Investigador','2019-04-23 21:26:10','Delete',NULL,_binary '\0','root@localhost'),(9,1,'ines@teste.pt','ines','Investigador','2019-04-24 10:03:47','Insert',NULL,_binary '\0','root@localhost'),(10,2,'luis@teste.pt','luis almeida','Investigador','2019-05-06 21:23:47','Insert',NULL,_binary '\0','root@localhost'),(11,3,'teste@teste.pt','teste','Investigador','2019-05-07 13:20:08','Insert',NULL,_binary '\0','root@localhost'),(12,3,'teste@teste.pt','teste','Investigador','2019-05-07 13:24:20','Delete',NULL,_binary '\0','root@localhost'),(13,4,'teste@teste.pt','teste','Investigador','2019-05-07 13:24:51','Insert',NULL,_binary '\0','root@localhost'),(14,5,'pedro@test.pt','pedro','Investigador','2019-05-07 14:41:02','Insert',NULL,_binary '\0','root@localhost'),(15,6,'coco@teste.pt','coco','Investigador','2019-05-07 19:11:27','Insert',NULL,_binary '\0','root@localhost');
 /*!40000 ALTER TABLE `logs_users` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -732,6 +732,32 @@ DELIMITER ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
 
 --
+-- Table structure for table `roles`
+--
+
+DROP TABLE IF EXISTS `roles`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+ SET character_set_client = utf8mb4 ;
+CREATE TABLE `roles` (
+  `id_Role` int(11) NOT NULL AUTO_INCREMENT,
+  `role` char(50) NOT NULL,
+  `name` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id_Role`,`role`),
+  UNIQUE KEY `id_Role_UNIQUE` (`id_Role`),
+  UNIQUE KEY `role_name_UNIQUE` (`role`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `roles`
+--
+
+LOCK TABLES `roles` WRITE;
+/*!40000 ALTER TABLE `roles` DISABLE KEYS */;
+/*!40000 ALTER TABLE `roles` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `system`
 --
 
@@ -789,14 +815,20 @@ DROP TABLE IF EXISTS `user_roles`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
  SET character_set_client = utf8mb4 ;
 CREATE TABLE `user_roles` (
-  `ID` int(11) NOT NULL AUTO_INCREMENT,
-  `user_email` varchar(45) NOT NULL,
-  `profCat` varchar(45) NOT NULL,
-  PRIMARY KEY (`ID`),
-  KEY `user_idx` (`user_email`),
-  KEY `profcat_idx` (`profCat`),
-  CONSTRAINT `profcat` FOREIGN KEY (`profCat`) REFERENCES `professional_categories` (`professional_category`),
-  CONSTRAINT `user` FOREIGN KEY (`user_email`) REFERENCES `users` (`email`)
+  `id_role` int(11) NOT NULL AUTO_INCREMENT,
+  `user_role` char(50) NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `user_email` int(11) NOT NULL,
+  PRIMARY KEY (`id_role`),
+  UNIQUE KEY `id_role_UNIQUE` (`id_role`),
+  UNIQUE KEY `user_role_UNIQUE` (`user_role`),
+  KEY `roles_idx` (`user_role`),
+  KEY `Users_email` (`email`),
+  KEY `FKkjpladnn98mcjj0p0avwnot32` (`user_email`),
+  CONSTRAINT `FKkjpladnn98mcjj0p0avwnot32` FOREIGN KEY (`user_email`) REFERENCES `roles` (`id_Role`),
+  CONSTRAINT `Users_email` FOREIGN KEY (`email`) REFERENCES `users` (`email`),
+  CONSTRAINT `role_name` FOREIGN KEY (`user_role`) REFERENCES `roles` (`role`),
+  CONSTRAINT `roles` FOREIGN KEY (`id_role`) REFERENCES `roles` (`id_Role`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -806,7 +838,6 @@ CREATE TABLE `user_roles` (
 
 LOCK TABLES `user_roles` WRITE;
 /*!40000 ALTER TABLE `user_roles` DISABLE KEYS */;
-INSERT INTO `user_roles` VALUES (1,'teste@teste.pt','Investigador'),(2,'teste@teste.pt','Administrador'),(3,'teste@teste.pt','ADMIN');
 /*!40000 ALTER TABLE `user_roles` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -827,7 +858,7 @@ CREATE TABLE `users` (
   PRIMARY KEY (`user_id`,`email`),
   UNIQUE KEY `user_id_UNIQUE` (`user_id`),
   UNIQUE KEY `email_UNIQUE` (`email`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -836,7 +867,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (1,'ines@teste.pt','ines','Investigador','',NULL),(2,'luis@teste.pt','luis almeida','Investigador','$2a$10$Z.MZYlclWYKRls6v84Zh4exG9qk14WGWD52UfbaRXY1NX36fButVS',NULL),(4,'teste@teste.pt','teste','Investigador','$2a$10$iwOU5eJl1iq5SkzGqyrDD.TYiOTI/usAc1ydjejq9HT68.IIP9ZNa',NULL),(5,'pedro@test.pt','pedro','Investigador','$2a$10$yR/wlKLpkFX7d761d10/S.rC3i.6ntnt05XLY0wMCb.FvW19nj5CS',NULL);
+INSERT INTO `users` VALUES (1,'ines@teste.pt','ines','Investigador','',NULL),(2,'luis@teste.pt','luis almeida','Investigador','$2a$10$Z.MZYlclWYKRls6v84Zh4exG9qk14WGWD52UfbaRXY1NX36fButVS',NULL),(4,'teste@teste.pt','teste','Investigador','$2a$10$iwOU5eJl1iq5SkzGqyrDD.TYiOTI/usAc1ydjejq9HT68.IIP9ZNa',NULL),(5,'pedro@test.pt','pedro','Investigador','$2a$10$yR/wlKLpkFX7d761d10/S.rC3i.6ntnt05XLY0wMCb.FvW19nj5CS',NULL),(6,'coco@teste.pt','coco','Investigador','$2a$10$pOSVXjGcY2kSHMWYO9SOm.3lJ4meKkzQ4ja9lK4iZV8wr9DjMjqMu',NULL);
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
@@ -969,7 +1000,7 @@ UNLOCK TABLES;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `addUser`(in name char(20), in email char(30), in professional_category char(30), in password char(8))
+CREATE DEFINER=`root`@`localhost` PROCEDURE `addUser`(in name char(20), in email char(30), in professional_category char(30), in password char(32))
 begin
 
 	DECLARE counter int;
@@ -987,6 +1018,7 @@ begin
 	WHERE table_name = 'professional_categories');
 
 if exists ( select * from professional_categories where professional_category = professional_category ) then
+	insert into users values(null, email, name, professional_category,password,null);
 	set @query1 := concat("CREATE USER '", email ,"' @localhost IDENTIFIED BY '",password,"' ");
 	PREPARE stmt FROM @query1; EXECUTE stmt; DEALLOCATE PREPARE stmt;
 
@@ -1103,4 +1135,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-05-07 20:09:52
+-- Dump completed on 2019-05-08 21:11:53
