@@ -40,7 +40,7 @@ public class User {
 
 	@Transient
 	@ManyToMany
-	@JoinTable(name = "user_roles", joinColumns = @JoinColumn(name = "email"), inverseJoinColumns = @JoinColumn(name = "user_email"))
+	@JoinTable(name = "user_roles", joinColumns = @JoinColumn(name = "email"), inverseJoinColumns = @JoinColumn(name = "email"))
 	public Set<Role> getRoles() {
 		return roles;
 	}

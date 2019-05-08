@@ -4,7 +4,7 @@ public interface UserService {
 
 	void saveUser(User user);
 
-	public User loadUserByUsername(String username);
+	User findByUsername(String username);
 
-	public User findByEmail(String email);
+	User findByEmail(String email);
 }

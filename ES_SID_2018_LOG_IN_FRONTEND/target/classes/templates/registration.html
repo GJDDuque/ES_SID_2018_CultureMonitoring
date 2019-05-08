@@ -21,15 +21,15 @@
 		<form method="POST" modelAttribute="userForm" class="form-signin"
 			th:action="@{/registration}" th:object="${userForm}">
 			<h2 class="form-signin-heading">Create your account</h2>
-            
-            <spring:bind path="name">
+
+			<spring:bind path="name">
 				<div class="form-group ${status.error ? 'has-error' : ''}">
 					<input type="text" path="name" class="form-control"
 						placeholder="Name" autofocus="true" th:field="*{name}"></input>
 					<errors path="name"></errors>
 				</div>
 			</spring:bind>
-            
+
 			<spring:bind path="email">
 				<div class="form-group ${status.error ? 'has-error' : ''}">
 					<input type="text" path="email" class="form-control"
@@ -46,14 +46,15 @@
 				</div>
 			</spring:bind>
 
-            <spring:bind path="professional_category">
+			<spring:bind path="professional_category">
 				<div class="form-group ${status.error ? 'has-error' : ''}">
-					<input type="text" path="professional_category" class="form-control"
-						placeholder="Professional Category" autofocus="true" th:field="*{professional_category}"></input>
+					<input type="text" path="professional_category"
+						class="form-control" placeholder="Professional Category"
+						autofocus="true" th:field="*{professional_category}"></input>
 					<errors path="professional_category"></errors>
 				</div>
 			</spring:bind>
-    
+
 			<button class="btn btn-lg btn-primary btn-block" type="submit">Submit</button>
 		</form>
 

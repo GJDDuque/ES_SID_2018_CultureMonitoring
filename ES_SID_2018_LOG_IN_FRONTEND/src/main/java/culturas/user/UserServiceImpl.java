@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.simple.SimpleJdbcCall;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import culturas.role.RoleRepository;
@@ -21,14 +20,11 @@ public class UserServiceImpl implements UserService {
 	@Autowired
 	private RoleRepository roleRepository;
 	@Autowired
-	private BCryptPasswordEncoder bCryptPasswordEncoder;
-	@Autowired
 	private DataSource dataSource;
 	private SimpleJdbcCall jdbcCall;
 
 	@Override
 	public void saveUser(User user) {
-		user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
 		user.setRoles(new HashSet<>(roleRepository.findAll()));
 
 		JdbcTemplate template = new JdbcTemplate(dataSource);
@@ -40,13 +36,13 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public User loadUserByUsername(String username) {
-		return userRepository.loadUserByUsername(username);
+	public User findByUsername(String username) {
+		return userRepository.findByName(username);
 	}
 
 	@Override
 	public User findByEmail(String email) {
-		return userRepository.loadUserByUsername(email);
+		return userRepository.findByEmail(email);
 	}
 
 }

@@ -1,7 +1,11 @@
-package culturas.security;
+package culturas;
+
+import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.simple.SimpleJdbcCall;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,20 +15,23 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import culturas.user.User;
-import culturas.user.UserService;
+import culturas.user.UserRepository;
+import culturas.user.UserServiceImpl;
 import culturas.user.UserValidator;
 
 @Controller
 public class UserController {
 
 	@Autowired
-	private UserService userServiceImp;
-
-	@Autowired
-	private SecurityService securityService;
+	private UserServiceImpl userServiceImpl;
 
 	@Autowired
 	private UserValidator userValidator;
+
+	@Autowired
+	private DataSource dataSource;
+	private SimpleJdbcCall jdbcCall;
+	private JdbcTemplate template;
 
 	@GetMapping("/registration")
 	public String registration(Model model) {
@@ -41,9 +48,7 @@ public class UserController {
 			return "registration";
 		}
 
-		userServiceImp.saveUser(userForm);
-
-		securityService.autoLogin(userForm.getEmail(), userForm.getPassword());
+		userServiceImpl.saveUser(userForm);
 
 		return "redirect:/welcome";
 	}
@@ -51,19 +56,28 @@ public class UserController {
 	@GetMapping("/login")
 	public String login(Model model, String error, String logout) {
 		model.addAttribute("userForm", new User());
-		if (error != null)
-			model.addAttribute("error", "Your username and password is invalid.");
-
-		if (logout != null)
-			model.addAttribute("message", "You have been logged out successfully.");
-
 		return "login";
 	}
 
-	@PostMapping(value = "/login")
+	@PostMapping("/login")
 	public String login(@ModelAttribute("userForm") User userForm, BindingResult bindingResult) {
-		securityService.autoLogin(userForm.getEmail(), userForm.getPassword());
-		return "redirect:/welcome";
+		String mapping;
+// Como se faz um stored procedure....
+
+//		template = new JdbcTemplate(dataSource);
+//		jdbcCall = new SimpleJdbcCall(template).withProcedureName("anyQuery");
+//		String aux = "select email, password from users where email = '" + userForm.getEmail() + "'
+//		MapSqlParameterSource paramMap = new MapSqlParameterSource().addValue("selectcommand", aux);
+//		User user = (User) jdbcCall.execute(paramMap); {
+//
+		User user = userServiceImpl.findByEmail(userForm.getEmail());
+		if (user.getPassword().equals(userForm.getPassword())) {
+			mapping = "redirect:/welcome";
+		} else {
+			mapping = "/login";
+		}
+		return mapping;
+
 	}
 
 	@GetMapping({ "/", "/welcome" })

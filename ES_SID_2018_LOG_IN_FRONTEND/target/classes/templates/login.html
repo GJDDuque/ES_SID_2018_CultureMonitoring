@@ -15,24 +15,22 @@
 <body>
 
 	<div class="container">
-		<form method="POST" class="form-signin" modelAttribute="userForm"
-			th:object="${userForm}" th:action="@{/login}">
+		<form method="POST" class="form-signin" modelAttribute="/login"
+			th:action="@{/login}" th:object="${userForm}">
 			<h2 class="form-heading">Log in</h2>
 
-			<div class="form-group ${error != null ? 'has-error' : ''}">
-				<input name="email" type="text" class="form-control"
-					placeholder="Email" autofocus="true" th:field="*{email}" /> <input
-					name="password" type="password" class="form-control"
-					placeholder="Password" th:field="*{password}" /> <input
-					type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+			<input name="email" type="text" class="form-control"
+				placeholder="Email" autofocus="true" th:field="*{email}" ) /> <input
+				name="password" type="password" class="form-control"
+				placeholder="Password" th:field="*{password}" />
 
-				<button class="btn btn-lg btn-primary btn-block" type="submit">Log
-					In</button>
-				<h4 class="text-center">
-					<a href="/registration">Create an account</a>
-				</h4>
-			</div>
-		</form>
+			<button class="btn btn-lg btn-primary btn-block" type="submit">Log
+				In</button>
+			<h4 class="text-center">
+				<a href="/registration">Create an account</a>
+			</h4>
+	</div>
+	</form>
 	</div>
 
 	<script
