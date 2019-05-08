@@ -27,11 +27,6 @@ public class UserServiceImpl implements UserService {
 	private SimpleJdbcCall jdbcCall;
 
 	@Override
-	public User findByEmail(String email) {
-		return userRepository.findByEmail(email);
-	}
-
-	@Override
 	public void saveUser(User user) {
 		user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
 		user.setRoles(new HashSet<>(roleRepository.findAll()));
@@ -42,6 +37,16 @@ public class UserServiceImpl implements UserService {
 				.addValue("email", user.getEmail()).addValue("professional_category", user.getProfessional_category())
 				.addValue("password", user.getPassword());
 		jdbcCall.execute(paramMap);
+	}
+
+	@Override
+	public User loadUserByUsername(String username) {
+		return userRepository.loadUserByUsername(username);
+	}
+
+	@Override
+	public User findByEmail(String email) {
+		return userRepository.loadUserByUsername(email);
 	}
 
 }
