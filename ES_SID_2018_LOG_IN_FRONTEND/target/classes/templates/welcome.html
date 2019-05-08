@@ -13,26 +13,19 @@
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
 <body>
-
 	<div class="container">
-		<form method="POST" action="${contextPath}/login" class="form-signin">
-			<h2 class="form-heading">Log in</h2>
+		<c:if test="${pageContext.request.userPrincipal.name != null}">
+			<form id="logoutForm" method="POST" action="${contextPath}/logout">
+				<input type="hidden" name="${_csrf.parameterName}"
+					value="${_csrf.token}" />
+			</form>
 
-			<div class="form-group ${error != null ? 'has-error' : ''}">
-				<input name="email" type="text" class="form-control"
-					placeholder="Email" autofocus="true" /> <input name="password"
-					type="password" class="form-control" placeholder="Password" /> <input
-					type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
-
-				<button class="btn btn-lg btn-primary btn-block" type="submit">Log
-					In</button>
-				<h4 class="text-center">
-					<a href="${{contextPath}/registration">Create an account</a>
-				</h4>
-			</div>
-		</form>
+			<h2>
+				Welcome ${pageContext.request.userPrincipal.name} | <a
+					onclick="document.forms['logoutForm'].submit()">Logout</a>
+			</h2>
+		</c:if>
 	</div>
-
 	<script
 		src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 	<script src="${contextPath}/resources/js/bootstrap.min.js"></script>

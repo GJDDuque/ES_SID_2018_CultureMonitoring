@@ -3,8 +3,6 @@ package hello;
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.management.relation.Role;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -12,10 +10,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
-import lombok.Data;
-
-@Data
 @Entity // This tells Hibernate to make a table out of this class
 @Table(name = "users")
 public class User {
@@ -37,15 +33,19 @@ public class User {
 	@Column
 	private String password;
 
-	private String enabled;
+	@Transient
+	private Set<Role> roles;
 
-//	@ManyToMany(cascade = CascadeType.ALL)
-//	@JoinTable(name = "user_roles", joinColumns = @JoinColumn(name = "email"), inverseJoinColumns = @JoinColumn(name = "user_email"))
-//	private Set<ProfessionalCategory> professional_categories;
+	@Transient
+	@ManyToMany
+	@JoinTable(name = "user_roles", joinColumns = @JoinColumn(name = "email"), inverseJoinColumns = @JoinColumn(name = "user_email"))
+	public Set<Role> getRoles() {
+		return roles;
+	}
 
-//	public Set<ProfessionalCategory> getProfessional_categories() {
-//		return professional_categories;
-//	}
+	public void setRoles(HashSet<Role> roles) {
+		this.roles = roles;
+	}
 
 	public long getUser_id() {
 		return user_id;
@@ -53,14 +53,6 @@ public class User {
 
 	public void setUser_id(long user_id) {
 		this.user_id = user_id;
-	}
-
-	public String getEnabled() {
-		return enabled;
-	}
-
-	public void setEnabled(String enabled) {
-		this.enabled = enabled;
 	}
 
 	public String getPassword() {
@@ -100,9 +92,5 @@ public class User {
 		// TODO Auto-generated method stub
 
 	}
-
-//	public void setProfessional_categories(HashSet<ProfessionalCategory> hashSet) {
-//		this.professional_categories = hashSet;
-//	}
 
 }
