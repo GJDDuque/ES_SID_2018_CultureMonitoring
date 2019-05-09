@@ -160,39 +160,63 @@
 				<!-- /.container-fluid -->
 
 				<!-- Begin Gráfico -->
-
-				<div class="col-xl-8 col-lg-7">
-					<div class="card shadow mb-4">
-						<!-- Card Header - Dropdown -->
-						<div
-							class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-							<h6 class="m-0 font-weight-bold text-primary">Culturas
-								Overview</h6>
-							<div class="dropdown no-arrow">
-								<a class="dropdown-toggle" href="#" role="button"
-									id="dropdownMenuLink" data-toggle="dropdown"
-									aria-haspopup="true" aria-expanded="false"> <i
-									class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
-								</a>
-								<div
-									class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
-									aria-labelledby="dropdownMenuLink">
-									<div class="dropdown-header">Ações:</div>
-									<a class="dropdown-item" href="#">Ação</a> <a
-										class="dropdown-item" href="#">Outra ação</a>
-									<div class="dropdown-divider"></div>
-									<a class="dropdown-item" href="#">Ou então tiramos isto</a>
-								</div>
-							</div>
-						</div>
-						<!-- Card Body -->
-						<div class="card-body">
-							<div class="chart-area">
-								<canvas id="myAreaChart"></canvas>
-							</div>
-						</div>
-					</div>
-				</div>
+                <div class="container col-12 m-0 d-inline-block d-md-inline-flex">
+                    <div class="col-xl-7 col-lg-6 col-12 d-inline-block">
+                        <div class="card shadow mb-4">
+                            <!-- Card Header - Dropdown -->
+                            <div
+                                class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                                <h6 class="m-0 font-weight-bold text-primary">Culturas
+                                    Overview</h6>
+                                <div class="dropdown no-arrow">
+                                    <a class="dropdown-toggle" href="#" role="button"
+                                        id="dropdownMenuLink" data-toggle="dropdown"
+                                        aria-haspopup="true" aria-expanded="false"> <i
+                                        class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
+                                    </a>
+                                    <div
+                                        class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
+                                        aria-labelledby="dropdownMenuLink">
+                                        <div class="dropdown-header">Ações:</div>
+                                        <a class="dropdown-item" href="#">Ação</a> <a
+                                            class="dropdown-item" href="#">Outra ação</a>
+                                        <div class="dropdown-divider"></div>
+                                        <a class="dropdown-item" href="#">Ou então tiramos isto</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Card Body -->
+                            <div class="card-body">
+                                <div class="chart-area">
+                                    <canvas id="myAreaChart"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-5 col-lg-6 col-12 d-inline-block">
+                        <div class="card shadow mb-4">
+                            <div class="card-title mt-3 mb-3 pl-3">
+                                <span><i class="fas fa-plus-circle"></i> Add Culture</span>
+                            </div>
+                            <div class="card-body">
+                                <form class="form-horizontal">
+                                    <div class="form-group">
+                                        <label>Culture Name</label>
+                                        <input type="text" class="form-control"/>                            
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Culture Description</label>
+                                        <textarea class="form-control"></textarea>
+                                    </div>
+                                    <div class="form-group">
+                                        <button type="button" class="btn btn-primary">CREATE</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                    
 
 				<!-- End Gráfico -->
 
@@ -260,12 +284,15 @@
 	<script src="js/demo/chart-area-demo.js"></script>
 	<script src="js/demo/chart-pie-demo.js"></script>
 
+    <input style="display: none" type="text" id="dadosTemperatura"/>
 </body>
 
 </html>
 
 <script>
-	// Set new default font family and font color to mimic Bootstrap's default styling
+    var temp = [0, 12000, 5200, 15200, 10500, 25000,15500, 25500, 25000, 35000, 25500, 45000];
+
+    // Set new default font family and font color to mimic Bootstrap's default styling
 			Chart.defaults.global.defaultFontFamily = 'Nunito',
 			'-apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif';
 	Chart.defaults.global.defaultFontColor = '#858796';
@@ -293,7 +320,7 @@
 		return s.join(dec);
 	}
 
-	// Area Chart Example
+	// Chart Example
 	var ctx = document.getElementById("myAreaChart");
 	var myLineChart = new Chart(
 			ctx,
@@ -316,9 +343,7 @@
 								pointHoverBorderColor : "rgba(78, 115, 223, 1)",
 								pointHitRadius : 10,
 								pointBorderWidth : 2,
-								data : [ 0, 12000, 5200, 15200, 10500, 25000,
-										15500, 25500, 25000, 35000, 25500,
-										45000 ],
+								data : temp,
 							},
 							{
 								label : "Luminosidade",
@@ -406,4 +431,132 @@
 					}
 				}
 			});
+    
+    $(document).ready(function(){   
+        $.ajax({
+            type: "GET",
+            contentType: "application/json",
+            url: 'urlCertoParaIrBuscarOsDados',
+            cache: false,
+            success: function(result)⁄{
+                var data = [];
+                data.push(result.wtv1);
+                data.push(result.wtv2);
+                renderChart(data,result.labels);
+            },
+            error: function(err){
+                console.log(err);
+            }
+        });
+    });
+    
+    function renderChart(data, labels)⁄{
+        var ctx = document.getElementById("myAreaChart");
+	var myLineChart = new Chart(
+			ctx,
+			{
+				type : 'line',
+				data : {
+					labels : labels,
+					datasets : [
+							{
+								label : "Temperatura",
+								lineTension : 0.3,
+								backgroundColor : "rgba(78, 115, 223, 0.05)",
+								borderColor : "rgba(78, 115, 223, 1)",
+								pointRadius : 3,
+								pointBackgroundColor : "rgba(78, 115, 223, 1)",
+								pointBorderColor : "rgba(78, 115, 223, 1)",
+								pointHoverRadius : 3,
+								pointHoverBackgroundColor : "rgba(78, 115, 223, 1)",
+								pointHoverBorderColor : "rgba(78, 115, 223, 1)",
+								pointHitRadius : 10,
+								pointBorderWidth : 2,
+								data : data[0],
+							},
+							{
+								label : "Luminosidade",
+								lineTension : 0.3,
+								backgroundColor : "rgba(66, 244, 95, 0.05)",
+								borderColor : "rgba(66, 244, 95, 1)",
+								pointRadius : 3,
+								pointBackgroundColor : "rgba(66, 244, 95, 1)",
+								pointBorderColor : "rgba(66, 244, 95, 1)",
+								pointHoverRadius : 3,
+								pointHoverBackgroundColor : "rgba(66, 244, 95, 1)",
+								pointHoverBorderColor : "rgba(66, 244, 95, 1)",
+								pointHitRadius : 10,
+								pointBorderWidth : 2,
+								data : data[1],
+							} ],
+				},
+				options : {
+					maintainAspectRatio : false,
+					layout : {
+						padding : {
+							left : 10,
+							right : 25,
+							top : 25,
+							bottom : 0
+						}
+					},
+					scales : {
+						xAxes : [ {
+							time : {
+								unit : 'date'
+							},
+							gridLines : {
+								display : false,
+								drawBorder : false
+							},
+							ticks : {
+								maxTicksLimit : 7
+							}
+						} ],
+						yAxes : [ {
+							ticks : {
+								maxTicksLimit : 5,
+								padding : 10,
+								callback : function(value, index, values) {
+									return number_format(value);
+								}
+							},
+							gridLines : {
+								color : "rgb(234, 236, 244)",
+								zeroLineColor : "rgb(234, 236, 244)",
+								drawBorder : false,
+								borderDash : [ 2 ],
+								zeroLineBorderDash : [ 2 ]
+							}
+						} ],
+					},
+					legend : {
+						display : false
+					},
+					tooltips : {
+						backgroundColor : "rgb(255,255,255)",
+						bodyFontColor : "#858796",
+						titleMarginBottom : 10,
+						titleFontColor : '#6e707e',
+						titleFontSize : 14,
+						borderColor : '#dddfeb',
+						borderWidth : 1,
+						xPadding : 15,
+						yPadding : 15,
+						displayColors : false,
+						intersect : false,
+						mode : 'index',
+						caretPadding : 10,
+						callbacks : {
+							label : function(tooltipItem, chart) {
+								var datasetLabel = chart.datasets[tooltipItem.datasetIndex].label
+										|| '';
+								return datasetLabel + ': '
+										+ number_format(tooltipItem.yLabel);
+							}
+						}
+					}
+				}
+			});
+    }
 </script>
