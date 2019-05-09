@@ -18,8 +18,9 @@ public class DataController {
 		return "temperature_measures";
 	}
 
-	@PostMapping("/temperature_measures")
-	public String registration(@ModelAttribute("graph") Data data, BindingResult bindingResult) {
+	@GetMapping("/filtro")
+	public String registration(@ModelAttribute("filtro") Data data, BindingResult bindingResult, Model model) {
+		model.addAttribute("graph", new Data("select * from temperature_measure").loadData());
 		return "temperature_measures";
 	}
 }
