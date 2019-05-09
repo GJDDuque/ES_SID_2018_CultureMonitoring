@@ -6,11 +6,15 @@ import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
 
+import culturas.role.RoleRepository;
+
 @Component
 public class UserValidator implements Validator {
 
 	@Autowired
 	private UserService userService;
+	@Autowired
+	private RoleRepository rolerpository;
 
 	@Override
 	public boolean supports(Class aClass) {
@@ -22,15 +26,16 @@ public class UserValidator implements Validator {
 		User user = (User) o;
 
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "email", "NotEmpty");
-		if (userService.findByEmail(user.getEmail()) != null)
-
-		{
+		if (userService.findByEmail(user.getEmail()) != null) {
 			errors.rejectValue("email", "Duplicate.userForm.email");
 		}
 
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "password", "NotEmpty");
 		if (user.getPassword().length() < 8 || user.getPassword().length() > 32) {
 			errors.rejectValue("password", "Size.userForm.password");
+		}
+		if (rolerpository.findByRole(user.getProfessional_category()) == null) {
+			errors.rejectValue("professional_category", "Exists.userForm.professional_category");
 		}
 	}
 }

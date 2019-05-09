@@ -1,5 +1,3 @@
-CREATE DATABASE  IF NOT EXISTS `culturedb` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */;
-USE `culturedb`;
 -- MySQL dump 10.13  Distrib 8.0.15, for Win64 (x86_64)
 --
 -- Host: localhost    Database: culturedb
@@ -362,7 +360,7 @@ CREATE TABLE `logs_users` (
   `migrated` bit(1) NOT NULL DEFAULT b'0',
   `user` varchar(45) NOT NULL,
   PRIMARY KEY (`log_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -371,7 +369,7 @@ CREATE TABLE `logs_users` (
 
 LOCK TABLES `logs_users` WRITE;
 /*!40000 ALTER TABLE `logs_users` DISABLE KEYS */;
-INSERT INTO `logs_users` VALUES (1,1,'luis@teste.pt','luis','borro','2019-04-23 19:24:04','Insert',NULL,_binary '\0','root@localhost'),(2,1,'luis@teste.pt','luis','borro','2019-04-23 21:20:12','Delete',NULL,_binary '\0','root@localhost'),(3,2,'luis@teste.pt','Luis','Investigador','2019-04-23 21:21:04','Insert',NULL,_binary '\0','root@localhost'),(4,2,'luis@teste.pt','Luis','Investigador','2019-04-23 21:23:30','Delete',NULL,_binary '\0','root@localhost'),(5,3,'luis@teste.pt','Luis','Investigador','2019-04-23 21:23:37','Insert',NULL,_binary '\0','root@localhost'),(6,3,'luis@teste.pt','Luis','Investigador','2019-04-23 21:24:24','Delete',NULL,_binary '\0','root@localhost'),(7,4,'ines@teste.pt','Ines','Investigador','2019-04-23 21:25:00','Insert',NULL,_binary '\0','root@localhost'),(8,4,'ines@teste.pt','Ines','Investigador','2019-04-23 21:26:10','Delete',NULL,_binary '\0','root@localhost'),(9,1,'ines@teste.pt','ines','Investigador','2019-04-24 10:03:47','Insert',NULL,_binary '\0','root@localhost'),(10,2,'luis@teste.pt','luis almeida','Investigador','2019-05-06 21:23:47','Insert',NULL,_binary '\0','root@localhost'),(11,3,'teste@teste.pt','teste','Investigador','2019-05-07 13:20:08','Insert',NULL,_binary '\0','root@localhost'),(12,3,'teste@teste.pt','teste','Investigador','2019-05-07 13:24:20','Delete',NULL,_binary '\0','root@localhost'),(13,4,'teste@teste.pt','teste','Investigador','2019-05-07 13:24:51','Insert',NULL,_binary '\0','root@localhost'),(14,5,'pedro@test.pt','pedro','Investigador','2019-05-07 14:41:02','Insert',NULL,_binary '\0','root@localhost'),(15,6,'coco@teste.pt','coco','Investigador','2019-05-07 19:11:27','Insert',NULL,_binary '\0','root@localhost');
+INSERT INTO `logs_users` VALUES (1,1,'luis@teste.pt','luis','borro','2019-04-23 19:24:04','Insert',NULL,_binary '\0','root@localhost'),(2,1,'luis@teste.pt','luis','borro','2019-04-23 21:20:12','Delete',NULL,_binary '\0','root@localhost'),(3,2,'luis@teste.pt','Luis','Investigador','2019-04-23 21:21:04','Insert',NULL,_binary '\0','root@localhost'),(4,2,'luis@teste.pt','Luis','Investigador','2019-04-23 21:23:30','Delete',NULL,_binary '\0','root@localhost'),(5,3,'luis@teste.pt','Luis','Investigador','2019-04-23 21:23:37','Insert',NULL,_binary '\0','root@localhost'),(6,3,'luis@teste.pt','Luis','Investigador','2019-04-23 21:24:24','Delete',NULL,_binary '\0','root@localhost'),(7,4,'ines@teste.pt','Ines','Investigador','2019-04-23 21:25:00','Insert',NULL,_binary '\0','root@localhost'),(8,4,'ines@teste.pt','Ines','Investigador','2019-04-23 21:26:10','Delete',NULL,_binary '\0','root@localhost'),(9,1,'ines@teste.pt','ines','Investigador','2019-04-24 10:03:47','Insert',NULL,_binary '\0','root@localhost'),(10,2,'luis@teste.pt','luis almeida','Investigador','2019-05-06 21:23:47','Insert',NULL,_binary '\0','root@localhost'),(11,3,'teste@teste.pt','teste','Investigador','2019-05-07 13:20:08','Insert',NULL,_binary '\0','root@localhost'),(12,3,'teste@teste.pt','teste','Investigador','2019-05-07 13:24:20','Delete',NULL,_binary '\0','root@localhost'),(13,4,'teste@teste.pt','teste','Investigador','2019-05-07 13:24:51','Insert',NULL,_binary '\0','root@localhost'),(14,5,'pedro@test.pt','pedro','Investigador','2019-05-07 14:41:02','Insert',NULL,_binary '\0','root@localhost'),(15,6,'coco@teste.pt','coco','Investigador','2019-05-07 19:11:27','Insert',NULL,_binary '\0','root@localhost'),(16,1,'ines@teste.pt','ines','Investigador','2019-05-09 13:37:34','Delete',NULL,_binary '\0','root@localhost'),(17,2,'luis@teste.pt','luis almeida','Investigador','2019-05-09 13:37:34','Delete',NULL,_binary '\0','root@localhost'),(18,4,'teste@teste.pt','teste','Investigador','2019-05-09 13:37:34','Delete',NULL,_binary '\0','root@localhost'),(19,5,'pedro@test.pt','pedro','Investigador','2019-05-09 13:37:34','Delete',NULL,_binary '\0','root@localhost'),(20,6,'coco@teste.pt','coco','Investigador','2019-05-09 13:37:34','Delete',NULL,_binary '\0','root@localhost'),(21,7,'luis@teste.pt','luis almeida','Investigador','2019-05-09 13:43:49','Insert',NULL,_binary '\0','root@localhost');
 /*!40000 ALTER TABLE `logs_users` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -741,7 +739,6 @@ DROP TABLE IF EXISTS `roles`;
 CREATE TABLE `roles` (
   `id_Role` int(11) NOT NULL AUTO_INCREMENT,
   `role` char(50) NOT NULL,
-  `name` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id_Role`,`role`),
   UNIQUE KEY `id_Role_UNIQUE` (`id_Role`),
   UNIQUE KEY `role_name_UNIQUE` (`role`)
@@ -754,6 +751,7 @@ CREATE TABLE `roles` (
 
 LOCK TABLES `roles` WRITE;
 /*!40000 ALTER TABLE `roles` DISABLE KEYS */;
+INSERT INTO `roles` VALUES (1,'Investigador'),(2,'Administrador');
 /*!40000 ALTER TABLE `roles` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -818,18 +816,11 @@ CREATE TABLE `user_roles` (
   `id_role` int(11) NOT NULL AUTO_INCREMENT,
   `user_role` char(50) NOT NULL,
   `email` varchar(255) NOT NULL,
-  `user_email` int(11) NOT NULL,
   PRIMARY KEY (`id_role`),
   UNIQUE KEY `id_role_UNIQUE` (`id_role`),
-  UNIQUE KEY `user_role_UNIQUE` (`user_role`),
   KEY `roles_idx` (`user_role`),
-  KEY `Users_email` (`email`),
-  KEY `FKkjpladnn98mcjj0p0avwnot32` (`user_email`),
-  CONSTRAINT `FKkjpladnn98mcjj0p0avwnot32` FOREIGN KEY (`user_email`) REFERENCES `roles` (`id_Role`),
-  CONSTRAINT `Users_email` FOREIGN KEY (`email`) REFERENCES `users` (`email`),
-  CONSTRAINT `role_name` FOREIGN KEY (`user_role`) REFERENCES `roles` (`role`),
-  CONSTRAINT `roles` FOREIGN KEY (`id_role`) REFERENCES `roles` (`id_Role`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  CONSTRAINT `role_name` FOREIGN KEY (`user_role`) REFERENCES `roles` (`role`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -838,6 +829,7 @@ CREATE TABLE `user_roles` (
 
 LOCK TABLES `user_roles` WRITE;
 /*!40000 ALTER TABLE `user_roles` DISABLE KEYS */;
+INSERT INTO `user_roles` VALUES (5,'Investigador','luis@teste.pt');
 /*!40000 ALTER TABLE `user_roles` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -858,7 +850,7 @@ CREATE TABLE `users` (
   PRIMARY KEY (`user_id`,`email`),
   UNIQUE KEY `user_id_UNIQUE` (`user_id`),
   UNIQUE KEY `email_UNIQUE` (`email`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -867,7 +859,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (1,'ines@teste.pt','ines','Investigador','',NULL),(2,'luis@teste.pt','luis almeida','Investigador','$2a$10$Z.MZYlclWYKRls6v84Zh4exG9qk14WGWD52UfbaRXY1NX36fButVS',NULL),(4,'teste@teste.pt','teste','Investigador','$2a$10$iwOU5eJl1iq5SkzGqyrDD.TYiOTI/usAc1ydjejq9HT68.IIP9ZNa',NULL),(5,'pedro@test.pt','pedro','Investigador','$2a$10$yR/wlKLpkFX7d761d10/S.rC3i.6ntnt05XLY0wMCb.FvW19nj5CS',NULL),(6,'coco@teste.pt','coco','Investigador','$2a$10$pOSVXjGcY2kSHMWYO9SOm.3lJ4meKkzQ4ja9lK4iZV8wr9DjMjqMu',NULL);
+INSERT INTO `users` VALUES (7,'luis@teste.pt','luis almeida','Investigador','123456789',NULL);
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
@@ -1018,7 +1010,8 @@ begin
 	WHERE table_name = 'professional_categories');
 
 if exists ( select * from professional_categories where professional_category = professional_category ) then
-	insert into users values(null, email, name, professional_category,password,null);
+	insert into user_roles values(null, professional_category, email);
+    insert into users values(null, email, name, professional_category,password,null);
 	set @query1 := concat("CREATE USER '", email ,"' @localhost IDENTIFIED BY '",password,"' ");
 	PREPARE stmt FROM @query1; EXECUTE stmt; DEALLOCATE PREPARE stmt;
 
@@ -1038,9 +1031,6 @@ if exists ( select * from professional_categories where professional_category = 
 		PREPARE stmt1 FROM @col;  
         EXECUTE stmt1;
         DEALLOCATE PREPARE stmt1;
-        
-        set @grant := concat("GRANT " , professional_category, " TO '", email, "'  @localhost ");
-	    PREPARE auxstatm FROM @grant; EXECUTE auxstatm; DEALLOCATE PREPARE auxstatm;
         
         set @query2 = '';
 		if @outvar = 'CRUD' then
@@ -1135,4 +1125,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-05-08 21:11:53
+-- Dump completed on 2019-05-09 14:53:53

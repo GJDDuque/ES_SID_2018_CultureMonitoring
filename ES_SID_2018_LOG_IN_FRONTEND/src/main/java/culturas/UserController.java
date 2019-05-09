@@ -28,11 +28,6 @@ public class UserController {
 	@Autowired
 	private UserValidator userValidator;
 
-	@Autowired
-	private DataSource dataSource;
-	private SimpleJdbcCall jdbcCall;
-	private JdbcTemplate template;
-
 	@GetMapping("/registration")
 	public String registration(Model model) {
 		model.addAttribute("userForm", new User());
@@ -53,7 +48,7 @@ public class UserController {
 		return "redirect:/welcome";
 	}
 
-	@GetMapping("/login")
+	@GetMapping({ "/", "/login" })
 	public String login(Model model, String error, String logout) {
 		model.addAttribute("userForm", new User());
 		return "login";
@@ -62,14 +57,6 @@ public class UserController {
 	@PostMapping("/login")
 	public String login(@ModelAttribute("userForm") User userForm, BindingResult bindingResult) {
 		String mapping;
-// Como se faz um stored procedure....
-
-//		template = new JdbcTemplate(dataSource);
-//		jdbcCall = new SimpleJdbcCall(template).withProcedureName("anyQuery");
-//		String aux = "select email, password from users where email = '" + userForm.getEmail() + "'
-//		MapSqlParameterSource paramMap = new MapSqlParameterSource().addValue("selectcommand", aux);
-//		User user = (User) jdbcCall.execute(paramMap); {
-//
 		User user = userServiceImpl.findByEmail(userForm.getEmail());
 		if (user.getPassword().equals(userForm.getPassword())) {
 			mapping = "redirect:/welcome";
@@ -80,8 +67,13 @@ public class UserController {
 
 	}
 
-	@GetMapping({ "/", "/welcome" })
-	public String welcome(Model model) {
+	@GetMapping({ "/welcome" })
+	public String success(Model model) {
 		return "welcome";
 	}
+
+//	@GetMapping({ "/", "/login" })
+//	public String welcome(Model model) {
+//		return "login";
+//	}
 }

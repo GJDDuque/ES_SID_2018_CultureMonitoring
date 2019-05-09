@@ -18,25 +18,22 @@ public class Role {
 	@Id
 	@Column
 	private String role;
-	@Transient
-	private String name;
+
+	public String getRole() {
+		return role;
+	}
+
+	public void setRole(String role) {
+		this.role = role;
+	}
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
 	public int getId_role() {
 		return id_role;
 	}
 
 	public void setId_role(int id_role) {
 		this.id_role = id_role;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
 	}
 
 }
