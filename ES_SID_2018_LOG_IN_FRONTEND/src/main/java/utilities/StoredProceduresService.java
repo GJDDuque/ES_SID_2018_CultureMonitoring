@@ -21,6 +21,19 @@ public class StoredProceduresService {
 		template = new JdbcTemplate(dataSource);
 		jdbcCall = new SimpleJdbcCall(template).withProcedureName(StoredProcedureName);
 	}
+	
+	public void SetQuery(String query) {
+		paramMap = new MapSqlParameterSource().addValue("selectcommand", query);
+	}
+
+	public Object Execute() {
+		Object object = jdbcCall.execute(paramMap);
+		return object;
+	}
+
+	public void VoidExecute() {
+		jdbcCall.execute(paramMap);
+	}
 
 	public DataSource getDataSource() {
 		return dataSource;
@@ -54,16 +67,4 @@ public class StoredProceduresService {
 		this.paramMap = paramMap;
 	}
 
-	public void SetQuery(String query) {
-		paramMap = new MapSqlParameterSource().addValue("selectcommand", query);
-	}
-
-	public Object Execute() {
-		Object object = jdbcCall.execute(paramMap);
-		return object;
-	}
-
-	public void VoidExecute() {
-		jdbcCall.execute(paramMap);
-	}
 }
