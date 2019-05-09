@@ -15,13 +15,41 @@ public class StoredProceduresService {
 	private JdbcTemplate template;
 	private MapSqlParameterSource paramMap;
 
-	public StoredProceduresService() {
-
-	}
-
-	public void PrepareStoredProcedure(String StoredProcedureName) {
+	public StoredProceduresService(String StoredProcedureName) {
 		template = new JdbcTemplate(dataSource);
 		jdbcCall = new SimpleJdbcCall(template).withProcedureName(StoredProcedureName);
+	}
+
+	public DataSource getDataSource() {
+		return dataSource;
+	}
+
+	public void setDataSource(DataSource dataSource) {
+		this.dataSource = dataSource;
+	}
+
+	public SimpleJdbcCall getJdbcCall() {
+		return jdbcCall;
+	}
+
+	public void setJdbcCall(SimpleJdbcCall jdbcCall) {
+		this.jdbcCall = jdbcCall;
+	}
+
+	public JdbcTemplate getTemplate() {
+		return template;
+	}
+
+	public void setTemplate(JdbcTemplate template) {
+		this.template = template;
+	}
+
+	public MapSqlParameterSource getParamMap() {
+		return paramMap;
+	}
+
+	public void setParamMap(MapSqlParameterSource paramMap) {
+		this.paramMap = paramMap;
 	}
 
 	public void SetQuery(String query) {
