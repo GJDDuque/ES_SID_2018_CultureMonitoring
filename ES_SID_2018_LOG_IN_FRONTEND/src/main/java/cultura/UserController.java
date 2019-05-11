@@ -7,6 +7,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.servlet.ModelAndView;
 
 import cultura.user.User;
 import cultura.user.UserServiceImpl;
@@ -48,15 +49,14 @@ public class UserController {
 	}
 
 	@PostMapping("/login")
-	public String login(@ModelAttribute("userForm") User userForm, BindingResult bindingResult) {
-		String mapping;
+	public ModelAndView login(@ModelAttribute("userForm") User userForm, BindingResult bindingResult) {
+		ModelAndView modelAndView = null;
 		User user = userServiceImpl.findByEmail(userForm.getEmail());
 		if (user.getPassword().equals(userForm.getPassword())) {
-			mapping = "redirect:/welcome";
+			return new ModelAndView("redirect:/welcome?" + "userEmail=" + user.getEmail());
 		} else {
-			mapping = "/login";
+			return new ModelAndView("/login");
 		}
-		return mapping;
 
 	}
 

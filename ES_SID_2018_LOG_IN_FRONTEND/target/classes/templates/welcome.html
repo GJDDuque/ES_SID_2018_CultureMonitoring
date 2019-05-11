@@ -188,7 +188,8 @@
 						<!-- Card Body -->
 						<div class="card-body">
 							<div class="chart-area">
-								<canvas id="myAreaChart"></canvas>
+								<canvas id="chart"></canvas>
+                                <input type="hidden" name="chartData" id="chartData"/>
 							</div>
 						</div>
 					</div>
@@ -294,7 +295,8 @@
 	}
 
 	// Area Chart Example
-	var ctx = document.getElementById("myAreaChart");
+	var ctx = document.getElementById("chart");
+    var temp = document.getElementById("chartData");
 	var myLineChart = new Chart(
 			ctx,
 			{
@@ -316,9 +318,7 @@
 								pointHoverBorderColor : "rgba(78, 115, 223, 1)",
 								pointHitRadius : 10,
 								pointBorderWidth : 2,
-								data : [ 0, 12000, 5200, 15200, 10500, 25000,
-										15500, 25500, 25000, 35000, 25500,
-										45000 ],
+								data : temp,
 							},
 							{
 								label : "Luminosidade",
