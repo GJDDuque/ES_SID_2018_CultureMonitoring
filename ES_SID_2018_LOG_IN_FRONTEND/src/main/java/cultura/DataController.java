@@ -26,7 +26,7 @@ public class DataController {
 	
 	@RequestMapping("/welcome/chart")
 	public List<Double> getMeasures(@RequestParam(name = "userEmail") String userEmail, Model model) {
-		return new Data("user", userEmail).loadMeasures();
+		return new Data("measured_value", "measures", "user", userEmail).loadMeasures();
 	}
 	
 //	@GetMapping("/filtro")

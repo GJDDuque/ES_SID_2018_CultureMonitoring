@@ -15,8 +15,8 @@ public class Data {
 	private StoredProceduresService storedProcedureService;
 	private String query;
 
-	public Data(String row, String filter) {
-		setupQuery(row, filter);
+	public Data(String line, String table, String row, String filter) {
+		setupQuery(line, table, row, filter);
 		storedProcedureService = new StoredProceduresService();
 		storedProcedureService.Configure("anyQuery");
 		storedProcedureService.SetQuery(filter);
@@ -31,8 +31,8 @@ public class Data {
 		return chartData;
 	}
 	
-	private void setupQuery(String row, String filter) {
-		query = "select measured_value from measures where " + row + "='" + filter + "'";		
+	private void setupQuery(String line, String table, String row, String filter) {
+		query = "select " + line + " from " + table + " where " + row + "='" + filter + "'";		
 	}
 
 	
