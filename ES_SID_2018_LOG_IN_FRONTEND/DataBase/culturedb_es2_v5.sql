@@ -1,10 +1,8 @@
-CREATE DATABASE  IF NOT EXISTS `culturedb` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */;
-USE `culturedb`;
--- MySQL dump 10.13  Distrib 8.0.15, for Win64 (x86_64)
+-- MySQL dump 10.13  Distrib 8.0.16, for Win64 (x86_64)
 --
--- Host: localhost    Database: culturedb
+-- Host: 127.0.0.1    Database: culturedb
 -- ------------------------------------------------------
--- Server version	8.0.15
+-- Server version	8.0.16
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -392,7 +390,7 @@ CREATE TABLE `measured_variables` (
   `variable_id` int(11) NOT NULL,
   `culture_id` int(11) NOT NULL,
   `lower_limit` decimal(8,2) NOT NULL,
-  `upper_limit(8,2)` varchar(45) NOT NULL,
+  `upper_limit` decimal(8,2) NOT NULL,
   PRIMARY KEY (`measured_variables_id`),
   KEY `variable id_idx` (`variable_id`),
   KEY `culture id_idx` (`culture_id`),
@@ -407,7 +405,7 @@ CREATE TABLE `measured_variables` (
 
 LOCK TABLES `measured_variables` WRITE;
 /*!40000 ALTER TABLE `measured_variables` DISABLE KEYS */;
-INSERT INTO `measured_variables` VALUES (1,1,1,20.00,'26');
+INSERT INTO `measured_variables` VALUES (1,1,1,20.00,26.00);
 /*!40000 ALTER TABLE `measured_variables` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1165,4 +1163,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-05-12 17:38:33
+-- Dump completed on 2019-05-12 20:38:12
