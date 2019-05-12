@@ -255,7 +255,7 @@ CREATE TABLE `logs_measures` (
   `migrated` bit(1) NOT NULL DEFAULT b'0',
   `user` varchar(45) NOT NULL,
   PRIMARY KEY (`log_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -264,6 +264,7 @@ CREATE TABLE `logs_measures` (
 
 LOCK TABLES `logs_measures` WRITE;
 /*!40000 ALTER TABLE `logs_measures` DISABLE KEYS */;
+INSERT INTO `logs_measures` VALUES (1,1,'2019-05-11 23:00:00','10.00','pedro','2019-05-12 14:51:33','Insert',NULL,_binary '\0','root@localhost'),(2,1,'2019-05-11 23:00:00','10.00','pedro@teste.pt','2019-05-12 14:52:59','Update',NULL,_binary '\0','root@localhost');
 /*!40000 ALTER TABLE `logs_measures` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -413,7 +414,7 @@ CREATE TABLE `measures` (
   `user` varchar(45) NOT NULL,
   `measured_variable_id` int(11) NOT NULL,
   PRIMARY KEY (`measure_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -422,6 +423,7 @@ CREATE TABLE `measures` (
 
 LOCK TABLES `measures` WRITE;
 /*!40000 ALTER TABLE `measures` DISABLE KEYS */;
+INSERT INTO `measures` VALUES (1,'2019-05-11 23:00:00',10.00,'pedro@teste.pt',1);
 /*!40000 ALTER TABLE `measures` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
@@ -434,7 +436,7 @@ UNLOCK TABLES;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 /*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER `register_log_AFTER_INSERT_measures` AFTER INSERT ON `measures` FOR EACH ROW BEGIN
-insert into logs_measure value (null, new.measure_id, new.date_time, new.measured_value, new.user, (select now()), "Insert", null, default, (select user()));
+insert into logs_measures value (null, new.measure_id, new.date_time, new.measured_value, new.user, (select now()), "Insert", null, default, (select user()));
 END */;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -475,7 +477,7 @@ set cf = concat(old_cf, 'measured_variable_id');
 set old_cf = cf;
 end if;
 
-insert into logs_measure value (null, new.measure_id, new.date_time , new.measured_value, new.user, (select now()), "Update", @cf, default, (select user()));
+insert into logs_measures value (null, new.measure_id, new.date_time , new.measured_value, new.user, (select now()), "Update", @cf, default, (select user()));
 END */;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -492,7 +494,7 @@ DELIMITER ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 /*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER `register_log_AFTER_DELETE_measures` AFTER DELETE ON `measures` FOR EACH ROW BEGIN
-insert into logs_measure value (null, old.measure_id, old.date_time, old.measured_value, old.user, (select now()), "Delete", null, default, (select user()));
+insert into logs_measures value (null, old.measure_id, old.date_time, old.measured_value, old.user, (select now()), "Delete", null, default, (select user()));
 END */;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -1147,4 +1149,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-05-09 19:23:08
+-- Dump completed on 2019-05-12 16:43:17
