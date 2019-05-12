@@ -13,11 +13,13 @@ import cultura.utilities.StoredProceduresService;
 public class Data {
 
 	private StoredProceduresService storedProcedureService;
+	private String query;
 
-	public Data(String selectCommand) {
+	public Data(String row, String filter) {
+		setupQuery(row, filter);
 		storedProcedureService = new StoredProceduresService();
 		storedProcedureService.Configure("anyQuery");
-		storedProcedureService.SetQuery(selectCommand);
+		storedProcedureService.SetQuery(filter);
 	}
 
 	public List<Double> loadMeasures() {
@@ -28,5 +30,12 @@ public class Data {
 		}
 		return chartData;
 	}
+	
+	private void setupQuery(String row, String filter) {
+		query = "select measured_value from measures where " + row + "='" + filter + "'";		
+	}
 
+	
+	
+	
 }

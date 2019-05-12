@@ -18,11 +18,17 @@ public class DataController {
 //		return welcome";
 //	}
 
+//	@RequestMapping("/welcome/chart")
+//	public List<Double> getMeasures(@RequestParam(name = "userEmail") String userEmail, Model model) {
+//		String query = "select measured_value from measures where user='" + userEmail + "'";
+//		return new Data(query).loadMeasures();
+//	}
+	
 	@RequestMapping("/welcome/chart")
 	public List<Double> getMeasures(@RequestParam(name = "userEmail") String userEmail, Model model) {
-		String query = "select measured_value from measures where user='" + userEmail + "'";
-		return new Data(query).loadMeasures();
+		return new Data("user", userEmail).loadMeasures();
 	}
+	
 //	@GetMapping("/filtro")
 //	public String registration(@ModelAttribute("filtro") Data data, BindingResult bindingResult, Model model) {
 //		model.addAttribute("graph", new Data("select * from temperature_measure").loadData());
