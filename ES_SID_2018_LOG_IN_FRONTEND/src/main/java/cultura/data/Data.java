@@ -1,6 +1,7 @@
 package cultura.data;
 
 import java.math.BigDecimal;
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -16,10 +17,16 @@ public class Data {
 	private String query;
 
 	public Data(String query) {
-//		setupQuery(line, table, row, filter);
 		storedProcedureService = new StoredProceduresService();
 		storedProcedureService.Configure("anyQuery");
 		storedProcedureService.SetQuery(query);
+	}
+	
+	public Data(Date dateB, Date dateF, double measureL, double measureH, String culture, String sensor) {
+		String finalQuery = setupQuery(dateB, dateF, measureL, measureH, culture, sensor);
+		storedProcedureService = new StoredProceduresService();
+		storedProcedureService.Configure("anyQuery");
+		storedProcedureService.SetQuery(finalQuery);
 	}
 
 	public List<Double> loadMeasures() {
@@ -31,11 +38,46 @@ public class Data {
 		return chartData;
 	}
 	
-	private void setupQuery(String line, String table, String row, String filter) {
-		query = "select " + line + " from " + table + " where " + row + "='" + filter + "'";		
-	}
+	private String setupQuery(Date dateB, Date dateF, Double measureL, Double measureH, String culture, String sensor) {
+		String query = "select measured_variables from measures m";
+		String join = "";
+		String whereDate = "";
+		String whereMeasure = "";
+		
+		//join
+		if(culture != null && sensor == null)
+			join = " join measured_variables mv on mv.measured_variables_id = m.measured_variables_id"
+					+ " join cultures c on c.culture_id = mv.culture_id";
 
-	
-	
-	
+		if(culture == null && sensor != null)
+			join = " join measured_variables mv on mv.measured_variables_id = m.measured_variables_id"
+					+ " join variables v on v.variable_id = mv.variable_id";
+
+		if(culture != null && sensor != null)
+			join = " join measured_variables mv on mv.measured_variables_id = m.measured_variables_id"
+					+ " join cultures c on c.culture_id = mv.culture_id join variables v on v.variable_id = mv.variable_id";
+
+		//where
+		if(dateB == dateF && dateB != null)
+			whereDate = " where m.date_time = dateF";
+			
+		if(dateB != dateF && dateB != null && dateF != null)
+			whereDate = " where m.date_time > dateB and m.date_time < dateF";
+		
+		if(measureL.equals(measureH) && measureL != null && measureH != null) {
+			if(dateB == null && dateF == null)
+				whereMeasure = " where m.measured_value = measureL";
+			else
+				whereMeasure = " and m.measured_value = measureL";
+		}
+		
+		if(!measureL.equals(measureH) && measureL != null && measureH != null) {
+			if(dateB == null && dateF == null)
+				whereMeasure = " where m.measured_value > measureL and m.measured_value < measureH";
+			else
+				whereMeasure = " and m.measured_value > measureL and m.measured_value < measureH";
+		}
+		
+		return query + join + whereDate + whereMeasure;
+	}
 }

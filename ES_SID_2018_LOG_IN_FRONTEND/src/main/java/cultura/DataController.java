@@ -1,5 +1,8 @@
 package cultura;
 
+import java.sql.Date;
+import java.util.List;
+
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -35,10 +38,16 @@ public class DataController {
 		response.setResult(new Data("select measured_value from measures where user = " + userEmail).loadMeasures());
 		return response;
 	}
-
-//	@GetMapping("/filtro")
-//	public String registration(@ModelAttribute("filtro") Data data, BindingResult bindingResult, Model model) {
-//		model.addAttribute("graph", new Data("select * from temperature_measure").loadData());
-//		return "temperature_measures";
-//	}
+	
+	@RequestMapping("/welcome/chart")
+	public List<Double> getMeasures(@RequestParam(name = "userEmail") String userEmail, Model model) {
+		return new Data("select measure_value from measures where user = " + userEmail).loadMeasures();
+	}
+	
+	@RequestMapping("/welcome/filters")
+	public List<Double> getMeasures(@RequestParam(name = "dataB") Date dataB, @RequestParam(name = "dataF") Date dataF, 
+			@RequestParam(name = "measureL") Double measureL, @RequestParam(name = "MeasureH") Double MeasureH, 
+			@RequestParam(name = "culture") String culture, @RequestParam(name = "sensor") String sensor, Model model) {
+		return new Data(dataB, dataF, measureL, MeasureH, culture, sensor).loadMeasures();
+	}
 }
