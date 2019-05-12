@@ -1,7 +1,9 @@
 package cultura;
 
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -23,11 +25,14 @@ public class DataController {
 //		return new Data(query).loadMeasures();
 //	}
 
-	@RequestMapping("/welcome/chart")
-	public AjaxResponseBody getMeasures(@RequestParam(name = "userEmail") String userEmail, Model model) {
+//	, Model model
+	
+	@RequestMapping(method = RequestMethod.POST,path = "/welcome/chart")
+	public AjaxResponseBody getMeasures(@RequestBody String userEmail) {
+		System.out.println(userEmail);
 		AjaxResponseBody response = new AjaxResponseBody();
 		response.setMsg("response");
-		response.setResult(new Data("measured_value", "measures", "user", userEmail).loadMeasures());
+		response.setResult(new Data("select measured_value from measures where user = " + userEmail).loadMeasures());
 		return response;
 	}
 

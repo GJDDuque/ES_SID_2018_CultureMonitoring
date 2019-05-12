@@ -15,11 +15,11 @@ public class Data {
 	private StoredProceduresService storedProcedureService;
 	private String query;
 
-	public Data(String line, String table, String row, String filter) {
-		setupQuery(line, table, row, filter);
+	public Data(String query) {
+//		setupQuery(line, table, row, filter);
 		storedProcedureService = new StoredProceduresService();
 		storedProcedureService.Configure("anyQuery");
-		storedProcedureService.SetQuery(filter);
+		storedProcedureService.SetQuery(query);
 	}
 
 	public List<Double> loadMeasures() {
