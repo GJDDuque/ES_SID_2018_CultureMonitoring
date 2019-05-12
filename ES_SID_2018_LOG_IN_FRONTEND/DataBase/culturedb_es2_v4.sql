@@ -1,8 +1,10 @@
--- MySQL dump 10.13  Distrib 8.0.16, for Win64 (x86_64)
+CREATE DATABASE  IF NOT EXISTS `culturedb` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */;
+USE `culturedb`;
+-- MySQL dump 10.13  Distrib 8.0.15, for Win64 (x86_64)
 --
--- Host: 127.0.0.1    Database: culturedb
+-- Host: localhost    Database: culturedb
 -- ------------------------------------------------------
--- Server version	8.0.16
+-- Server version	8.0.15
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -60,8 +62,10 @@ CREATE TABLE `cultures` (
   `culture_name` varchar(45) NOT NULL,
   `culture_responsible` varchar(45) NOT NULL,
   `culture_description` varchar(45) DEFAULT NULL,
-  PRIMARY KEY (`culture_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  PRIMARY KEY (`culture_id`),
+  KEY `culture responsible_idx` (`culture_responsible`),
+  CONSTRAINT `culture responsible` FOREIGN KEY (`culture_responsible`) REFERENCES `users` (`email`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -70,6 +74,7 @@ CREATE TABLE `cultures` (
 
 LOCK TABLES `cultures` WRITE;
 /*!40000 ALTER TABLE `cultures` DISABLE KEYS */;
+INSERT INTO `cultures` VALUES (1,'Tomates','luis@teste.pt','cultura de tomates');
 /*!40000 ALTER TABLE `cultures` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
@@ -224,7 +229,7 @@ CREATE TABLE `logs_cultures` (
   `date_time` timestamp NOT NULL,
   `migrated` bit(1) NOT NULL DEFAULT b'0',
   PRIMARY KEY (`log_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -233,6 +238,7 @@ CREATE TABLE `logs_cultures` (
 
 LOCK TABLES `logs_cultures` WRITE;
 /*!40000 ALTER TABLE `logs_cultures` DISABLE KEYS */;
+INSERT INTO `logs_cultures` VALUES (1,1,'Tomates','cultura de tomates','luis@teste.pt','Insert',NULL,'root@localhost','2019-05-10 18:41:19',_binary '\0');
 /*!40000 ALTER TABLE `logs_cultures` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -255,7 +261,7 @@ CREATE TABLE `logs_measures` (
   `migrated` bit(1) NOT NULL DEFAULT b'0',
   `user` varchar(45) NOT NULL,
   PRIMARY KEY (`log_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -264,6 +270,7 @@ CREATE TABLE `logs_measures` (
 
 LOCK TABLES `logs_measures` WRITE;
 /*!40000 ALTER TABLE `logs_measures` DISABLE KEYS */;
+INSERT INTO `logs_measures` VALUES (1,2,'2019-05-10 18:49:10','22.00','luis@teste.pt','2019-05-10 18:49:10','Insert',NULL,_binary '\0','root@localhost'),(2,3,'2019-05-10 18:50:10','22.50','luis@teste.pt','2019-05-10 18:54:18','Insert',NULL,_binary '\0','root@localhost'),(3,4,'2019-05-10 18:50:10','22.50','luis@teste.pt','2019-05-10 18:56:06','Insert',NULL,_binary '\0','root@localhost'),(4,5,'2019-05-10 18:58:10','22.60','luis@teste.pt','2019-05-10 18:56:06','Insert',NULL,_binary '\0','root@localhost'),(5,6,'2019-05-10 19:50:10','22.30','luis@teste.pt','2019-05-10 18:56:06','Insert',NULL,_binary '\0','root@localhost'),(6,7,'2019-05-11 07:10:10','22.20','luis@teste.pt','2019-05-10 18:56:06','Insert',NULL,_binary '\0','root@localhost'),(7,8,'2019-05-11 08:10:10','21.00','luis@teste.pt','2019-05-10 18:56:06','Insert',NULL,_binary '\0','root@localhost');
 /*!40000 ALTER TABLE `logs_measures` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -360,7 +367,7 @@ CREATE TABLE `logs_users` (
   `migrated` bit(1) NOT NULL DEFAULT b'0',
   `user` varchar(45) NOT NULL,
   PRIMARY KEY (`log_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -369,7 +376,7 @@ CREATE TABLE `logs_users` (
 
 LOCK TABLES `logs_users` WRITE;
 /*!40000 ALTER TABLE `logs_users` DISABLE KEYS */;
-INSERT INTO `logs_users` VALUES (1,1,'luis@teste.pt','luis','borro','2019-04-23 19:24:04','Insert',NULL,_binary '\0','root@localhost'),(2,1,'luis@teste.pt','luis','borro','2019-04-23 21:20:12','Delete',NULL,_binary '\0','root@localhost'),(3,2,'luis@teste.pt','Luis','Investigador','2019-04-23 21:21:04','Insert',NULL,_binary '\0','root@localhost'),(4,2,'luis@teste.pt','Luis','Investigador','2019-04-23 21:23:30','Delete',NULL,_binary '\0','root@localhost'),(5,3,'luis@teste.pt','Luis','Investigador','2019-04-23 21:23:37','Insert',NULL,_binary '\0','root@localhost'),(6,3,'luis@teste.pt','Luis','Investigador','2019-04-23 21:24:24','Delete',NULL,_binary '\0','root@localhost'),(7,4,'ines@teste.pt','Ines','Investigador','2019-04-23 21:25:00','Insert',NULL,_binary '\0','root@localhost'),(8,4,'ines@teste.pt','Ines','Investigador','2019-04-23 21:26:10','Delete',NULL,_binary '\0','root@localhost'),(9,1,'ines@teste.pt','ines','Investigador','2019-04-24 10:03:47','Insert',NULL,_binary '\0','root@localhost'),(10,2,'luis@teste.pt','luis almeida','Investigador','2019-05-06 21:23:47','Insert',NULL,_binary '\0','root@localhost'),(11,3,'teste@teste.pt','teste','Investigador','2019-05-07 13:20:08','Insert',NULL,_binary '\0','root@localhost'),(12,3,'teste@teste.pt','teste','Investigador','2019-05-07 13:24:20','Delete',NULL,_binary '\0','root@localhost'),(13,4,'teste@teste.pt','teste','Investigador','2019-05-07 13:24:51','Insert',NULL,_binary '\0','root@localhost'),(14,5,'pedro@test.pt','pedro','Investigador','2019-05-07 14:41:02','Insert',NULL,_binary '\0','root@localhost'),(15,6,'coco@teste.pt','coco','Investigador','2019-05-07 19:11:27','Insert',NULL,_binary '\0','root@localhost'),(16,1,'ines@teste.pt','ines','Investigador','2019-05-09 13:37:34','Delete',NULL,_binary '\0','root@localhost'),(17,2,'luis@teste.pt','luis almeida','Investigador','2019-05-09 13:37:34','Delete',NULL,_binary '\0','root@localhost'),(18,4,'teste@teste.pt','teste','Investigador','2019-05-09 13:37:34','Delete',NULL,_binary '\0','root@localhost'),(19,5,'pedro@test.pt','pedro','Investigador','2019-05-09 13:37:34','Delete',NULL,_binary '\0','root@localhost'),(20,6,'coco@teste.pt','coco','Investigador','2019-05-09 13:37:34','Delete',NULL,_binary '\0','root@localhost'),(21,7,'luis@teste.pt','luis almeida','Investigador','2019-05-09 13:43:49','Insert',NULL,_binary '\0','root@localhost'),(22,8,'pedro@teste.pt','pedro','Administrador','2019-05-09 15:56:18','Insert',NULL,_binary '\0','root@localhost');
+INSERT INTO `logs_users` VALUES (1,1,'luis@teste.pt','luis','borro','2019-04-23 19:24:04','Insert',NULL,_binary '\0','root@localhost'),(2,1,'luis@teste.pt','luis','borro','2019-04-23 21:20:12','Delete',NULL,_binary '\0','root@localhost'),(3,2,'luis@teste.pt','Luis','Investigador','2019-04-23 21:21:04','Insert',NULL,_binary '\0','root@localhost'),(4,2,'luis@teste.pt','Luis','Investigador','2019-04-23 21:23:30','Delete',NULL,_binary '\0','root@localhost'),(5,3,'luis@teste.pt','Luis','Investigador','2019-04-23 21:23:37','Insert',NULL,_binary '\0','root@localhost'),(6,3,'luis@teste.pt','Luis','Investigador','2019-04-23 21:24:24','Delete',NULL,_binary '\0','root@localhost'),(7,4,'ines@teste.pt','Ines','Investigador','2019-04-23 21:25:00','Insert',NULL,_binary '\0','root@localhost'),(8,4,'ines@teste.pt','Ines','Investigador','2019-04-23 21:26:10','Delete',NULL,_binary '\0','root@localhost'),(9,1,'ines@teste.pt','ines','Investigador','2019-04-24 10:03:47','Insert',NULL,_binary '\0','root@localhost'),(10,2,'luis@teste.pt','luis almeida','Investigador','2019-05-06 21:23:47','Insert',NULL,_binary '\0','root@localhost'),(11,3,'teste@teste.pt','teste','Investigador','2019-05-07 13:20:08','Insert',NULL,_binary '\0','root@localhost'),(12,3,'teste@teste.pt','teste','Investigador','2019-05-07 13:24:20','Delete',NULL,_binary '\0','root@localhost'),(13,4,'teste@teste.pt','teste','Investigador','2019-05-07 13:24:51','Insert',NULL,_binary '\0','root@localhost'),(14,5,'pedro@test.pt','pedro','Investigador','2019-05-07 14:41:02','Insert',NULL,_binary '\0','root@localhost'),(15,6,'coco@teste.pt','coco','Investigador','2019-05-07 19:11:27','Insert',NULL,_binary '\0','root@localhost'),(16,1,'ines@teste.pt','ines','Investigador','2019-05-09 13:37:34','Delete',NULL,_binary '\0','root@localhost'),(17,2,'luis@teste.pt','luis almeida','Investigador','2019-05-09 13:37:34','Delete',NULL,_binary '\0','root@localhost'),(18,4,'teste@teste.pt','teste','Investigador','2019-05-09 13:37:34','Delete',NULL,_binary '\0','root@localhost'),(19,5,'pedro@test.pt','pedro','Investigador','2019-05-09 13:37:34','Delete',NULL,_binary '\0','root@localhost'),(20,6,'coco@teste.pt','coco','Investigador','2019-05-09 13:37:34','Delete',NULL,_binary '\0','root@localhost'),(21,7,'luis@teste.pt','luis almeida','Investigador','2019-05-09 13:43:49','Insert',NULL,_binary '\0','root@localhost'),(22,8,'ines@teste.pt','ines','Investigador','2019-05-09 14:00:54','Insert',NULL,_binary '\0','root@localhost'),(23,9,'testing@teste.pt','testing','Investigador','2019-05-10 10:22:17','Insert',NULL,_binary '\0','root@localhost');
 /*!40000 ALTER TABLE `logs_users` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -386,8 +393,12 @@ CREATE TABLE `measured_variables` (
   `culture_id` int(11) NOT NULL,
   `lower_limit` decimal(8,2) NOT NULL,
   `upper_limit(8,2)` varchar(45) NOT NULL,
-  PRIMARY KEY (`measured_variables_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  PRIMARY KEY (`measured_variables_id`),
+  KEY `variable id_idx` (`variable_id`),
+  KEY `culture id_idx` (`culture_id`),
+  CONSTRAINT `culture id` FOREIGN KEY (`culture_id`) REFERENCES `cultures` (`culture_id`),
+  CONSTRAINT `variable id` FOREIGN KEY (`variable_id`) REFERENCES `variables` (`variable_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -396,6 +407,7 @@ CREATE TABLE `measured_variables` (
 
 LOCK TABLES `measured_variables` WRITE;
 /*!40000 ALTER TABLE `measured_variables` DISABLE KEYS */;
+INSERT INTO `measured_variables` VALUES (1,1,1,20.00,'26');
 /*!40000 ALTER TABLE `measured_variables` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -412,8 +424,12 @@ CREATE TABLE `measures` (
   `measured_value` decimal(8,2) NOT NULL,
   `user` varchar(45) NOT NULL,
   `measured_variable_id` int(11) NOT NULL,
-  PRIMARY KEY (`measure_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  PRIMARY KEY (`measure_id`),
+  KEY `mesures id_idx` (`measured_variable_id`),
+  KEY `user _idx` (`user`),
+  CONSTRAINT `mesures id` FOREIGN KEY (`measured_variable_id`) REFERENCES `measured_variables` (`measured_variables_id`),
+  CONSTRAINT `user ` FOREIGN KEY (`user`) REFERENCES `users` (`email`)
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -422,6 +438,7 @@ CREATE TABLE `measures` (
 
 LOCK TABLES `measures` WRITE;
 /*!40000 ALTER TABLE `measures` DISABLE KEYS */;
+INSERT INTO `measures` VALUES (2,'2019-05-10 18:49:10',22.00,'luis@teste.pt',1),(3,'2019-05-10 18:50:10',22.50,'luis@teste.pt',1),(4,'2019-05-10 18:50:10',22.50,'luis@teste.pt',1),(5,'2019-05-10 18:58:10',22.60,'luis@teste.pt',1),(6,'2019-05-10 19:50:10',22.30,'luis@teste.pt',1),(7,'2019-05-11 07:10:10',22.20,'luis@teste.pt',1),(8,'2019-05-11 08:10:10',21.00,'luis@teste.pt',1);
 /*!40000 ALTER TABLE `measures` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
@@ -434,7 +451,7 @@ UNLOCK TABLES;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 /*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER `register_log_AFTER_INSERT_measures` AFTER INSERT ON `measures` FOR EACH ROW BEGIN
-insert into logs_measure value (null, new.measure_id, new.date_time, new.measured_value, new.user, (select now()), "Insert", null, default, (select user()));
+insert into logs_measures value (null, new.measure_id, new.date_time, new.measured_value, new.user, (select now()), "Insert", null, default, (select user()));
 END */;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -820,7 +837,7 @@ CREATE TABLE `user_roles` (
   UNIQUE KEY `id_role_UNIQUE` (`id_role`),
   KEY `roles_idx` (`user_role`),
   CONSTRAINT `role_name` FOREIGN KEY (`user_role`) REFERENCES `roles` (`role`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -829,7 +846,7 @@ CREATE TABLE `user_roles` (
 
 LOCK TABLES `user_roles` WRITE;
 /*!40000 ALTER TABLE `user_roles` DISABLE KEYS */;
-INSERT INTO `user_roles` VALUES (5,'Investigador','luis@teste.pt'),(6,'Administrador','pedro@teste.pt');
+INSERT INTO `user_roles` VALUES (5,'Investigador','luis@teste.pt'),(6,'Investigador','ines@teste.pt'),(7,'Investigador','testing@teste.pt');
 /*!40000 ALTER TABLE `user_roles` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -850,7 +867,7 @@ CREATE TABLE `users` (
   PRIMARY KEY (`user_id`,`email`),
   UNIQUE KEY `user_id_UNIQUE` (`user_id`),
   UNIQUE KEY `email_UNIQUE` (`email`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -859,7 +876,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (7,'luis@teste.pt','luis almeida','Investigador','123456789',NULL),(8,'pedro@teste.pt','pedro','Administrador','123456789',NULL);
+INSERT INTO `users` VALUES (7,'luis@teste.pt','luis almeida','Investigador','123456789',NULL),(8,'ines@teste.pt','ines','Investigador','123456789',NULL),(9,'testing@teste.pt','testing','Investigador','123456789',NULL);
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
@@ -963,7 +980,7 @@ CREATE TABLE `variables` (
   `variable_id` int(11) NOT NULL AUTO_INCREMENT,
   `variable_name` varchar(45) NOT NULL,
   PRIMARY KEY (`variable_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -972,6 +989,7 @@ CREATE TABLE `variables` (
 
 LOCK TABLES `variables` WRITE;
 /*!40000 ALTER TABLE `variables` DISABLE KEYS */;
+INSERT INTO `variables` VALUES (1,'Temperature'),(2,'Light');
 /*!40000 ALTER TABLE `variables` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1064,11 +1082,11 @@ DELIMITER ;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
 /*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8 */ ;
-/*!50003 SET character_set_results = utf8 */ ;
-/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'NO_AUTO_VALUE_ON_ZERO' */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `anyQuery`(in selectcommand text)
 BEGIN
@@ -1147,4 +1165,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-05-09 19:23:08
+-- Dump completed on 2019-05-12 17:38:33
