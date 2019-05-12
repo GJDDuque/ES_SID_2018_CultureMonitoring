@@ -156,7 +156,7 @@
 
 				<!-- Begin Gráfico -->
 
-				<div class="col-xl-8 col-lg-7">
+				<div class="col-xl-7 col-lg-6">
 					<div class="card shadow mb-4">
 						<!-- Card Header - Dropdown -->
 						<div
@@ -189,6 +189,18 @@
 						</div>
 					</div>
 				</div>
+                
+                <div class="col-xl-5 col-lg-6">
+                    <div class="card shadow mb-4">
+                        <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                            <h6 class="m-0 font-weight-bold text-primary">Filter Graph</h6>
+                        </div>
+                        <div class="card-body">
+                            <label>Email</label>
+                            //input
+                        </div>
+                    </div>
+                </div>
 
 				<!-- End Gráfico -->
 
@@ -411,13 +423,12 @@
         $.ajax({
             type: "GET",
             contentType: "application/json",
-            url: 'urlCertoParaIrBuscarOsDados',
+            url: '/welcome/chart',
             cache: false,
             success: function(result)⁄{
                 var data = [];
                 data.push(result.wtv1);
-                data.push(result.wtv2);
-                renderChart(data,result.labels);
+                renderChart(data,"teste");
             },
             error: function(err){
                 console.log(err);
@@ -449,21 +460,6 @@
 								pointBorderWidth : 2,
 								data : data[0],
 							},
-							{
-								label : "Luminosidade",
-								lineTension : 0.3,
-								backgroundColor : "rgba(66, 244, 95, 0.05)",
-								borderColor : "rgba(66, 244, 95, 1)",
-								pointRadius : 3,
-								pointBackgroundColor : "rgba(66, 244, 95, 1)",
-								pointBorderColor : "rgba(66, 244, 95, 1)",
-								pointHoverRadius : 3,
-								pointHoverBackgroundColor : "rgba(66, 244, 95, 1)",
-								pointHoverBorderColor : "rgba(66, 244, 95, 1)",
-								pointHitRadius : 10,
-								pointBorderWidth : 2,
-								data : data[1],
-							} ],
 				},
 				options : {
 					maintainAspectRatio : false,
