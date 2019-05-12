@@ -60,9 +60,9 @@ public class UserController {
 
 	}
 
-//	@GetMapping({ "/welcome" })
-//	public String success(Model model) {
-//		return "welcome";
-//	}
+	@GetMapping({ "/welcome" })
+	public String success(Model model) {
+		return "welcome";
+	}
 
 }

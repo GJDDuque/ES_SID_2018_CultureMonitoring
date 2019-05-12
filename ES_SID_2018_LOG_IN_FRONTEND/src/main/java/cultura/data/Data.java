@@ -1,18 +1,17 @@
 package cultura.data;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.stream.Stream;
 
-import javax.sql.DataSource;
-
-import org.springframework.boot.jdbc.DataSourceBuilder;
-import org.springframework.context.annotation.Bean;
+import org.springframework.util.LinkedCaseInsensitiveMap;
 
 import cultura.utilities.StoredProceduresService;
 
 public class Data {
 
-	private LinkedHashMap data;
 	private StoredProceduresService storedProcedureService;
 
 	public Data(String selectCommand) {
@@ -21,16 +20,13 @@ public class Data {
 		storedProcedureService.SetQuery(selectCommand);
 	}
 
-	public LinkedHashMap getData() {
-		return data;
-	}
-
-	public void setData(LinkedHashMap data) {
-		this.data = data;
-	}
-
-	public LinkedHashMap loadData() {
-		return data = (LinkedHashMap) storedProcedureService.Execute();
+	public List<Double> loadMeasures() {
+		LinkedHashMap measuresData = (LinkedHashMap) storedProcedureService.Execute();
+		List<Double> chartData = new ArrayList<Double>();
+		for (LinkedCaseInsensitiveMap data : (ArrayList<LinkedCaseInsensitiveMap>) measuresData.get("#result-set-1")) {
+			chartData.add((double) ((BigDecimal) data.get(("measured_value"))).doubleValue());
+		}
+		return chartData;
 	}
 
 }
