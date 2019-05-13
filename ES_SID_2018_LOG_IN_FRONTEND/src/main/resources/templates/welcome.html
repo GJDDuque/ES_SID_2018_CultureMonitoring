@@ -180,6 +180,12 @@
 								</div>
 							</div>
 						</div>
+                        <!-- Card Body -->
+						<div class="card-body">
+							<div class="chart-area">
+								<canvas id="myAreaChart"></canvas>
+							</div>
+						</div>
 					</div>
 				</div>
                 
@@ -188,32 +194,34 @@
                         <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                             <h6 class="m-0 font-weight-bold text-primary">Filter Graph</h6>
                         </div>
-                        <div class="card-body">
+                        <div class="card-body">     
+                        <form action="#" th:action="@{/welcome/filters}" th:object="${filters}" method="post">
                         <label>Begin date:</label>
                        <br>
-                        <input type="date" id="dataB" name="dataB">
+                        <input type="date" id="dataB" name="dataB" th:field="*{dataB}">
                         <br>
                         <label>End date:</label>
                           <br>
-                          <input type="date" id="dataF" name="dataF">
+                          <input type="date" id="dataF" name="dataF" th:field="*{dataF}">
                           <br>
                           <label>Measurement low:</label>
                           <br>
-                           <input type="number" id="measureL" name="measureL">
+                           <input type="number" id="measureL" name="measureL" th:field="*{measureL}">
                            <br>
                            <label>Measurement high:</label>
                            <br>
-                            <input type="number" id="measureH" name="MeasureH">
+                            <input type="number" id="measureH" name="measureH" th:field="*{measureH}">
                             <br>
                             <label>Culture:</label>
                            <br>
-                            <input type="text" id="culture" name="culture">
+                            <input type="text" id="culture" name="culture" th:field="*{culture}">
                             <br>
                             <label>Sensor:</label>
                            <br>
-                            <input type="text" id="sensor" name="sensor">
+                            <input type="text" id="sensor" name="sensor" th:field="*{sensor}">
                             <br>
                           <input type="button" value="Filtrar" id="filtrar" name="Filtrar">
+                        </form>
                         </div>
                     </div>
                 </div>
@@ -300,21 +308,23 @@
 <script>
 
     $(document).ready(function(){   
-        //var userEmail = {};
+        //var userEmail = {};   
         //userEmail["email"] = "luis@teste.pt";
-        var userEmail = "luis@teste.pt";
+        var userEmail = "[[${userEmail}]]"; 
         
         
         $.ajax({
             type: "POST",
-            contentType: "application/json",
+            contentType: "application/json",    
             data: JSON.stringify(userEmail),
             url: '/welcome/chart',
             cache: false,
             success: function(result){
                 var data = [];
-                data.push(result.result);
-                renderChart(data,"teste");
+                var labels = [];
+                data = result.yaxis;
+                labels = result.xaxis;
+                renderChart(data, labels);
             },
             error: function(err){
                 console.log(err);
@@ -344,7 +354,7 @@
 								pointHoverBorderColor : "rgba(78, 115, 223, 1)",
 								pointHitRadius : 10,
 								pointBorderWidth : 2,
-								data : data[0],
+								data : data,
 							},
 				]},
 				options : {
@@ -416,6 +426,10 @@
 				}
 			});
     }
+    function number_format (number) {
+    var auxnumber = parseFloat(number).toFixed(2);
+    return auxnumber;
+}
 </script>
 
 

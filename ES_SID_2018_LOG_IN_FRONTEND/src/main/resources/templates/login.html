@@ -23,7 +23,9 @@
 				placeholder="Email" autofocus="true" th:field="*{email}" ) /> <input
 				name="password" type="password" class="form-control"
 				placeholder="Password" th:field="*{password}" />
-
+            <br>
+            <span th:if="${logError != null}" class="error">Wrong user or password</span>
+            <br>
 			<button class="btn btn-lg btn-primary btn-block" type="submit">Log
 				In</button>
 			<h4 class="text-center">

@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.support.RequestContextUtils;
 
+import cultura.data.Filters;
 import cultura.user.User;
 import cultura.user.UserServiceImpl;
 import cultura.user.UserValidator;
@@ -61,6 +62,7 @@ public class UserController {
 			return "redirect:/welcome";
 
 		} else {
+			model.addAttribute("logError", "logError");
 			return "/login";
 		}
 
@@ -69,7 +71,8 @@ public class UserController {
 	@GetMapping("/welcome")
 	public String success(HttpServletRequest request, Model model) {
 		Map<String, ?> flashMap = RequestContextUtils.getInputFlashMap(request);
-		model.addAttribute("user", (String) flashMap.get("user"));
+		model.addAttribute("userEmail", ((User) flashMap.get("user")).getEmail());
+		model.addAttribute("filters", new Filters());
 		return "welcome";
 	}
 
