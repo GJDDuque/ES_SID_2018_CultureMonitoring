@@ -343,6 +343,10 @@
         var culture = $('#culture').val();
         var sensor = $('#sensor').val();
         
+        if((dataB == null || dataB == '') && (dataF == null || dataF == '') && (measureL == null || measureL == '') && (measureH == null || measureH == '') && (culture == null || culture == '') && (sensor == null || sensor == '')){
+           return;
+        }
+        
        $.ajax({
            type: "GET",
            contentType: "application/json",
