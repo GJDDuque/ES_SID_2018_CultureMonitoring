@@ -37,11 +37,11 @@ public class DataController {
 //	}
 	
 	@RequestMapping("/welcome/filters")
-	public List<Double> getMeasures(@RequestParam(name = "dataB") Date dataB, @RequestParam(name = "dataF") Date dataF, 
+	public List<Double> getMeasures(@RequestParam(name = "dataB") String dataB, @RequestParam(name = "dataF") String dataF, 
 			@RequestParam(name = "measureL") Double measureL, @RequestParam(name = "MeasureH") Double MeasureH, 
 			@RequestParam(name = "culture") String culture, @RequestParam(name = "sensor") String sensor, Model model) {
 		return new Data("select measure_value from measures", dataB, dataF, measureL, MeasureH, culture, sensor).loadMeasures();
-
+	}
 	@RequestMapping(value = "/welcome/filters", method = RequestMethod.GET)
 	public AjaxResponseBody getFilteredMeasures(@RequestParam(name = "dataB") String dataB,
 			@RequestParam(name = "dataF") String dataF, @RequestParam(name = "measureL") Double measureL,

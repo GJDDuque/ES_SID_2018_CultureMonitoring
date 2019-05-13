@@ -23,7 +23,7 @@ public class Data {
 		storedProcedureService.SetQuery(query);
 	}
 
-	public Data(String query, Date dateB, Date dateF, Double measureL, Double measureH, String culture, String sensor) {
+	public Data(String query, String dateB, String dateF, Double measureL, Double measureH, String culture, String sensor) {
 		String finalQuery = setupQuery(query, dateB, dateF, measureL, measureH, culture, sensor);
 		storedProcedureService = new StoredProceduresService();
 		storedProcedureService.Configure("anyQuery");
@@ -50,7 +50,7 @@ public class Data {
 		return chartData;
 	}
 
-	private String setupQuery(String query, Date dateB, Date dateF, Double measureL, Double measureH, String culture,
+	private String setupQuery(String query, String dateB, String dateF, Double measureL, Double measureH, String culture,
 			String sensor) {
 		String join = "";
 		String whereDate = "";
