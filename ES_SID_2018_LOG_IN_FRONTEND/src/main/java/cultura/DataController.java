@@ -34,11 +34,12 @@ public class DataController {
 //		return new Data("select measure_value from measures where user = " + userEmail).loadMeasures();
 //	}
 
-	@RequestMapping(value = "/welcome/filters", method = RequestMethod.POST)
-	public AjaxResponseBody getMeasures(@RequestParam(name = "dataB") Date dataB,
-			@RequestParam(name = "dataF") Date dataF, @RequestParam(name = "measureL") Double measureL,
+	@RequestMapping(value = "/welcome/filters", method = RequestMethod.GET)
+	public AjaxResponseBody getFilteredMeasures(@RequestParam(name = "dataB") String dataB,
+			@RequestParam(name = "dataF") String dataF, @RequestParam(name = "measureL") Double measureL,
 			@RequestParam(name = "measureH") Double measureH, @RequestParam(name = "culture") String culture,
 			@RequestParam(name = "sensor") String sensor, Model model) {
+		
 		AjaxResponseBody response = new AjaxResponseBody();
 		response.setMsg("response");
 		response.setYAxis(
