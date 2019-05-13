@@ -23,10 +23,10 @@ public class DataController {
 		AjaxResponseBody response = new AjaxResponseBody();
 		response.setMsg("response");
 		response.setYAxis(
-				new Data("select measured_value from measures where user = " + userEmail + "order by date_time asc ", userEmail)
+				new Data("select measured_value from measures where user = " + userEmail + "order by date_time asc ")
 						.loadMeasures());
 		response.setXAxis(
-				new Data("select date_time from measures where user = " + userEmail + "order by date_time asc ", userEmail)
+				new Data("select date_time from measures where user = " + userEmail + "order by date_time asc ")
 						.loadDate());
 		return response;
 	}
@@ -36,25 +36,20 @@ public class DataController {
 //		return new Data("select measure_value from measures where user = " + userEmail).loadMeasures();
 //	}
 	
-	@RequestMapping("/welcome/filters")
-	public List<Double> getMeasures(@RequestParam(name = "dataB") String dataB, @RequestParam(name = "dataF") String dataF, 
-			@RequestParam(name = "measureL") Double measureL, @RequestParam(name = "MeasureH") Double MeasureH, 
-			@RequestParam(name = "culture") String culture, @RequestParam(name = "sensor") String sensor, Model model) {
-		return new Data("select measure_value from measures", dataB, dataF, measureL, MeasureH, culture, sensor).loadMeasures();
-	}
+
 	@RequestMapping(value = "/welcome/filters", method = RequestMethod.GET)
 	public AjaxResponseBody getFilteredMeasures(@RequestParam(name = "dataB") String dataB,
 			@RequestParam(name = "dataF") String dataF, @RequestParam(name = "measureL") Double measureL,
 			@RequestParam(name = "measureH") Double measureH, @RequestParam(name = "culture") String culture,
-			@RequestParam(name = "sensor") String sensor, Model model) {
+			@RequestParam(name = "sensor") String sensor,@RequestParam(name = "user") String user, Model model) {
 		
 		AjaxResponseBody response = new AjaxResponseBody();
 		response.setMsg("response");
 		response.setYAxis(
-				new Data("select measured_variables from measures m", dataB, dataF, measureL, measureH, culture, sensor)
+				new Data("select measured_value from measures m", dataB, dataF, measureL, measureH, culture, sensor, user)
 						.loadMeasures());
 		response.setXAxis(
-				new Data("select date_time from measures m", dataB, dataF, measureL, measureH, culture, sensor)
+				new Data("select date_time from measures m", dataB, dataF, measureL, measureH, culture, sensor, user)
 						.loadDate());
 		return response;
 	}

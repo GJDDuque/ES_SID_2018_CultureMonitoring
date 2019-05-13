@@ -16,15 +16,14 @@ public class Data {
 	private StoredProceduresService storedProcedureService;
 	private String userEmail;
 
-	public Data(String query, String userEmail) {
-		this.userEmail = userEmail;
+	public Data(String query) {
 		storedProcedureService = new StoredProceduresService();
 		storedProcedureService.Configure("anyQuery");
 		storedProcedureService.SetQuery(query);
 	}
 
-	public Data(String query, String dateB, String dateF, Double measureL, Double measureH, String culture, String sensor) {
-		String finalQuery = setupQuery(query, dateB, dateF, measureL, measureH, culture, sensor);
+	public Data(String query, String dateB, String dateF, Double measureL, Double measureH, String culture, String sensor, String user) {
+		String finalQuery = setupQuery(query, dateB, dateF, measureL, measureH, culture, sensor,user);
 		storedProcedureService = new StoredProceduresService();
 		storedProcedureService.Configure("anyQuery");
 		storedProcedureService.SetQuery(finalQuery);
@@ -51,23 +50,29 @@ public class Data {
 	}
 
 	private String setupQuery(String query, String dateB, String dateF, Double measureL, Double measureH, String culture,
-			String sensor) {
+			String sensor, String user) {
 		String join = "";
 		String whereDate = "";
 		String whereMeasure = "";
-		String andUser = " and user = " + userEmail;
+		String andUser = " and user = '" + user + "'";
 
+		if(dateF == "")
+			dateF = null;
+		
+		if(dateB == "")
+			dateB = null;
+		
 		// join
 		if (culture != null && sensor == null)
-			join = " join measured_variables mv on mv.measured_variables_id = m.measured_variables_id"
+			join = " join measured_variables mv on mv.measured_variables_id = m.measured_variable_id"
 					+ " join cultures c on c.culture_id = mv.culture_id";
 
 		if (culture == null && sensor != null)
-			join = " join measured_variables mv on mv.measured_variables_id = m.measured_variables_id"
+			join = " join measured_variables mv on mv.measured_variables_id = m.measured_variable_id"
 					+ " join variables v on v.variable_id = mv.variable_id";
 
 		if (culture != null && sensor != null)
-			join = " join measured_variables mv on mv.measured_variables_id = m.measured_variables_id"
+			join = " join measured_variables mv on mv.measured_variables_id = m.measured_variable_id"
 					+ " join cultures c on c.culture_id = mv.culture_id join variables v on v.variable_id = mv.variable_id";
 
 		// where

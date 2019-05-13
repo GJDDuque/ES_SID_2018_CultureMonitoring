@@ -342,8 +342,9 @@
         var measureH = $('#measureH').val();
         var culture = $('#culture').val();
         var sensor = $('#sensor').val();
+        var userEmail = "[[${userEmail}]]";
         
-        if((dataB == null || dataB == '') && (dataF == null || dataF == '') && (measureL == null || measureL == '') && (measureH == null || measureH == '') && (culture == null || culture == '') && (sensor == null || sensor == '')){
+        if((dataB == null || dataB == '') && (dataF == null || dataF == '') && (measureL == null || measureL == '') && (measureH == null || measureH == '') && (culture == null || culture == '') && (sensor == null || sensor == '') && (userEmail == null || userEmail == '')){
            return;
         }
         
@@ -351,7 +352,7 @@
            type: "GET",
            contentType: "application/json",
            url: "/welcome/filters",
-           data: { 'dataB': dataB, 'dataF': dataF, 'measureL': measureL, 'measureH': measureH, 'culture': culture, 'sensor': sensor},
+           data: { 'dataB': dataB, 'dataF': dataF, 'measureL': measureL, 'measureH': measureH, 'culture': culture, 'sensor': sensor, 'user': userEmail},
            cache: false,
            dataType: 'json',
            success: function(result){
@@ -359,7 +360,7 @@
                var labels = [];
                data = result.yaxis;
                labels = result.xaxis;
-               ctx.destroy();
+               var ctx = document.getElementById("myAreaChart");
                renderChart(data, labels);
            },
            error: function(err){
