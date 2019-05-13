@@ -3,7 +3,6 @@ package cultura.data;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.sql.Timestamp;
-import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -15,14 +14,16 @@ import cultura.utilities.StoredProceduresService;
 public class Data {
 
 	private StoredProceduresService storedProcedureService;
+	private String userEmail;
 
-	public Data(String query) {
+	public Data(String query, String userEmail) {
+		this.userEmail = userEmail;
 		storedProcedureService = new StoredProceduresService();
 		storedProcedureService.Configure("anyQuery");
 		storedProcedureService.SetQuery(query);
 	}
 
-	public Data(String query, Date dateB, Date dateF, double measureL, double measureH, String culture, String sensor) {
+	public Data(String query, String dateB, String dateF, Double measureL, Double measureH, String culture, String sensor) {
 		String finalQuery = setupQuery(query, dateB, dateF, measureL, measureH, culture, sensor);
 		storedProcedureService = new StoredProceduresService();
 		storedProcedureService.Configure("anyQuery");
@@ -49,11 +50,12 @@ public class Data {
 		return chartData;
 	}
 
-	private String setupQuery(String query, Date dateB, Date dateF, Double measureL, Double measureH, String culture,
+	private String setupQuery(String query, String dateB, String dateF, Double measureL, Double measureH, String culture,
 			String sensor) {
 		String join = "";
 		String whereDate = "";
 		String whereMeasure = "";
+		String andUser = " and user = " + userEmail;
 
 		// join
 		if (culture != null && sensor == null)
@@ -69,25 +71,49 @@ public class Data {
 					+ " join cultures c on c.culture_id = mv.culture_id join variables v on v.variable_id = mv.variable_id";
 
 		// where
+		//Datas
+			// se as datas sao iguais
 		if (dateB == dateF && dateB != null)
-			whereDate = " where m.date_time = dateF";
-
+			whereDate = " where m.date_time >= " + dateB + " and m.date_time <= " + dateF;
+			//se apenas a being
+		if (dateB != null && dateF == null)
+			whereDate = " where m.date_time >= " + dateB;
+			//se apenas a date final
+		if (dateF != null && dateB == null)
+			whereDate = " where m.date_time <= " + dateF;
+			//se datas sao diferentes
 		if (dateB != dateF && dateB != null && dateF != null)
-			whereDate = " where m.date_time >= dateB and m.date_time <= dateF";
-
-		if (measureL.equals(measureH) && measureL != null && measureH != null) {
+			whereDate = " where m.date_time >= " + dateB + " and m.date_time <= " + dateF;
+		//Measures
+			//se sao iguais
+		if (measureL != null && measureH != null && measureL.equals(measureH)) {
 			if (dateB == null && dateF == null)
-				whereMeasure = " where m.measured_value = measureL";
+				whereMeasure = " where m.measured_value = " + measureL;
 			else
-				whereMeasure = " and m.measured_value = measureL";
+				whereMeasure = " and m.measured_value = " + measureL;
 		}
-
-		if (!measureL.equals(measureH) && measureL != null && measureH != null) {
+			//se sao diferentes
+		if (measureL != null && measureH != null && !measureL.equals(measureH)) {
 			if (dateB == null && dateF == null)
-				whereMeasure = " where m.measured_value >= measureL and m.measured_value <= measureH";
+				whereMeasure = " where m.measured_value >= " + measureL + " and m.measured_value <= " + measureH;
 			else
-				whereMeasure = " and m.measured_value >= measureL and m.measured_value <= measureH";
+				whereMeasure = " and m.measured_value >= " + measureL + " and m.measured_value <= " + measureH;
 		}
-		return query + join + whereDate + whereMeasure;
+			//se apenas a low
+		if (measureL != null && measureH == null) {
+			if (dateB == null && dateF == null)
+				whereMeasure = " where m.measured_value >= " + measureL;
+			else
+				whereMeasure = " and m.measured_value >= " + measureL;
+		}
+			//se apenas high
+		if (measureH != null && measureL == null) {
+			if (dateB == null && dateF == null)
+				whereMeasure = " where m.measured_value <= " + measureH;
+			else
+				whereMeasure = " and m.measured_value <= " + measureH;
+		}
+		
+		return query + join + whereDate + whereMeasure + andUser;
 	}
 }
