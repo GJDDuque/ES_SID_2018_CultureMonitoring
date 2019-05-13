@@ -1,5 +1,9 @@
 package cultura;
 
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -7,7 +11,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.servlet.support.RequestContextUtils;
 
 import cultura.user.User;
 import cultura.user.UserServiceImpl;
@@ -30,15 +35,14 @@ public class UserController {
 	}
 
 	@PostMapping(value = "/registration")
-	public String registration(@ModelAttribute("userForm") User userForm, BindingResult bindingResult) {
+	public String registration(@ModelAttribute("userForm") User userForm, BindingResult bindingResult,
+			RedirectAttributes atributes) {
 		userValidator.validate(userForm, bindingResult);
-
 		if (bindingResult.hasErrors()) {
 			return "registration";
 		}
-
 		userServiceImpl.saveUser(userForm);
-
+		atributes.addFlashAttribute("user", userForm);
 		return "redirect:/welcome";
 	}
 
@@ -49,19 +53,23 @@ public class UserController {
 	}
 
 	@PostMapping("/login")
-	public ModelAndView login(@ModelAttribute("userForm") User userForm, BindingResult bindingResult) {
-		ModelAndView modelAndView = null;
+	public String login(@ModelAttribute("userForm") User userForm, BindingResult bindingResult, Model model,
+			RedirectAttributes atributes) {
 		User user = userServiceImpl.findByEmail(userForm.getEmail());
 		if (user.getPassword().equals(userForm.getPassword())) {
-			return new ModelAndView("redirect:/welcome?" + "userEmail=" + user.getEmail());
+			atributes.addFlashAttribute("user", user);
+			return "redirect:/welcome";
+
 		} else {
-			return new ModelAndView("/login");
+			return "/login";
 		}
 
 	}
 
 	@GetMapping("/welcome")
-	public String success(Model model) {
+	public String success(HttpServletRequest request, Model model) {
+		Map<String, ?> flashMap = RequestContextUtils.getInputFlashMap(request);
+		model.addAttribute("user", (String) flashMap.get("user"));
 		return "welcome";
 	}
 
