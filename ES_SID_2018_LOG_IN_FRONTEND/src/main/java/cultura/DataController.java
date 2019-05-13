@@ -1,15 +1,15 @@
 package cultura;
 
-import java.util.List;
+import java.util.Date;
 
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import cultura.data.Data;
-import cultura.data.Filters;
 import cultura.utilities.AjaxResponseBody;
 
 @RestController
@@ -35,8 +35,18 @@ public class DataController {
 //	}
 
 	@RequestMapping(value = "/welcome/filters", method = RequestMethod.POST)
-	public List<Double> getMeasures(Filters filters, Model model) {
-		return new Data(filters.getDataB(), filters.getDataF(), filters.getMeasureL(), filters.getMeasureH(),
-				filters.getCulture(), filters.getSensor()).loadMeasures();
+	public AjaxResponseBody getMeasures(@RequestParam(name = "dataB") Date dataB,
+			@RequestParam(name = "dataF") Date dataF, @RequestParam(name = "measureL") Double measureL,
+			@RequestParam(name = "measureH") Double measureH, @RequestParam(name = "culture") String culture,
+			@RequestParam(name = "sensor") String sensor, Model model) {
+		AjaxResponseBody response = new AjaxResponseBody();
+		response.setMsg("response");
+		response.setYAxis(
+				new Data("select measured_variables from measures m", dataB, dataF, measureL, measureH, culture, sensor)
+						.loadMeasures());
+		response.setXAxis(
+				new Data("select date_time from measures m", dataB, dataF, measureL, measureH, culture, sensor)
+						.loadDate());
+		return response;
 	}
 }

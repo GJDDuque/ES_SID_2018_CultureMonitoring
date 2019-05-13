@@ -113,8 +113,7 @@
 							class="nav-link dropdown-toggle" href="#" id="userDropdown"
 							role="button" data-toggle="dropdown" aria-haspopup="true"
 							aria-expanded="false"> <span
-								class="mr-2 d-none d-lg-inline text-gray-600 small">Valerie
-									Culturas</span> <img class="img-profile rounded-circle"
+								class="mr-2 d-none d-lg-inline text-gray-600 small"><input type="hidden" th:text="${userEmail}" ></span> <img class="img-profile rounded-circle"
 								src="https://source.unsplash.com/QAB-WJcbgJk/60x60">
 						</a> <!-- Dropdown - User Information -->
 							<div
@@ -195,30 +194,30 @@
                             <h6 class="m-0 font-weight-bold text-primary">Filter Graph</h6>
                         </div>
                         <div class="card-body">     
-                        <form action="#" th:action="@{/welcome/filters}" th:object="${filters}" method="post">
+                        <form action="#" >
                         <label>Begin date:</label>
                        <br>
-                        <input type="date" id="dataB" name="dataB" th:field="*{dataB}">
+                        <input type="date" id="dataB" name="dataB">
                         <br>
                         <label>End date:</label>
                           <br>
-                          <input type="date" id="dataF" name="dataF" th:field="*{dataF}">
+                          <input type="date" id="dataF" name="dataF">
                           <br>
                           <label>Measurement low:</label>
                           <br>
-                           <input type="number" id="measureL" name="measureL" th:field="*{measureL}">
+                           <input type="number" id="measureL" name="measureL" >
                            <br>
                            <label>Measurement high:</label>
                            <br>
-                            <input type="number" id="measureH" name="measureH" th:field="*{measureH}">
+                            <input type="number" id="measureH" name="measureH">
                             <br>
                             <label>Culture:</label>
                            <br>
-                            <input type="text" id="culture" name="culture" th:field="*{culture}">
+                            <input type="text" id="culture" name="culture" >
                             <br>
                             <label>Sensor:</label>
                            <br>
-                            <input type="text" id="sensor" name="sensor" th:field="*{sensor}">
+                            <input type="text" id="sensor" name="sensor" >
                             <br>
                           <input type="button" value="Filtrar" id="filtrar" name="Filtrar">
                         </form>
@@ -330,6 +329,34 @@
                 console.log(err);
             }
         });
+    });
+    
+    $('#filtrar').click(function(){
+        var dataB = $('#dataB').val();
+        var dataF = $('#dataF').val(); 
+        var measureL = $('#measureL').val();
+        var measureH = $('#measureH').val();
+        var culture = $('#culture').val();
+        var sensor = $('#sensor').val();
+        
+       $.ajax({
+           type:'POST',
+           contentType: "application/json",
+           url: '/welcome/filters',
+           data: { dataB: dataB, dataF: dataF, measureL: measureL, measureH: measureH, culture: culture, sensor: sensor},
+           cache: false,
+           success: function(result){
+               var data = [];
+               var labels = [];
+               data = result.yaxis;
+               labels = result.xaxis;
+               ctx.destroy();
+               renderChart(data, labels);
+           },
+           error: function(err){
+               alert(err);
+           }
+       }) 
     });
     
     function renderChart(data, labels){

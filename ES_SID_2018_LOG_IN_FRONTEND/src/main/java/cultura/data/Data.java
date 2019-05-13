@@ -22,8 +22,8 @@ public class Data {
 		storedProcedureService.SetQuery(query);
 	}
 
-	public Data(Date dateB, Date dateF, double measureL, double measureH, String culture, String sensor) {
-		String finalQuery = setupQuery(dateB, dateF, measureL, measureH, culture, sensor);
+	public Data(String query, Date dateB, Date dateF, double measureL, double measureH, String culture, String sensor) {
+		String finalQuery = setupQuery(query, dateB, dateF, measureL, measureH, culture, sensor);
 		storedProcedureService = new StoredProceduresService();
 		storedProcedureService.Configure("anyQuery");
 		storedProcedureService.SetQuery(finalQuery);
@@ -49,8 +49,8 @@ public class Data {
 		return chartData;
 	}
 
-	private String setupQuery(Date dateB, Date dateF, Double measureL, Double measureH, String culture, String sensor) {
-		String query = "select measured_variables from measures m";
+	private String setupQuery(String query, Date dateB, Date dateF, Double measureL, Double measureH, String culture,
+			String sensor) {
 		String join = "";
 		String whereDate = "";
 		String whereMeasure = "";
@@ -73,7 +73,7 @@ public class Data {
 			whereDate = " where m.date_time = dateF";
 
 		if (dateB != dateF && dateB != null && dateF != null)
-			whereDate = " where m.date_time > dateB and m.date_time < dateF";
+			whereDate = " where m.date_time >= dateB and m.date_time <= dateF";
 
 		if (measureL.equals(measureH) && measureL != null && measureH != null) {
 			if (dateB == null && dateF == null)
@@ -84,9 +84,9 @@ public class Data {
 
 		if (!measureL.equals(measureH) && measureL != null && measureH != null) {
 			if (dateB == null && dateF == null)
-				whereMeasure = " where m.measured_value > measureL and m.measured_value < measureH";
+				whereMeasure = " where m.measured_value >= measureL and m.measured_value <= measureH";
 			else
-				whereMeasure = " and m.measured_value > measureL and m.measured_value < measureH";
+				whereMeasure = " and m.measured_value >= measureL and m.measured_value <= measureH";
 		}
 		return query + join + whereDate + whereMeasure;
 	}
