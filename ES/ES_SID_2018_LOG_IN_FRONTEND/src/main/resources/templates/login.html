@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Log In</title>
+<link rel="stylesheet" type="text/css"
+	th:href="@{/css/registration.css}" />
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+	<div class="container">
+		<form method="POST" class="form-signin" modelAttribute="/login"
+			th:action="@{/login}" th:object="${userForm}">
+			<h2 class="form-heading">Log in</h2>
+
+			<input name="email" type="text" class="form-control"
+				placeholder="Email" autofocus="true" th:field="*{email}" ) /> <input
+				name="password" type="password" class="form-control"
+				placeholder="Password" th:field="*{password}" />
+            <br>
+            <span th:if="${logError != null}" class="error">Wrong user or password</span>
+            <br>
+			<button class="btn btn-lg btn-primary btn-block" type="submit">Log
+				In</button>
+			<h4 class="text-center">
+				<a href="/registration">Create an account</a>
+			</h4>
+	</form>
+	</div>
+
+	<script
+		src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+	<script src="${contextPath}/resources/js/bootstrap.min.js"></script>
+</body>
+</html>

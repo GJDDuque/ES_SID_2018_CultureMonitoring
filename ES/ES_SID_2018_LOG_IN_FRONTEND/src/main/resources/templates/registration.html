@@ -1,0 +1,67 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Create an account</title>
+<head>
+<link rel="stylesheet" type="text/css"
+	th:href="@{/css/registration.css}" />
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+	<div class="container">
+
+		<form method="POST" modelAttribute="userForm" class="form-signin"
+			th:action="@{/registration}" th:object="${userForm}">
+			<h2 class="form-signin-heading">Create your account</h2>
+
+			<spring:bind path="name">
+				<div class="form-group ${status.error ? 'has-error' : ''}">
+					<input type="text" path="name" class="form-control"
+						placeholder="Name" autofocus="true" th:field="*{name}"></input>
+					<errors path="name"></errors>
+				</div>
+			</spring:bind>
+
+			<spring:bind path="email">
+				<div class="form-group ${status.error ? 'has-error' : ''}">
+					<input type="text" path="email" class="form-control"
+						placeholder="Email" autofocus="true" th:field="*{email}"></input>
+					<errors path="email"></errors>
+				</div>
+			</spring:bind>
+
+			<spring:bind path="password">
+				<div class="form-group ${status.error ? 'has-error' : ''}">
+					<input type="password" path="password" class="form-control"
+						placeholder="Password" th:field="*{password}"></input>
+					<errors path="password"> </errors>
+				</div>
+			</spring:bind>
+
+			<spring:bind path="professional_category">
+				<div class="form-group ${status.error ? 'has-error' : ''}">
+					<input type="text" path="professional_category"
+						class="form-control" placeholder="Professional Category"
+						autofocus="true" th:field="*{professional_category}"></input>
+					<errors path="professional_category"></errors>
+				</div>
+			</spring:bind>
+
+			<button class="btn btn-lg btn-primary btn-block" type="submit">Submit</button>
+		</form>
+
+	</div>
+
+	<script
+		src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+	<script src="${contextPath}/resources/js/bootstrap.min.js"></script>
+</body>
+</html>
