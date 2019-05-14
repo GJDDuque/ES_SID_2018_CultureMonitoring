@@ -365,6 +365,7 @@
                data = result.yaxis;
                labels = result.xaxis;
                var ctx = document.getElementById("myAreaChart");
+               ctx.destroy();
                renderChart(data, labels);
            },
            error: function(err){
