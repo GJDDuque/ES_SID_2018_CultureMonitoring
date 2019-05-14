@@ -24,6 +24,7 @@ public class MeasureController {
 		return "addmeasure";
 	}
 	
+	
 	@PostMapping(value = "/addmeasure")
 	public String addmeasure(@ModelAttribute("measureForm") Measure measureForm, BindingResult bindingResult, Model model,
 			RedirectAttributes atributes) {
