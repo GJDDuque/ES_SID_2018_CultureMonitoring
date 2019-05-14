@@ -167,16 +167,16 @@ content="width=device-width, initial-scale=1, shrink-to-fit=no">
                         <label>Culture's name:</label>
                        <br>
                         <select name="cultures" class="form-control" th:field="*{culture}">
-                            <option value="tomates">Tomates</option>
-                            <option value="cebolas">Cebolas</option>
-                            <option value="pimentos">Pimentos</option>
+                            <option value="Tomates">Tomates</option>
+                            <option value="Cebolas">Cebolas</option>
+                            <option value="Pimentos">Pimentos</option>
                         </select>
                         <br>
                         <label>Measured variable:</label>
                           <br>
                           <select name="variables" class="form-control" th:field="*{variable}">
-                            <option value="luminosidade">Luminosidade</option>
-                            <option value="temperatura">Temperatura</option>
+                            <option value="Light">Luminosidade</option>
+                            <option value="Temperature">Temperatura</option>
                         </select>
                           <br>
                           <label>Measured value:</label>
@@ -184,7 +184,7 @@ content="width=device-width, initial-scale=1, shrink-to-fit=no">
                            <input type="number" id="measuredValue" name="measuredValue" class="form-control" th:field="*{measured_value}">
                            <br>
                             <br>
-                          <input type="button" value="Adicionar" id="addMeasure" name="addMeasure">
+                          <input type="submit" value="Adicionar" id="addMeasure" name="addMeasure">
                         </form>
                         </div>
                     </div>

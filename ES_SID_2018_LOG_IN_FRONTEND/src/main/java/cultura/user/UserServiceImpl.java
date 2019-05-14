@@ -13,14 +13,6 @@ import cultura.utilities.StoredProceduresService;
 @Service("userService")
 public class UserServiceImpl implements UserService {
 
-	public StoredProceduresService getStoredProcedureService() {
-		return storedProcedureService;
-	}
-
-	public void setStoredProcedureService(StoredProceduresService storedProcedureService) {
-		this.storedProcedureService = storedProcedureService;
-	}
-
 	@Autowired
 	private UserRepository userRepository;
 	@Autowired
@@ -64,5 +56,13 @@ public class UserServiceImpl implements UserService {
 
 	public void setRoleRepository(RoleRepository roleRepository) {
 		this.roleRepository = roleRepository;
+	}
+
+	public StoredProceduresService getStoredProcedureService() {
+		return storedProcedureService;
+	}
+
+	public void setStoredProcedureService(StoredProceduresService storedProcedureService) {
+		this.storedProcedureService = storedProcedureService;
 	}
 }

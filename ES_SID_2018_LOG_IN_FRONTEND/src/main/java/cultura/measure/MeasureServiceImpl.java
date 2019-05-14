@@ -1,55 +1,30 @@
 package cultura.measure;
 
-import org.springframework.jdbc.core.JdbcTemplate;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-@Service
-public class MeasureServiceImpl implements MeasureService{
-	private JdbcTemplate jdbcTemplate;
-	final String INSERT_QUERY = "insert into measures (measure_id, date_time, measured_value, user, measured_variable_id)"
-			+ " values (?, ?, ?, ?, ?)";
-    final String UPDATE_QUERY = "update measures set measured_value = ? where measure_id = ?";
-    final String DELETE_QUERY = "delete from measures where measure_id = ?";
-	
-    public void setJdbcTemplate(JdbcTemplate jdbcTemplate) {
-    	this.jdbcTemplate = jdbcTemplate;
-    }
-    
-    public int save(Measure measure) {
-        return jdbcTemplate.update(INSERT_QUERY, measure.getMeasureId(), measure.getDatetime(), measure.getMeasuredValue(),
-        		measure.getUser(), measure.getMeasuredVariableId());   
-    }
+import cultura.data.Data;
+import cultura.utilities.StoredProceduresService;
 
-    public void update(Measure measure) {
-        int status = jdbcTemplate.update(UPDATE_QUERY, measure.getMeasuredValue(), 
-        		measure.getMeasureId()); 
-        if(status != 0){
-            System.out.println("Measure data updated for ID " + measure.getMeasureId());
-        }else{
-            System.out.println("No Measure found with ID " + measure.getMeasureId());
-        }       
-    }
+@Service("measureService")
+public class MeasureServiceImpl implements MeasureService {
 
-    public void deleteEmpById(int empId) {
-        int status = jdbcTemplate.update(DELETE_QUERY, empId);
-        if(status != 0){
-            System.out.println("Measure data deleted for ID " + empId);
-        }else{
-            System.out.println("No Measure found with ID " + empId);
-        }
-    }
-    
-    
-//	public void setTemplate(JdbcTemplate template) {
-//		this.template = template;
-//	}
-	
-	
-//	public void saveMeasure(Measure measure) {
-//		String query = "insert into measures values(" + measure.getMeasureId() + ", " + 
-//				measure.getDatetime() + ", " + measure.getMeasuredValue() + ", " + measure.getUser()
-//				+ ", "+ measure.getMeasuredVariableId();
-//		template.update(query);
-//	}
-	
+	@Autowired
+	private MeasureRepository measureRepository;
+	private StoredProceduresService storedProcedureService;
+
+	@Override
+	public void saveMeasure(MeasureForm measureForm, String userEmail) {
+		int measure_variable_id = new Data(
+				"select measured_variables_id from measured_variables mv join cultures c on mv.culture_id = c.culture_id join variables v on mv.variable_id = v.variable_id where c.culture_name = '"
+						+ measureForm.getCulture() + "' and v.variable_name = '" + measureForm.getVariable() + "'")
+								.loadID();
+		measureRepository.save(
+				new Measure((new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date(System.currentTimeMillis()))),
+						measureForm.getMeasured_value(), userEmail, measure_variable_id));
+	}
+
 }
