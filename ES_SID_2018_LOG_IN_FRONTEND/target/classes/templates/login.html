@@ -5,33 +5,65 @@
 <title>Log In</title>
 <link rel="stylesheet" type="text/css"
 	th:href="@{/css/registration.css}" />
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script
+      src="https://code.jquery.com/jquery-3.4.1.js"
+      integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
+      crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 <script
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
 </head>
 <body>
-
+    <div id="background"></div>
 	<div class="container">
-		<form method="POST" class="form-signin" modelAttribute="/login"
+        <div class="row justify-content-center">
+            <div class="col-md-12" id="loginCard">
+                <div class="card-group">
+                    <div class="card p-2">
+                        <div class="card-body">
+                            <h1>Login</h1>
+                            <p class="text-muted">Sign In to your account</p>
+                            <form method="POST" class="form-signin" modelAttribute="/login"
 			th:action="@{/login}" th:object="${userForm}">
-			<h2 class="form-heading">Log in</h2>
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">
+                                            <i class="fa fa-user fa-fw"></i>
+                                        </span>
+                                    </div>
+                                    <input class="form-control" id="usernameField" placeholder="Email" name="Email" type="text" value="" autofocus="true" th:field="*{email}" />
+                                </div>
+                                <div class="input-group mb-4">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">
+                                            <i class="fa fa-lock fa-fw"></i>
+                                        </span>
+                                    </div>
+                                    <input class="form-control" id="passwordField" name="Password" placeholder="Password" type="password" th:field="*{password}">                                    
+                                </div>
+                                <div class="input-group mb-2">
+                                    <span th:if="${logError != null}" class="error text-danger">Wrong user or password</span> 
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <button class="btn btn-primary px-4" type="submit">Login</button>
+                                    </div>
+                                    <div class="col-sm-6 text-right">
+                                        <a id="forgotPwd" class="px-0" href="/registration">Create an account</a>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-			<input name="email" type="text" class="form-control"
-				placeholder="Email" autofocus="true" th:field="*{email}" ) /> <input
-				name="password" type="password" class="form-control"
-				placeholder="Password" th:field="*{password}" />
-            <br>
-            <span th:if="${logError != null}" class="error">Wrong user or password</span>
-            <br>
-			<button class="btn btn-lg btn-primary btn-block" type="submit">Log
-				In</button>
-			<h4 class="text-center">
-				<a href="/registration">Create an account</a>
-			</h4>
-	</form>
 	</div>
 
 	<script
@@ -39,3 +71,46 @@
 	<script src="${contextPath}/resources/js/bootstrap.min.js"></script>
 </body>
 </html>
+
+<style>
+    #background{
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: url('https://www.iscte-iul.pt/assets/files/2017/02/15/1487158179806_noticias_PESQUISA.jpg') no-repeat center center fixed;
+        background-size: cover;
+        opacity: 0.5;
+    }
+    
+    @media (min-width: 1200px){
+        .container {
+            max-width: 1140px;
+        }
+    }
+    
+    @media (min-width: 992px)
+    .container {
+        max-width: 960px;
+    }   
+    
+    @media (min-width: 768px){
+        .container {
+            max-width: 720px;
+        }
+    }
+    
+    @media (min-width: 576px){
+        .container {
+            max-width: 540px;
+        }
+    }
+    
+    #loginCard{
+        margin-top: 50%;
+        transform: translateY(-50%);
+    }
+    
+    
+</style>

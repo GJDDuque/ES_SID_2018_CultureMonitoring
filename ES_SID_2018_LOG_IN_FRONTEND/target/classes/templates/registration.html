@@ -1,62 +1,99 @@
-
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
 <head>
-<meta charset="utf-8">
-<title>Create an account</title>
-<head>
+<title>Register</title>
 <link rel="stylesheet" type="text/css"
 	th:href="@{/css/registration.css}" />
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script
+      src="https://code.jquery.com/jquery-3.4.1.js"
+      integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
+      crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 <script
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
 </head>
 <body>
-
+    <div id="background"></div>
 	<div class="container">
-
-		<form method="POST" modelAttribute="userForm" class="form-signin"
+        <div class="row justify-content-center">
+            <div class="col-md-12" id="loginCard">
+                <div class="card-group">
+                    <div class="card p-2">
+                        <div class="card-body">
+                            <h1>Register</h1>
+                            <p class="text-muted">Create an account</p>
+                            <form method="POST" modelAttribute="userForm" class="form-signin"
 			th:action="@{/registration}" th:object="${userForm}">
-			<h2 class="form-signin-heading">Create your account</h2>
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">
+                                            <i class="fa fa-user fa-fw"></i>
+                                        </span>
+                                    </div>
+                                    <spring:bind path="name" class="col-10 p-0">
+                                        <div class="${status.error ? 'has-error' : ''}">
+                                           <input type="text" path="name" class="form-control" placeholder="Name" autofocus="true" th:field="*{name}"/>
+                                           <errors path="name"></errors>
+                                        </div>
+			                         </spring:bind>
+                                </div>
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">
+                                            <i class="fas fa-at fa-fw"></i>
+                                        </span>
+                                    </div>
+                                    <spring:bind path="email" class = "col-10 p-0">
+                                        <div class="${status.error ? 'has-error' : ''}">
+                                           <input type="text" path="email" class="form-control" placeholder="Email" autofocus="true" th:field="*{email}"/>
+                                           <errors path="email"></errors>
+                                        </div>
+			                         </spring:bind>
+                                </div>
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">
+                                            <i class="fa fa-lock fa-fw"></i>
+                                        </span>
+                                    </div>
+                                    <spring:bind path="password" class="col-10 p-0">
+                                        <div class="${status.error ? 'has-error' : ''}">
+                                           <input type="password" path="password" class="form-control" placeholder="Password" autofocus="true" th:field="*{password}"/>
+                                           <errors path="password"></errors>
+                                        </div>
+			                         </spring:bind>                                   
+                                </div>
+                                <div class="input-group mb-4">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">
+                                            <i class="fas fa-tools fa-fw"></i>
+                                        </span>
+                                    </div>
+                                    <spring:bind path="professional_category" class="col-10 p-0">
+                                        <div class="${status.error ? 'has-error' : ''}">
+                                           <input type="text" path="professional_category" class="form-control" placeholder="Professional Category" autofocus="true" th:field="*{professional_category}"/>
+                                           <errors path="professional_category"></errors>
+                                        </div>
+			                         </spring:bind>
+                                </div>
 
-			<spring:bind path="name">
-				<div class="form-group ${status.error ? 'has-error' : ''}">
-					<input type="text" path="name" class="form-control"
-						placeholder="Name" autofocus="true" th:field="*{name}"></input>
-					<errors path="name"></errors>
-				</div>
-			</spring:bind>
-
-			<spring:bind path="email">
-				<div class="form-group ${status.error ? 'has-error' : ''}">
-					<input type="text" path="email" class="form-control"
-						placeholder="Email" autofocus="true" th:field="*{email}"></input>
-					<errors path="email"></errors>
-				</div>
-			</spring:bind>
-
-			<spring:bind path="password">
-				<div class="form-group ${status.error ? 'has-error' : ''}">
-					<input type="password" path="password" class="form-control"
-						placeholder="Password" th:field="*{password}"></input>
-					<errors path="password"> </errors>
-				</div>
-			</spring:bind>
-
-			<spring:bind path="professional_category">
-				<div class="form-group ${status.error ? 'has-error' : ''}">
-					<input type="text" path="professional_category"
-						class="form-control" placeholder="Professional Category"
-						autofocus="true" th:field="*{professional_category}"></input>
-					<errors path="professional_category"></errors>
-				</div>
-			</spring:bind>
-
-			<button class="btn btn-lg btn-primary btn-block" type="submit">Submit</button>
-		</form>
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <button class="btn btn-primary px-4" type="submit">Register</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
 	</div>
 
@@ -65,3 +102,46 @@
 	<script src="${contextPath}/resources/js/bootstrap.min.js"></script>
 </body>
 </html>
+
+<style>
+    #background{
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: url('https://www.iscte-iul.pt/assets/files/2017/02/15/1487158179806_noticias_PESQUISA.jpg') no-repeat center center fixed;
+        background-size: cover;
+        opacity: 0.5;
+    }
+    
+    @media (min-width: 1200px){
+        .container {
+            max-width: 1140px;
+        }
+    }
+    
+    @media (min-width: 992px)
+    .container {
+        max-width: 960px;
+    }   
+    
+    @media (min-width: 768px){
+        .container {
+            max-width: 720px;
+        }
+    }
+    
+    @media (min-width: 576px){
+        .container {
+            max-width: 540px;
+        }
+    }
+    
+    #loginCard{
+        margin-top: 50%;
+        transform: translateY(-50%);
+    }
+    
+    
+</style>

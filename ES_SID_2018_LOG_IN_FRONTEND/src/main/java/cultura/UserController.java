@@ -28,6 +28,8 @@ public class UserController {
 	@Autowired
 	private UserValidator userValidator;
 
+	private User user;
+
 	@GetMapping("/registration")
 	public String registration(Model model) {
 		model.addAttribute("userForm", new User());
@@ -55,7 +57,7 @@ public class UserController {
 	@PostMapping("/login")
 	public String login(@ModelAttribute("userForm") User userForm, BindingResult bindingResult, Model model,
 			RedirectAttributes atributes) {
-		User user = userServiceImpl.findByEmail(userForm.getEmail());
+		user = userServiceImpl.findByEmail(userForm.getEmail());
 		if (user.getPassword().equals(userForm.getPassword())) {
 			atributes.addFlashAttribute("user", user);
 			return "redirect:/welcome";
@@ -69,8 +71,7 @@ public class UserController {
 
 	@GetMapping("/welcome")
 	public String success(HttpServletRequest request, Model model) {
-		Map<String, ?> flashMap = RequestContextUtils.getInputFlashMap(request);
-		model.addAttribute("userEmail", ((User) flashMap.get("user")).getEmail());
+		model.addAttribute("userEmail", user.getEmail());
 		model.addAttribute("filters", new Filters());
 		return "welcome";
 	}
