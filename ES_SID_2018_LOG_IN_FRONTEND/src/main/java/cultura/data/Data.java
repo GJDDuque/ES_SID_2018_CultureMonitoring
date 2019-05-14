@@ -63,15 +63,15 @@ public class Data {
 			dateB = null;
 		
 		// join
-		if (culture != null && sensor == null)
+		if (!culture.isEmpty() && sensor.isEmpty() )
 			join = " join measured_variables mv on mv.measured_variables_id = m.measured_variable_id"
 					+ " join cultures c on c.culture_id = mv.culture_id";
 
-		if (culture == null && sensor != null)
+		if (culture.isEmpty() && !sensor.isEmpty())
 			join = " join measured_variables mv on mv.measured_variables_id = m.measured_variable_id"
 					+ " join variables v on v.variable_id = mv.variable_id";
 
-		if (culture != null && sensor != null)
+		if (!culture.isEmpty() && !sensor.isEmpty())
 			join = " join measured_variables mv on mv.measured_variables_id = m.measured_variable_id"
 					+ " join cultures c on c.culture_id = mv.culture_id join variables v on v.variable_id = mv.variable_id";
 
@@ -79,44 +79,44 @@ public class Data {
 		//Datas
 			// se as datas sao iguais
 		if (dateB == dateF && dateB != null)
-			whereDate = " where m.date_time >= " + dateB + " and m.date_time <= " + dateF;
+			whereDate = " where m.date_time >= '" + dateB + "' and m.date_time <= '" + dateF + "'";
 			//se apenas a being
 		if (dateB != null && dateF == null)
-			whereDate = " where m.date_time >= " + dateB;
+			whereDate = " where m.date_time >= '" + dateB + "'";
 			//se apenas a date final
 		if (dateF != null && dateB == null)
-			whereDate = " where m.date_time <= " + dateF;
+			whereDate = " where m.date_time <= '" + dateF + "'";
 			//se datas sao diferentes
 		if (dateB != dateF && dateB != null && dateF != null)
-			whereDate = " where m.date_time >= " + dateB + " and m.date_time <= " + dateF;
+			whereDate = " where m.date_time >= '" + dateB + "' and m.date_time <= '" + dateF + "'";
 		//Measures
 			//se sao iguais
 		if (measureL != null && measureH != null && measureL.equals(measureH)) {
 			if (dateB == null && dateF == null)
-				whereMeasure = " where m.measured_value = " + measureL;
+				whereMeasure = " where m.measured_value = '" + measureL + "'";
 			else
-				whereMeasure = " and m.measured_value = " + measureL;
+				whereMeasure = " and m.measured_value = '" + measureL + "'";
 		}
 			//se sao diferentes
 		if (measureL != null && measureH != null && !measureL.equals(measureH)) {
 			if (dateB == null && dateF == null)
-				whereMeasure = " where m.measured_value >= " + measureL + " and m.measured_value <= " + measureH;
+				whereMeasure = " where m.measured_value >= '" + measureL + "' and m.measured_value <= '" + measureH + "'";
 			else
-				whereMeasure = " and m.measured_value >= " + measureL + " and m.measured_value <= " + measureH;
+				whereMeasure = " and m.measured_value >= '" + measureL + "' and m.measured_value <= '" + measureH + "'";
 		}
 			//se apenas a low
 		if (measureL != null && measureH == null) {
 			if (dateB == null && dateF == null)
-				whereMeasure = " where m.measured_value >= " + measureL;
+				whereMeasure = " where m.measured_value >= '" + measureL + "'";
 			else
-				whereMeasure = " and m.measured_value >= " + measureL;
+				whereMeasure = " and m.measured_value >= '" + measureL + "'";
 		}
 			//se apenas high
 		if (measureH != null && measureL == null) {
 			if (dateB == null && dateF == null)
-				whereMeasure = " where m.measured_value <= " + measureH;
+				whereMeasure = " where m.measured_value <= '" + measureH + "'";
 			else
-				whereMeasure = " and m.measured_value <= " + measureH;
+				whereMeasure = " and m.measured_value <= '" + measureH + "'";
 		}
 		
 		return query + join + whereDate + whereMeasure + andUser;
