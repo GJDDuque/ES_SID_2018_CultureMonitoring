@@ -6,8 +6,8 @@ import java.util.List;
 import java.util.UUID;
 
 import org.bson.Document;
+import org.bson.conversions.Bson;
 import org.springframework.context.ApplicationEventPublisher;
-import org.springframework.stereotype.Component;
 
 import com.mongodb.MongoClient;
 import com.mongodb.MongoClientOptions;
@@ -21,7 +21,6 @@ import iscte.sid.sensorsuite.model.SensorAdminError;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-@Component
 public class MongoDb {
 	public static MongoDb instance;
 	private MongoDatabase database;
@@ -98,19 +97,38 @@ public class MongoDb {
 
 	public List<String> getValidReadings(long starttime, long endtime) {
 		List<String> result = new ArrayList<>();
+
 		if (starttime > 0 && endtime > starttime) {
-			dbsensormeasures.find(Filters.and(Filters.gt("timestamp", starttime), Filters.lte("timestamp", endtime)))
-					.forEach((Document b) -> result.add(b.toJson()));
+			Bson filter = Filters.and(Filters.gt("timestamp", starttime), Filters.lte("timestamp", endtime),
+					Filters.ne("processed", 1));
+			dbsensormeasures.find(filter).forEach((Document b) -> {
+				result.add(b.toJson());
+
+			});
+			dbsensormeasures.updateMany(filter, new Document("$set", new Document("processed", 1)));
 		} else {
 			if (endtime == 0 && starttime > 0) {
-				dbsensormeasures.find(Filters.gt("timestamp", starttime))
-						.forEach((Document b) -> result.add(b.toJson()));
+				Bson filter = Filters.and(Filters.gt("timestamp", starttime), Filters.ne("processed", 1));
+				dbsensormeasures.find(filter).forEach((Document b) -> {
+					result.add(b.toJson());
+
+				});
+				dbsensormeasures.updateMany(filter, new Document("$set", new Document("processed", 1)));
 			} else {
 				if (endtime > 0 && starttime == 0) {
-					dbsensormeasures.find(Filters.lte("timestamp", endtime))
-							.forEach((Document b) -> result.add(b.toJson()));
+					Bson filter = Filters.and(Filters.lte("timestamp", endtime), Filters.ne("processed", 1));
+					dbsensormeasures.find(filter).forEach((Document b) -> {
+						result.add(b.toJson());
+
+					});
+					dbsensormeasures.updateMany(filter, new Document("$set", new Document("processed", 1)));
 				} else {
-					dbsensormeasures.find().forEach((Document b) -> result.add(b.toJson()));
+					dbsensormeasures.find(Filters.ne("processed", 1)).forEach((Document b) -> {
+						result.add(b.toJson());
+
+					});
+					dbsensormeasures.updateMany(Filters.ne("processed", 1),
+							new Document("$set", new Document("processed", 1)));
 				}
 			}
 		}

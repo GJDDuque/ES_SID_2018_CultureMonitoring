@@ -47,7 +47,7 @@ public class SensorSuiteApplication {
 	@Bean
 	public SensorInformationBroker provideBroker() {
 		log.debug("provider broker called " + counter++ + " time");
-		return new SensorInformationBroker(config_mqtt_qos);
+		return new SensorInformationBroker(Integer.valueOf(config_mqtt_qos));
 	}
 
 }
