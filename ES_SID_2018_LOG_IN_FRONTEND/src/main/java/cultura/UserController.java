@@ -69,9 +69,14 @@ public class UserController {
 
 	@GetMapping("/welcome")
 	public String success(Model model) {
-		model.addAttribute("userEmail", user.getEmail());
-		model.addAttribute("filters", new Filters());
-		return "welcome";
+		if (user != null) {
+			model.addAttribute("userEmail", user.getEmail());
+			model.addAttribute("filters", new Filters());
+			return "welcome";
+		} else {
+			return "redirect:/login";
+		}
+
 	}
 
 }
