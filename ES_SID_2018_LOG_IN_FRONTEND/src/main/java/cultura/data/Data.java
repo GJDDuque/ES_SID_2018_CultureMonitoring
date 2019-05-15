@@ -3,7 +3,10 @@ package cultura.data;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.sql.Timestamp;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.LinkedHashMap;
 import java.util.List;
 
@@ -86,8 +89,10 @@ public class Data {
 		// where
 		// Datas
 		// se as datas sao iguais
-		if (dateB == dateF && dateB != null)
-			whereDate = " where m.date_time >= '" + dateB + "' and m.date_time <= '" + dateF + "'";
+		if (dateB.equals(dateF) && dateB != null) {
+			String newDateF = addOneDay(dateF);
+			whereDate = " where m.date_time >= '" + dateB + "' and m.date_time < '" + newDateF + "'";
+		}
 		// se apenas a being
 		if (dateB != null && dateF == null)
 			whereDate = " where m.date_time >= '" + dateB + "'";
@@ -95,7 +100,7 @@ public class Data {
 		if (dateF != null && dateB == null)
 			whereDate = " where m.date_time <= '" + dateF + "'";
 		// se datas sao diferentes
-		if (dateB != dateF && dateB != null && dateF != null)
+		if (!dateB.equals(dateF) && dateB != null && dateF != null)
 			whereDate = " where m.date_time >= '" + dateB + "' and m.date_time <= '" + dateF + "'";
 		// Measures
 		// se sao iguais
@@ -135,5 +140,17 @@ public class Data {
 			andUser = " and user = '" + user + "'";
 		}
 		return query + join + whereDate + whereMeasure + andUser;
+	}
+	
+	public String addOneDay(String date){
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		Calendar c = Calendar.getInstance();
+		try {
+			c.setTime(sdf.parse(date));
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		c.add(Calendar.DATE, 1);
+		return sdf.format(c.getTime());
 	}
 }
