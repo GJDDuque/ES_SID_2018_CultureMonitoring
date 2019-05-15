@@ -5,6 +5,15 @@ public class MeasureForm {
 	private String culture;
 	private String variable;
 	private Double measured_value;
+	private String email;
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
 
 	public String getCulture() {
 		return culture;

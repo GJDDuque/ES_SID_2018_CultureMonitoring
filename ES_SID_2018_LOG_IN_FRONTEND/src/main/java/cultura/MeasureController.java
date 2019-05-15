@@ -17,15 +17,16 @@ public class MeasureController {
 	private MeasureServiceImpl measureServiceImpl;
 
 	@GetMapping("/addMeasure")
-	public String addmeasure(Model model) {
+	public String addmeasure(Model model, @ModelAttribute String userEmail) {
+		model.addAttribute("userEmail", userEmail);
 		model.addAttribute("measureForm", new MeasureForm());
 		return "addMeasure";
 	}
 
-	@PostMapping(value = "/addmeasure")
+	@PostMapping(value = "/addMeasure")
 	public String addmeasure(@ModelAttribute("measureForm") MeasureForm measureForm, BindingResult bindingResult,
-			Model model, @ModelAttribute String userEmail) {
-		measureServiceImpl.saveMeasure(measureForm, userEmail);
+			Model model) {
+		measureServiceImpl.saveMeasure(measureForm);
 		return "redirect:/addMeasure";
 
 	}

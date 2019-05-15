@@ -1,7 +1,5 @@
 package cultura.utilities;
 
-import java.sql.Timestamp;
-import java.util.Date;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonView;
@@ -19,6 +17,26 @@ public class AjaxResponseBody {
 
 	@JsonView(Views.Public.class)
 	private List<String> XAxis;
+
+	@JsonView(Views.Public.class)
+	private String userEmail;
+
+	public AjaxResponseBody() {
+
+	}
+
+	public AjaxResponseBody(String userEmail, String msg) {
+		this.userEmail = userEmail;
+		this.msg = msg;
+	}
+
+	public String getUserEmail() {
+		return userEmail;
+	}
+
+	public void setUserEmail(String userEmail) {
+		this.userEmail = userEmail;
+	}
 
 	public List<Double> getYAxis() {
 		return YAxis;

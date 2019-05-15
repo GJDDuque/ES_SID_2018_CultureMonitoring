@@ -36,7 +36,7 @@
                 <div class="sidebar-brand-icon rotate-n-15">
                     <i class="fab fa-pagelines"></i>
                 </div>
-                <div class="sidebar-brand-text mx-3">Culture Admin</div>
+                <div class="sidebar-brand-text mx-3" href="/welcome">Culture Admin</div>
             </a>
 
             <!-- Divider -->
@@ -117,7 +117,7 @@
                             class="nav-link dropdown-toggle" href="#" id="userDropdown"
                             role="button" data-toggle="dropdown" aria-haspopup="true"
                             aria-expanded="false"> <span
-                                class="mr-2 d-none d-lg-inline text-gray-600 small"><input type="hidden" th:text="${userEmail}" ></span> <img class="img-profile rounded-circle"
+                                class="mr-2 d-none d-lg-inline text-gray-600 small" id="userEmail"></span> <img class="img-profile rounded-circle"
                                 src="https://source.unsplash.com/QAB-WJcbgJk/60x60">
                         </a> <!-- Dropdown - User Information -->
                             <div
@@ -166,7 +166,7 @@
                                 <h6 class="m-0 font-weight-bold text-primary">Add a new measure</h6>
                             </div>
                             <div class="card-body">     
-                                <form method="POST" modelAttribute="/addmeasure" th:action="@{/addmeasure}" th:object="${measureForm}">
+                                <form method="POST" modelAttribute="/addMeasure" th:action="@{/addMeasure}" th:object="${measureForm}">
                                     <div class="form-group">
                                         <label>Culture's name:</label>
                                         <select name="cultures" class="form-control" th:field="*{culture}">
@@ -184,8 +184,9 @@
                                     </div>
                                     <div class="form-group">
                                         <label>Measured value:</label>
-                                        <input type="number" id="measuredValue" name="measuredValue" class="form-control" th:field="*{measured_value}">
+                                        <input type="number"  step="0.01" id="measuredValue" name="measuredValue" class="form-control" th:field="*{measured_value}">
                                     </div>
+                                     <input type="hidden" id="email" name="email" class="form-control" th:field="*{email}" value="">
                                     <div class="form-group text-center">
                                         <input type="submit" class="col-5 btn btn-primary form-control" value="Adicionar" id="addMeasure" name="addMeasure">
                                     </div>
@@ -265,13 +266,27 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
     <script>
-        !function(t){"use strict";t("#sidebarToggle, #sidebarToggleTop").on("click",function(o){t("body").toggleClass("sidebar-toggled"),t(".sidebar").toggleClass("toggled"),t(".sidebar").hasClass("toggled")&&t(".sidebar .collapse").collapse("hide")}),t(window).resize(function(){t(window).width()<768&&t(".sidebar .collapse").collapse("hide")}),t("body.fixed-nav .sidebar").on("mousewheel DOMMouseScroll wheel",function(o){if(768<t(window).width()){var e=o.originalEvent,l=e.wheelDelta||-e.detail;this.scrollTop+=30*(l<0?1:-1),o.preventDefault()}}),t(document).on("scroll",function(){100<t(this).scrollTop()?t(".scroll-to-top").fadeIn():t(".scroll-to-top").fadeOut()}),t(document).on("click","a.scroll-to-top",function(o){var e=t(this);t("html, body").stop().animate({scrollTop:t(e.attr("href")).offset().top},1e3,"easeInOutExpo"),o.preventDefault()})}(jQuery);
+        !function(t){"use strict";t("#sidebarToggle, #sidebarToggleTop").on("click",function(o){t("body").toggleClass("sidebar-toggled"),t(".sidebar").toggleClass("toggled"),t(".sidebar").hasClass("toggled")&&t(".sidebar .collapse").collapse("hide")}),t(window).resize(function(){t(window).width()<768&&t(".sidebar .collapse").collapse("hide")}),t("body.fixed-nav .   sidebar").on("mousewheel DOMMouseScroll wheel",function(o){if(768<t(window).width()){var e=o.originalEvent,l=e.wheelDelta||-e.detail;this.scrollTop+=30*(l<0?1:-1),o.preventDefault()}}),t(document).on("scroll",function(){100<t(this).scrollTop()?t(".scroll-to-top").fadeIn():t(".scroll-to-top").fadeOut()}),t(document).on("click","a.scroll-to-top",function(o){var e=t(this);t("html, body").stop().animate({scrollTop:t(e.attr("href")).offset().top},1e3,"easeInOutExpo"),o.preventDefault()})}(jQuery);
     </script>
-
 </body>
 
 </html>
-
+<script>
+    $.ajax({
+        type: "GET",
+        contentType: "application/json",    
+        url: "/addMeasure/user",
+        cache: false,
+        success: function(result){
+           document.getElementById("userEmail").textContent=result.userEmail;
+           var email = document.getElementById("email")
+           email.value = result.userEmail;
+        },
+        error: function(err){
+            console.log(err);
+        }
+    });
+</script>
 <style>
 
     /*!

@@ -62,7 +62,7 @@ public class Data {
 		String join = "";
 		String whereDate = "";
 		String whereMeasure = "";
-		String andUser = " and user = '" + user + "'";
+		String andUser = "";
 
 		if (dateF == "")
 			dateF = null;
@@ -126,8 +126,14 @@ public class Data {
 				whereMeasure = " where m.measured_value <= '" + measureH + "'";
 			else
 				whereMeasure = " and m.measured_value <= '" + measureH + "'";
-		}
 
+		}
+		if (dateB == null && dateF == null && measureL == null && measureH == null && culture.isEmpty()
+				&& sensor.isEmpty()) {
+			andUser = " where user = '" + user + "'";
+		} else {
+			andUser = " and user = '" + user + "'";
+		}
 		return query + join + whereDate + whereMeasure + andUser;
 	}
 }

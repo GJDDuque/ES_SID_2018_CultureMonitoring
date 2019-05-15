@@ -1,9 +1,5 @@
 package cultura;
 
-import java.util.Map;
-
-import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,13 +7,15 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import org.springframework.web.servlet.support.RequestContextUtils;
 
 import cultura.data.Filters;
 import cultura.user.User;
 import cultura.user.UserServiceImpl;
 import cultura.user.UserValidator;
+import cultura.utilities.AjaxResponseBody;
 
 @Controller
 public class UserController {
@@ -70,7 +68,7 @@ public class UserController {
 	}
 
 	@GetMapping("/welcome")
-	public String success(HttpServletRequest request, Model model) {
+	public String success(Model model) {
 		model.addAttribute("userEmail", user.getEmail());
 		model.addAttribute("filters", new Filters());
 		return "welcome";
