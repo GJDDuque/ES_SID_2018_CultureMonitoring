@@ -71,6 +71,8 @@ public class UserController {
 	public String success(Model model) {
 		model.addAttribute("userEmail", user.getEmail());
 		model.addAttribute("filters", new Filters());
+		if(user.getProfessional_category().equals("Administrador"))
+			return "welcome/comAddUser";
 		return "welcome";
 	}
 

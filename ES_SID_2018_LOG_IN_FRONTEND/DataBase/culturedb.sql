@@ -1,6 +1,6 @@
 -- MySQL dump 10.13  Distrib 8.0.16, for Win64 (x86_64)
 --
--- Host: 127.0.0.1    Database: culturedb
+-- Host: 127.0.0.1    Database: culturedb_es
 -- ------------------------------------------------------
 -- Server version	8.0.16
 
@@ -365,7 +365,7 @@ CREATE TABLE `logs_users` (
   `migrated` bit(1) NOT NULL DEFAULT b'0',
   `user` varchar(45) NOT NULL,
   PRIMARY KEY (`log_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -374,7 +374,7 @@ CREATE TABLE `logs_users` (
 
 LOCK TABLES `logs_users` WRITE;
 /*!40000 ALTER TABLE `logs_users` DISABLE KEYS */;
-INSERT INTO `logs_users` VALUES (1,1,'luis@teste.pt','luis','borro','2019-04-23 19:24:04','Insert',NULL,_binary '\0','root@localhost'),(2,1,'luis@teste.pt','luis','borro','2019-04-23 21:20:12','Delete',NULL,_binary '\0','root@localhost'),(3,2,'luis@teste.pt','Luis','Investigador','2019-04-23 21:21:04','Insert',NULL,_binary '\0','root@localhost'),(4,2,'luis@teste.pt','Luis','Investigador','2019-04-23 21:23:30','Delete',NULL,_binary '\0','root@localhost'),(5,3,'luis@teste.pt','Luis','Investigador','2019-04-23 21:23:37','Insert',NULL,_binary '\0','root@localhost'),(6,3,'luis@teste.pt','Luis','Investigador','2019-04-23 21:24:24','Delete',NULL,_binary '\0','root@localhost'),(7,4,'ines@teste.pt','Ines','Investigador','2019-04-23 21:25:00','Insert',NULL,_binary '\0','root@localhost'),(8,4,'ines@teste.pt','Ines','Investigador','2019-04-23 21:26:10','Delete',NULL,_binary '\0','root@localhost'),(9,1,'ines@teste.pt','ines','Investigador','2019-04-24 10:03:47','Insert',NULL,_binary '\0','root@localhost'),(10,2,'luis@teste.pt','luis almeida','Investigador','2019-05-06 21:23:47','Insert',NULL,_binary '\0','root@localhost'),(11,3,'teste@teste.pt','teste','Investigador','2019-05-07 13:20:08','Insert',NULL,_binary '\0','root@localhost'),(12,3,'teste@teste.pt','teste','Investigador','2019-05-07 13:24:20','Delete',NULL,_binary '\0','root@localhost'),(13,4,'teste@teste.pt','teste','Investigador','2019-05-07 13:24:51','Insert',NULL,_binary '\0','root@localhost'),(14,5,'pedro@test.pt','pedro','Investigador','2019-05-07 14:41:02','Insert',NULL,_binary '\0','root@localhost'),(15,6,'coco@teste.pt','coco','Investigador','2019-05-07 19:11:27','Insert',NULL,_binary '\0','root@localhost'),(16,1,'ines@teste.pt','ines','Investigador','2019-05-09 13:37:34','Delete',NULL,_binary '\0','root@localhost'),(17,2,'luis@teste.pt','luis almeida','Investigador','2019-05-09 13:37:34','Delete',NULL,_binary '\0','root@localhost'),(18,4,'teste@teste.pt','teste','Investigador','2019-05-09 13:37:34','Delete',NULL,_binary '\0','root@localhost'),(19,5,'pedro@test.pt','pedro','Investigador','2019-05-09 13:37:34','Delete',NULL,_binary '\0','root@localhost'),(20,6,'coco@teste.pt','coco','Investigador','2019-05-09 13:37:34','Delete',NULL,_binary '\0','root@localhost'),(21,7,'luis@teste.pt','luis almeida','Investigador','2019-05-09 13:43:49','Insert',NULL,_binary '\0','root@localhost'),(22,8,'ines@teste.pt','ines','Investigador','2019-05-09 14:00:54','Insert',NULL,_binary '\0','root@localhost'),(23,9,'testing@teste.pt','testing','Investigador','2019-05-10 10:22:17','Insert',NULL,_binary '\0','root@localhost');
+INSERT INTO `logs_users` VALUES (1,1,'luis@teste.pt','luis','borro','2019-04-23 19:24:04','Insert',NULL,_binary '\0','root@localhost'),(2,1,'luis@teste.pt','luis','borro','2019-04-23 21:20:12','Delete',NULL,_binary '\0','root@localhost'),(3,2,'luis@teste.pt','Luis','Investigador','2019-04-23 21:21:04','Insert',NULL,_binary '\0','root@localhost'),(4,2,'luis@teste.pt','Luis','Investigador','2019-04-23 21:23:30','Delete',NULL,_binary '\0','root@localhost'),(5,3,'luis@teste.pt','Luis','Investigador','2019-04-23 21:23:37','Insert',NULL,_binary '\0','root@localhost'),(6,3,'luis@teste.pt','Luis','Investigador','2019-04-23 21:24:24','Delete',NULL,_binary '\0','root@localhost'),(7,4,'ines@teste.pt','Ines','Investigador','2019-04-23 21:25:00','Insert',NULL,_binary '\0','root@localhost'),(8,4,'ines@teste.pt','Ines','Investigador','2019-04-23 21:26:10','Delete',NULL,_binary '\0','root@localhost'),(9,1,'ines@teste.pt','ines','Investigador','2019-04-24 10:03:47','Insert',NULL,_binary '\0','root@localhost'),(10,2,'luis@teste.pt','luis almeida','Investigador','2019-05-06 21:23:47','Insert',NULL,_binary '\0','root@localhost'),(11,3,'teste@teste.pt','teste','Investigador','2019-05-07 13:20:08','Insert',NULL,_binary '\0','root@localhost'),(12,3,'teste@teste.pt','teste','Investigador','2019-05-07 13:24:20','Delete',NULL,_binary '\0','root@localhost'),(13,4,'teste@teste.pt','teste','Investigador','2019-05-07 13:24:51','Insert',NULL,_binary '\0','root@localhost'),(14,5,'pedro@test.pt','pedro','Investigador','2019-05-07 14:41:02','Insert',NULL,_binary '\0','root@localhost'),(15,6,'coco@teste.pt','coco','Investigador','2019-05-07 19:11:27','Insert',NULL,_binary '\0','root@localhost'),(16,1,'ines@teste.pt','ines','Investigador','2019-05-09 13:37:34','Delete',NULL,_binary '\0','root@localhost'),(17,2,'luis@teste.pt','luis almeida','Investigador','2019-05-09 13:37:34','Delete',NULL,_binary '\0','root@localhost'),(18,4,'teste@teste.pt','teste','Investigador','2019-05-09 13:37:34','Delete',NULL,_binary '\0','root@localhost'),(19,5,'pedro@test.pt','pedro','Investigador','2019-05-09 13:37:34','Delete',NULL,_binary '\0','root@localhost'),(20,6,'coco@teste.pt','coco','Investigador','2019-05-09 13:37:34','Delete',NULL,_binary '\0','root@localhost'),(21,7,'luis@teste.pt','luis almeida','Investigador','2019-05-09 13:43:49','Insert',NULL,_binary '\0','root@localhost'),(22,8,'ines@teste.pt','ines','Investigador','2019-05-09 14:00:54','Insert',NULL,_binary '\0','root@localhost'),(23,9,'testing@teste.pt','testing','Investigador','2019-05-10 10:22:17','Insert',NULL,_binary '\0','root@localhost'),(24,14,'levino@teste.pt','levino','Investigador','2019-05-15 17:52:18','Insert',NULL,_binary '\0','root@localhost'),(25,15,'ironman@teste.pt','tony stark','Administrador','2019-05-15 18:23:06','Insert',NULL,_binary '\0','root@localhost'),(26,16,'joao@teste.pt','joao','Investigador','2019-05-15 18:24:07','Insert',NULL,_binary '\0','root@localhost');
 /*!40000 ALTER TABLE `logs_users` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -835,7 +835,7 @@ CREATE TABLE `user_roles` (
   UNIQUE KEY `id_role_UNIQUE` (`id_role`),
   KEY `roles_idx` (`user_role`),
   CONSTRAINT `role_name` FOREIGN KEY (`user_role`) REFERENCES `roles` (`role`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -844,7 +844,7 @@ CREATE TABLE `user_roles` (
 
 LOCK TABLES `user_roles` WRITE;
 /*!40000 ALTER TABLE `user_roles` DISABLE KEYS */;
-INSERT INTO `user_roles` VALUES (5,'Investigador','luis@teste.pt'),(6,'Investigador','ines@teste.pt'),(7,'Investigador','testing@teste.pt');
+INSERT INTO `user_roles` VALUES (5,'Investigador','luis@teste.pt'),(6,'Investigador','ines@teste.pt'),(7,'Investigador','testing@teste.pt'),(8,'Investigador','luis@teste.pt'),(9,'Investigador','luis@teste.pt'),(10,'Investigador','luis@teste.pt'),(11,'Investigador','luis@teste.pt'),(12,'Investigador','levino@teste.pt'),(13,'Administrador','ironman@teste.pt'),(14,'Investigador','joao@teste.pt');
 /*!40000 ALTER TABLE `user_roles` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -865,7 +865,7 @@ CREATE TABLE `users` (
   PRIMARY KEY (`user_id`,`email`),
   UNIQUE KEY `user_id_UNIQUE` (`user_id`),
   UNIQUE KEY `email_UNIQUE` (`email`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -874,7 +874,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (7,'luis@teste.pt','luis almeida','Investigador','123456789',NULL),(8,'ines@teste.pt','ines','Investigador','123456789',NULL),(9,'testing@teste.pt','testing','Investigador','123456789',NULL);
+INSERT INTO `users` VALUES (7,'luis@teste.pt','luis almeida','Investigador','123456789',NULL),(8,'ines@teste.pt','ines','Investigador','123456789',NULL),(9,'testing@teste.pt','testing','Investigador','123456789',NULL),(14,'levino@teste.pt','levino','Investigador','123456789',NULL),(15,'ironman@teste.pt','tony stark','Administrador','123456789',NULL),(16,'joao@teste.pt','joao','Investigador','123456789',NULL);
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
@@ -992,11 +992,11 @@ INSERT INTO `variables` VALUES (1,'Temperature'),(2,'Light');
 UNLOCK TABLES;
 
 --
--- Dumping events for database 'culturedb'
+-- Dumping events for database 'culturedb_es'
 --
 
 --
--- Dumping routines for database 'culturedb'
+-- Dumping routines for database 'culturedb_es'
 --
 /*!50003 DROP PROCEDURE IF EXISTS `addUser` */;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
@@ -1163,4 +1163,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-05-12 20:38:12
+-- Dump completed on 2019-05-15 19:25:35
