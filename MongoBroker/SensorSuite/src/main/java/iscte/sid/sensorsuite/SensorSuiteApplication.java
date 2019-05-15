@@ -1,6 +1,7 @@
 package iscte.sid.sensorsuite;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationEventPublisher;
@@ -24,6 +25,9 @@ public class SensorSuiteApplication {
 		sa.run(args);
 	}
 
+	@Value("${mqtt.qos}")
+	private int config_mqtt_qos;
+	
 	@Autowired
 	ApplicationEventPublisher publisher;
 
@@ -43,7 +47,7 @@ public class SensorSuiteApplication {
 	@Bean
 	public SensorInformationBroker provideBroker() {
 		log.debug("provider broker called " + counter++ + " time");
-		return new SensorInformationBroker();
+		return new SensorInformationBroker(config_mqtt_qos);
 	}
 
 }

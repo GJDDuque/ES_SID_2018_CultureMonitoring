@@ -28,15 +28,18 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class SensorInformationBroker {
 
+	private static final int MQTT_CONNECTION_TIMEOUT = 60000;
 	private static final String SID_31_2019 = "SID-31-2019";
 	private MqttAsyncClient client;
 	@Autowired
 	private ObjectMapper mapper;
 	@Autowired
 	private MongoDb db;
+	private int configMqttQos;
 
-	public SensorInformationBroker() {
+	public SensorInformationBroker(int config_mqtt_qos) {
 		super();
+		this.configMqttQos = config_mqtt_qos;
 		log.debug("created MongoBroker with UUID " + UUID.randomUUID());
 		createClient(PropertiesHelper.getInstance().getConfiguredClient());
 	}
@@ -59,7 +62,7 @@ public class SensorInformationBroker {
 	private void connectToMqtt() {
 		try {
 			MqttConnectOptions options = new MqttConnectOptions();
-			options.setConnectionTimeout(60000);
+			options.setConnectionTimeout(MQTT_CONNECTION_TIMEOUT);
 			getClient().connect(options, null, new IMqttActionListener() {
 
 				public void onSuccess(IMqttToken asyncActionToken) {
@@ -140,7 +143,7 @@ public class SensorInformationBroker {
 				System.out.println("connected to " + serverURI);
 				try {
 					System.out.println("subscribing to " + topic);
-					client.subscribe(topic, 0);
+					client.subscribe(topic, configMqttQos);
 				} catch (MqttException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
