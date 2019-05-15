@@ -14,13 +14,15 @@ public class StoredProceduresService {
 	private SimpleJdbcCall jdbcCall;
 	private JdbcTemplate template;
 	private MapSqlParameterSource paramMap;
+	public static DataSource dataSource;
 
 	public StoredProceduresService() {
-
+		if (this.dataSource == null) {
+			this.dataSource = getDataSource();
+		}
 	}
 
-	@Bean
-	public DataSource dataSource() {
+	public DataSource getDataSource() {
 		DataSourceBuilder dataSourceBuilder = DataSourceBuilder.create();
 		dataSourceBuilder.url(
 				"jdbc:mysql://localhost:3306/culturedb?serverTimezone=GMT&useSSL=false&allowPublicKeyRetrieval=true");
@@ -30,7 +32,7 @@ public class StoredProceduresService {
 	}
 
 	public void Configure(String StoredProcedureName) {
-		template = new JdbcTemplate(dataSource());
+		template = new JdbcTemplate(dataSource);
 		jdbcCall = new SimpleJdbcCall(template).withProcedureName(StoredProcedureName);
 	}
 
