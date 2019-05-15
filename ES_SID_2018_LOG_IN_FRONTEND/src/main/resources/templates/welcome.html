@@ -374,24 +374,39 @@
         type: "POST",
         contentType: "application/json",    
         data: JSON.stringify(userEmail),
-        url: "/welcome/chart",
+        url: "/welcome/temperature",
         cache: false,
         success: function(result){
             var data = [];
             var labels = [];
             data = result.yaxis;
             labels = result.xaxis;
-            renderFirstChart(data, labels);
+            renderFirstChart(data, labels, "myAreaChart");
         },
         error: function(err){
             console.log(err);
         }
     });
     
+    $.ajax({
+        type: "POST",
+        contentType: "application/json",
+        data: JSON.stringify(userEmail),
+        url: "/welcome/Light",
+        cache: false,
+        success: function(result){
+            var data = [];
+            var labels = [];
+            data = result.yaxis;
+            labels = result.xaxis;
+            renderFirstChart(data, labels, "myAreaChartLuminosidade");
+        }
+    });
+    
     var myLineChart = null;
     
-    function renderFirstChart(data, labels){
-        var ctx = document.getElementById("myAreaChart");
+    function renderFirstChart(data, labels, chart){
+        var ctx = document.getElementById(chart);
     myLineChart = new Chart(
 			ctx,
 			{
@@ -487,7 +502,7 @@
     function number_format (number) {
     var auxnumber = parseFloat(number).toFixed(2);
     return auxnumber;
-}
+    }
 
     $('#filtrar').click(function(){
         //var predataB = $('#dataB').val().split('-');
