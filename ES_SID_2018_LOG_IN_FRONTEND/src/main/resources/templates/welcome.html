@@ -159,128 +159,74 @@
 				</div>
 				<!-- /.container-fluid -->
 
-                <div class="col-12">
-				    <div class="col-12 d-lg-flex" style="max-height: 100%;">
-                        <!-- Begin 1º Gráfico -->
-                        <div class="col-xl-6 col-lg-6 d-inline-block">
-                            <div class="card shadow mb-4">
-                                <!-- Card Header - Dropdown -->
-                                <div
-                                    class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                                    <h6 class="m-0 font-weight-bold text-primary">Temperatura</h6>
-                                    <div class="dropdown no-arrow">
-                                        <a class="dropdown-toggle" href="#" role="button"
-                                            id="dropdownMenuLink" data-toggle="dropdown"
-                                            aria-haspopup="true" aria-expanded="false"> <i
-                                            class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
-                                        </a>
-                                        <div
-                                            class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
-                                            aria-labelledby="dropdownMenuLink">
-                                            <div class="dropdown-header">Ações:</div>
-                                            <a class="dropdown-item" href="#">Ação</a> <a
-                                                class="dropdown-item" href="#">Outra ação</a>
-                                            <div class="dropdown-divider"></div>
-                                            <a class="dropdown-item" href="#">Ou então tiramos isto</a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- Card Body -->
-                                <div class="card-body">
-                                    <div class="chart-area">
-                                        <canvas id="myAreaChart"></canvas>
+                <div class="col-12 d-lg-flex">
+				    <!-- Begin Gráfico -->
+                    <div class="col-xl-7 col-lg-6 d-inline-block">
+                        <div class="card shadow mb-4">
+                            <!-- Card Header - Dropdown -->
+                            <div
+                                class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                                <h6 class="m-0 font-weight-bold text-primary">Culturas
+                                    Overview</h6>
+                                <div class="dropdown no-arrow">
+                                    <a class="dropdown-toggle" href="#" role="button"
+                                        id="dropdownMenuLink" data-toggle="dropdown"
+                                        aria-haspopup="true" aria-expanded="false"> <i
+                                        class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
+                                    </a>
+                                    <div
+                                        class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
+                                        aria-labelledby="dropdownMenuLink">
+                                        <div class="dropdown-header">Ações:</div>
+                                        <a class="dropdown-item" href="#">Ação</a> <a
+                                            class="dropdown-item" href="#">Outra ação</a>
+                                        <div class="dropdown-divider"></div>
+                                        <a class="dropdown-item" href="#">Ou então tiramos isto</a>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <!-- End 1º Gráfico -->
-                        <!-- Begin 2º Gráfico -->
-                        <div class="col-xl-6 col-lg-6 d-inline-block">
-                            <div class="card shadow mb-4">
-                                <!-- Card Header - Dropdown -->
-                                <div
-                                    class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                                    <h6 class="m-0 font-weight-bold text-primary">Luminosidade</h6>
-                                    <div class="dropdown no-arrow">
-                                        <a class="dropdown-toggle" href="#" role="button"
-                                            id="dropdownMenuLink" data-toggle="dropdown"
-                                            aria-haspopup="true" aria-expanded="false"> <i
-                                            class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
-                                        </a>
-                                        <div
-                                            class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
-                                            aria-labelledby="dropdownMenuLink">
-                                            <div class="dropdown-header">Ações:</div>
-                                            <a class="dropdown-item" href="#">Ação</a> <a
-                                                class="dropdown-item" href="#">Outra ação</a>
-                                            <div class="dropdown-divider"></div>
-                                            <a class="dropdown-item" href="#">Ou então tiramos isto</a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- Card Body -->
-                                <div class="card-body">
-                                    <div class="chart-area">
-                                        <canvas id="myAreaChartLuminosidade"></canvas>
-                                    </div>
+                            <!-- Card Body -->
+                            <div class="card-body">
+                                <div class="chart-area">
+                                    <canvas id="myAreaChart"></canvas>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="col-12">
-                        <div class="col-12 d-inline-block">
-                            <div class="card shadow mb-4">
-                                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                                    <h6 class="m-0 font-weight-bold text-primary">Filter Graph</h6>
-                                    <div class="float-right">
-                                        <label>Temperatura</label>
-                                        <input type="checkbox" value="Temperatura" class="mr-4">
-                                        <label>Luminosidade</label>
-                                        <input type="checkbox" value="Luminosidade">
-                                    </div>
-                                </div>
-                                <div class="card-body">     
-                                <form action="#" class="form-group">
-                                    <div class="row">
-                                        <div class="form-group col-12 col-md-6">
-                                            <label>Begin date:</label>
-                                            <input class="form-control" type="date" id="dataB" name="dataB">
-                                        </div>
-                                        <div class="form-group col-12 col-md-6">
-                                            <label>End date:</label>
-                                            <input class="form-control" type="date" id="dataF" name="dataF">
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="form-group col-12 col-md-6">
-                                            <label>Measurement low:</label>
-                                            <input class="form-control" type="number" id="measureL" name="measureL" >
-                                        </div>
-                                        <div class="form-group col-12 col-md-6">
-                                            <label>Measurement high:</label>
-                                            <input class="form-control" type="number" id="measureH" name="measureH">
-                                        </div>
-                                    </div>    
-                                    <div class="row">
-                                        <div class="form-group col-12 col-md-6">
-                                            <label>Culture:</label>
-                                            <input class="form-control" type="text" id="culture" name="culture" >
-                                        </div>
-                                    </div>
-                                    
-                                    <!--<div class="form-group col-12 col-md-6">
-                                        <label>Sensor:</label>
-                                        <input class="form-control" type="text" id="sensor" name="sensor" >
-                                    </div>-->
-                                    
-                                    <div class="row">
-                                        <div class="form-group col-4" style="margin-left: 50%; transform: translateX(-50%)">
-                                            <input class="form-control btn btn-primary" type="button" value="Filtrar" id="filtrar" name="Filtrar">
-                                        </div>
-                                    </div>
-                                    
-                                </form>
-                                </div>
+
+                    <div class="col-xl-5 col-lg-6 d-inline-block">
+                        <div class="card shadow mb-4">
+                            <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                                <h6 class="m-0 font-weight-bold text-primary">Filter Graph</h6>
+                            </div>
+                            <div class="card-body">     
+                            <form action="#" >
+                            <label>Begin date:</label>
+                           <br>
+                            <input class="form-control" type="date" id="dataB" name="dataB">
+                            <br>
+                            <label>End date:</label>
+                              <br>
+                              <input class="form-control" type="date" id="dataF" name="dataF">
+                              <br>
+                              <label>Measurement low:</label>
+                              <br>
+                               <input class="form-control" type="number" id="measureL" name="measureL" >
+                               <br>
+                               <label>Measurement high:</label>
+                               <br>
+                                <input class="form-control" type="number" id="measureH" name="measureH">
+                                <br>
+                                <label>Culture:</label>
+                               <br>
+                                <input class="form-control" type="text" id="culture" name="culture" >
+                                <br>
+                                <label>Sensor:</label>
+                               <br>
+                                <input class="form-control" type="text" id="sensor" name="sensor" >
+                                <br>
+                              <input class="form-control btn btn-primary" type="button" value="Filtrar" id="filtrar" name="Filtrar">
+                            </form>
                             </div>
                         </div>
                     </div>
@@ -374,39 +320,24 @@
         type: "POST",
         contentType: "application/json",    
         data: JSON.stringify(userEmail),
-        url: "/welcome/temperature",
+        url: "/welcome/chart",
         cache: false,
         success: function(result){
             var data = [];
             var labels = [];
             data = result.yaxis;
             labels = result.xaxis;
-            renderFirstChart(data, labels, "myAreaChart");
+            renderFirstChart(data, labels);
         },
         error: function(err){
             console.log(err);
         }
     });
     
-    $.ajax({
-        type: "POST",
-        contentType: "application/json",
-        data: JSON.stringify(userEmail),
-        url: "/welcome/Light",
-        cache: false,
-        success: function(result){
-            var data = [];
-            var labels = [];
-            data = result.yaxis;
-            labels = result.xaxis;
-            renderFirstChart(data, labels, "myAreaChartLuminosidade");
-        }
-    });
-    
     var myLineChart = null;
     
-    function renderFirstChart(data, labels, chart){
-        var ctx = document.getElementById(chart);
+    function renderFirstChart(data, labels){
+        var ctx = document.getElementById("myAreaChart");
     myLineChart = new Chart(
 			ctx,
 			{
@@ -502,7 +433,7 @@
     function number_format (number) {
     var auxnumber = parseFloat(number).toFixed(2);
     return auxnumber;
-    }
+}
 
     $('#filtrar').click(function(){
         //var predataB = $('#dataB').val().split('-');
