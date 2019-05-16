@@ -264,7 +264,11 @@
                                     <div class="row">
                                         <div class="form-group col-12 col-md-6">
                                             <label>Culture:</label>
-                                            <input class="form-control" type="text" id="culture" name="culture" >
+                                            <!--<input class="form-control" type="text" id="culture" name="culture" >-->
+                                            <select class="form-control">
+                                                <option selected value="0">None</option>
+                                                <option th:each="culture : ${cultures}" th:value="${culture}" th:text="${culture}" />
+                                            </select>
                                         </div>
                                     </div>
                                     
@@ -329,7 +333,7 @@
 				<div class="modal-footer">
 					<button class="btn btn-secondary" type="button"
 						data-dismiss="modal">Cancel</button>
-					<a class="btn btn-primary" href="login.html">Logout</a>
+					<a class="btn btn-primary" href="/login">Logout</a>
 				</div>
 			</div>
 		</div>
@@ -617,11 +621,12 @@
         
         
        if($('#checkTemperatura').is(':checked')){
+            var temperatura = "Temperature";   
            $.ajax({
                type: "GET",
                contentType: "application/json",
                url: "/welcome/filters",
-               data: { 'dataB': dataB, 'dataF': dataF, 'measureL': measureL, 'measureH': measureH, 'culture': culture, 'sensor': 'Temperature', 'user': userEmail},
+               data: { 'dataB': dataB, 'dataF': dataF, 'measureL': measureL, 'measureH': measureH, 'culture': culture, 'sensor': temperatura, 'user': userEmail},
                cache: false,
                dataType: 'json',
                success: function(result){
@@ -638,13 +643,13 @@
            })
        } 
         
-        
        if($('#checkLuminosidade').is(':checked')){
+           var luz = "Light";
            $.ajax({
                type: 'GET',
                contentType: "application/json",
                url: "/welcome/filters",
-               data: { 'dataB': dataB, 'dataF': dataF, 'measureL': measureL, 'measureH': measureH, 'culture': culture, 'sensor': 'Light', 'user': userEmail},
+               data: { 'dataB': dataB, 'dataF': dataF, 'measureL': measureL, 'measureH': measureH, 'culture': culture, 'sensor': luz, 'user': userEmail},
                cache: false,
                dataType: 'json',
                success: function(result){

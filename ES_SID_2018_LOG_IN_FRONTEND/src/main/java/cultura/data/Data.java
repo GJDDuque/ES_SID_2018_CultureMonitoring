@@ -60,6 +60,15 @@ public class Data {
 		return chartData;
 	}
 
+	public List<String> loadCultureNames(){
+		LinkedHashMap culturesData = (LinkedHashMap) storedProcedureService.Execute();
+		List<String> namesData = new ArrayList<String>();
+		for (LinkedCaseInsensitiveMap name : (ArrayList<LinkedCaseInsensitiveMap>) culturesData.get("#result-set-1")) {
+			namesData.add((String) name.get("culture_name"));
+		}
+		return namesData;
+	}
+	
 	private String setupQuery(String query, String dateB, String dateF, Double measureL, Double measureH,
 			String culture, String sensor, String user) {
 		String join = "";
@@ -90,7 +99,7 @@ public class Data {
 		// where
 		// Datas
 		// se as datas sao iguais
-		if (dateB.equals(dateF) && dateB != null) {
+		if (dateB != null && dateF != null && dateB.equals(dateF)) {
 			String newDateF = addOneDay(dateF);
 			whereDate = " where m.date_time >= '" + dateB + "' and m.date_time < '" + newDateF + "'";
 		}
@@ -101,7 +110,7 @@ public class Data {
 		if (dateF != null && dateB == null)
 			whereDate = " where m.date_time <= '" + dateF + "'";
 		// se datas sao diferentes
-		if (!dateB.equals(dateF) && dateB != null && dateF != null)
+		if (dateB != null && dateF != null && !dateB.equals(dateF))
 			whereDate = " where m.date_time >= '" + dateB + "' and m.date_time <= '" + dateF + "'";
 		// Measures
 		// se sao iguais
@@ -110,6 +119,8 @@ public class Data {
 				whereMeasure = " where m.measured_value = '" + measureL + "'";
 			else
 				whereMeasure = " and m.measured_value = '" + measureL + "'";
+			
+			
 		}
 		// se sao diferentes
 		if (measureL != null && measureH != null && !measureL.equals(measureH)) {
@@ -134,6 +145,7 @@ public class Data {
 				whereMeasure = " and m.measured_value <= '" + measureH + "'";
 
 		}
+		
 		
 		if (dateB == null && dateF == null && measureL == null && measureH == null && culture.isEmpty()) {
 			andUser = " where user = '" + user + "'" + " and v.variable_name = '" + sensor + "'";
