@@ -74,9 +74,9 @@ public class Data {
 			dateB = null;
 
 		// join
-		if (!culture.isEmpty() && sensor.isEmpty())
-			join = " join measured_variables mv on mv.measured_variables_id = m.measured_variable_id"
-					+ " join cultures c on c.culture_id = mv.culture_id";
+//		if (!culture.isEmpty() && sensor.isEmpty())
+//			join = " join measured_variables mv on mv.measured_variables_id = m.measured_variable_id"
+//					+ " join cultures c on c.culture_id = mv.culture_id";
 
 		if (culture.isEmpty() && !sensor.isEmpty())
 			join = " join measured_variables mv on mv.measured_variables_id = m.measured_variable_id"
@@ -86,6 +86,7 @@ public class Data {
 			join = " join measured_variables mv on mv.measured_variables_id = m.measured_variable_id"
 					+ " join cultures c on c.culture_id = mv.culture_id join variables v on v.variable_id = mv.variable_id";
 
+		
 		// where
 		// Datas
 		// se as datas sao iguais
@@ -133,11 +134,11 @@ public class Data {
 				whereMeasure = " and m.measured_value <= '" + measureH + "'";
 
 		}
-		if (dateB == null && dateF == null && measureL == null && measureH == null && culture.isEmpty()
-				&& sensor.isEmpty()) {
-			andUser = " where user = '" + user + "'";
+		
+		if (dateB == null && dateF == null && measureL == null && measureH == null && culture.isEmpty()) {
+			andUser = " where user = '" + user + "'" + " and v.variable_name = '" + sensor + "'";
 		} else {
-			andUser = " and user = '" + user + "'";
+			andUser = " and user = '" + user + "' and v.variable_name = '" + sensor + "'";
 		}
 		return query + join + whereDate + whereMeasure + andUser;
 	}

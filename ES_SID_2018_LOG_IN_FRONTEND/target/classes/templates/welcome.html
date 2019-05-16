@@ -37,7 +37,7 @@
 					<i class="fab fa-pagelines"></i>
 				</div>
                 <form action="/welcome" >
-				<div class="sidebar-brand-text mx-3" >Culture Admin</div>
+				<div class="mx-3" >Culture Admin</div>
                 </form>
 			</a>
 
@@ -237,6 +237,61 @@
                                         <input type="checkbox" value="Temperatura" class="mr-4">
                                         <label>Luminosidade</label>
                                         <input type="checkbox" value="Luminosidade">
+                                    </div>
+                                </div>
+                                <div class="card-body">     
+                                <form action="#" class="form-group">
+                                    <div class="row">
+                                        <div class="form-group col-12 col-md-6">
+                                            <label>Begin date:</label>
+                                            <input class="form-control" type="date" id="dataB" name="dataB">
+                                        </div>
+                                        <div class="form-group col-12 col-md-6">
+                                            <label>End date:</label>
+                                            <input class="form-control" type="date" id="dataF" name="dataF">
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="form-group col-12 col-md-6">
+                                            <label>Measurement low:</label>
+                                            <input class="form-control" type="number" id="measureL" name="measureL" >
+                                        </div>
+                                        <div class="form-group col-12 col-md-6">
+                                            <label>Measurement high:</label>
+                                            <input class="form-control" type="number" id="measureH" name="measureH">
+                                        </div>
+                                    </div>    
+                                    <div class="row">
+                                        <div class="form-group col-12 col-md-6">
+                                            <label>Culture:</label>
+                                            <input class="form-control" type="text" id="culture" name="culture" >
+                                        </div>
+                                    </div>
+                                    
+                                    <!--<div class="form-group col-12 col-md-6">
+                                        <label>Sensor:</label>
+                                        <input class="form-control" type="text" id="sensor" name="sensor" >
+                                    </div>-->
+                                    
+                                    <div class="row">
+                                        <div class="form-group col-4" style="margin-left: 50%; transform: translateX(-50%)">
+                                            <input class="form-control btn btn-primary" type="button" value="Filtrar" id="filtrar" name="Filtrar">
+                                        </div>
+                                    </div>
+                                    
+                                </form>
+                                </div>
+                            </div>
+                    <div class="col-12">
+                        <div class="col-12 d-inline-block">
+                            <div class="card shadow mb-4">
+                                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                                    <h6 class="m-0 font-weight-bold text-primary">Filter Graph</h6>
+                                    <div class="float-right">
+                                        <label>Temperatura</label>
+                                        <input type="checkbox" value="Temperatura" id="checkTemperatura" class="mr-4">
+                                        <label>Luminosidade</label>
+                                        <input type="checkbox" value="Luminosidade" id="checkLuminosidade">
                                     </div>
                                 </div>
                                 <div class="card-body">     
