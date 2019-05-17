@@ -18,6 +18,9 @@ public class Data {
 
 	private StoredProceduresService storedProcedureService;
 	private String userEmail;
+	private boolean bothDatesEmpty = false;
+	private boolean bothMeasuresEmpty = false;
+	private boolean cultureEmpty = false;
 
 	public Data(String query) {
 		storedProcedureService = new StoredProceduresService();
@@ -60,7 +63,7 @@ public class Data {
 		return chartData;
 	}
 
-	public List<String> loadCultureNames(){
+	public List<String> loadCultureNames() {
 		LinkedHashMap culturesData = (LinkedHashMap) storedProcedureService.Execute();
 		List<String> namesData = new ArrayList<String>();
 		for (LinkedCaseInsensitiveMap name : (ArrayList<LinkedCaseInsensitiveMap>) culturesData.get("#result-set-1")) {
@@ -68,94 +71,94 @@ public class Data {
 		}
 		return namesData;
 	}
-	
+
+	//O sensor é desnecessário!!!
 	private String setupQuery(String query, String dateB, String dateF, Double measureL, Double measureH,
 			String culture, String sensor, String user) {
-		String join = "";
-		String whereDate = "";
-		String whereMeasure = "";
-		String andUser = "";
-
-		if (dateF == "")
-			dateF = null;
-
-		if (dateB == "")
-			dateB = null;
-
-		// join
-//		if (!culture.isEmpty() && sensor.isEmpty())
-//			join = " join measured_variables mv on mv.measured_variables_id = m.measured_variable_id"
-//					+ " join cultures c on c.culture_id = mv.culture_id";
-
-		if (culture.isEmpty() && !sensor.isEmpty())
-			join = " join measured_variables mv on mv.measured_variables_id = m.measured_variable_id"
-					+ " join variables v on v.variable_id = mv.variable_id";
-
-		if (!culture.isEmpty() && !sensor.isEmpty())
-			join = " join measured_variables mv on mv.measured_variables_id = m.measured_variable_id"
-					+ " join cultures c on c.culture_id = mv.culture_id join variables v on v.variable_id = mv.variable_id";
-
+		String joinQuery = joinQuery(culture);
+		String whereDateQuery = whereDateQuery(dateB, dateF);
+		String whereMeasureQuery = whereMeasureQuery(measureL, measureH);
+		String cultureQuery = cultureQuery(culture);
+		String userQuery = userQuery(user);
 		
-		// where
-		// Datas
-		// se as datas sao iguais
-		if (dateB != null && dateF != null && dateB.equals(dateF)) {
-			String newDateF = addOneDay(dateF);
-			whereDate = " where m.date_time >= '" + dateB + "' and m.date_time < '" + newDateF + "'";
-		}
-		// se apenas a being
-		if (dateB != null && dateF == null)
-			whereDate = " where m.date_time >= '" + dateB + "'";
-		// se apenas a date final
-		if (dateF != null && dateB == null)
-			whereDate = " where m.date_time <= '" + dateF + "'";
-		// se datas sao diferentes
-		if (dateB != null && dateF != null && !dateB.equals(dateF))
-			whereDate = " where m.date_time >= '" + dateB + "' and m.date_time <= '" + dateF + "'";
-		// Measures
-		// se sao iguais
-		if (measureL != null && measureH != null && measureL.equals(measureH)) {
-			if (dateB == null && dateF == null)
-				whereMeasure = " where m.measured_value = '" + measureL + "'";
-			else
-				whereMeasure = " and m.measured_value = '" + measureL + "'";
-			
-			
-		}
-		// se sao diferentes
-		if (measureL != null && measureH != null && !measureL.equals(measureH)) {
-			if (dateB == null && dateF == null)
-				whereMeasure = " where m.measured_value >= '" + measureL + "' and m.measured_value <= '" + measureH
-						+ "'";
-			else
-				whereMeasure = " and m.measured_value >= '" + measureL + "' and m.measured_value <= '" + measureH + "'";
-		}
-		// se apenas a low
-		if (measureL != null && measureH == null) {
-			if (dateB == null && dateF == null)
-				whereMeasure = " where m.measured_value >= '" + measureL + "'";
-			else
-				whereMeasure = " and m.measured_value >= '" + measureL + "'";
-		}
-		// se apenas high
-		if (measureH != null && measureL == null) {
-			if (dateB == null && dateF == null)
-				whereMeasure = " where m.measured_value <= '" + measureH + "'";
-			else
-				whereMeasure = " and m.measured_value <= '" + measureH + "'";
-
-		}
-		
-		
-		if (dateB == null && dateF == null && measureL == null && measureH == null && culture.isEmpty()) {
-			andUser = " where user = '" + user + "'" + " and v.variable_name = '" + sensor + "'";
-		} else {
-			andUser = " and user = '" + user + "' and v.variable_name = '" + sensor + "'";
-		}
-		return query + join + whereDate + whereMeasure + andUser;
+		return joinQuery + whereDateQuery + whereMeasureQuery + cultureQuery + userQuery;
 	}
 	
-	public String addOneDay(String date){
+	private String joinQuery(String culture) {
+		if (culture.isEmpty())
+			return " join measured_variables mv on mv.measured_variables_id = m.measured_variable_id"
+					+ " join variables v on v.variable_id = mv.variable_id";
+
+		if (!culture.isEmpty())
+			return " join measured_variables mv on mv.measured_variables_id = m.measured_variable_id"
+					+ " join cultures c on c.culture_id = mv.culture_id join variables v on v.variable_id = mv.variable_id";
+		return "";
+	}
+
+	private String whereDateQuery(String dateB, String dateF) {
+		String newDateF = addOneDay(dateF);
+
+		if (!dateB.isEmpty() && !dateF.isEmpty() && dateB.equals(dateF))
+			return " where m.date_time >= '" + dateB + "' and m.date_time < '" + newDateF + "'";
+
+		if (!dateB.isEmpty() && dateF.isEmpty())
+			return " where m.date_time >= '" + dateB + "'";
+
+		if (dateB.isEmpty() && !dateF.isEmpty())
+			return " where m.date_time < '" + newDateF + "'";
+
+		if (!dateB.isEmpty() && !dateF.isEmpty() && !dateB.equals(dateF))
+			return " where m.date_time >= '" + dateB + "' and m.date_time < '" + newDateF + "'";
+
+		bothDatesEmpty = true;
+		return "";
+	}
+
+	private String whereMeasureQuery(Double measureL, Double measureH) {
+		String whereQuery = "";
+
+		String beforeQuery = " and";
+		if (bothDatesEmpty)
+			beforeQuery = " where";
+
+		if (measureL != null && measureH != null && measureL.equals(measureH))
+			return whereQuery = beforeQuery + " m.measured_value = '" + measureL + "'";
+
+		if (measureL != null && measureH != null && !measureL.equals(measureH))
+			return whereQuery = beforeQuery + " m.measured_value >= '" + measureL + "' and m.measured_value <= '"
+					+ measureH + "'";
+
+		if (measureL != null && measureH == null)
+			return whereQuery = beforeQuery + " m.measured_value >= '" + measureL + "'";
+
+		if (measureH != null && measureL == null)
+			return whereQuery = beforeQuery + " m.measured_value <= '" + measureH + "'";
+
+		bothMeasuresEmpty = true;
+		return whereQuery;
+	}
+
+	private String cultureQuery(String culture) {
+		if(culture.isEmpty()) {
+			cultureEmpty = true;
+			return "";
+		}
+		else {
+			if (bothDatesEmpty && bothMeasuresEmpty)
+				return " where v.culture_name = '" + culture + "'";
+
+			return " and v.culture_name = '" + culture + "'";
+		}
+
+	}
+
+	private String userQuery(String user) {
+		if(bothDatesEmpty && bothMeasuresEmpty && cultureEmpty)
+			return " where user.email = '" + user + "'";
+		return " and user.email = '" + user + "'";
+	}
+	
+	public String addOneDay(String date) {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		Calendar c = Calendar.getInstance();
 		try {
