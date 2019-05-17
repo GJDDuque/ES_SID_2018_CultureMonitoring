@@ -46,11 +46,7 @@ public class DataController {
 		return response;
 	}
 
-//	@RequestMapping("/welcome/chart")
-//	public List<Double> getMeasures(@RequestParam(name = "userEmail") String userEmail, Model model) {
-//		return new Data("select measure_value from measures where user = " + userEmail).loadMeasures();
-//	}
-
+	//O sensor é desnecessario
 	@RequestMapping(value = "/welcome/filters", method = RequestMethod.GET)
 	public AjaxResponseBody getFilteredMeasures(@RequestParam(name = "dataB") String dataB,
 			@RequestParam(name = "dataF") String dataF, @RequestParam(name = "measureL") Double measureL,
