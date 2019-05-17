@@ -265,7 +265,7 @@
                                         <div class="form-group col-12 col-md-6">
                                             <label>Culture:</label>
                                             <!--<input class="form-control" type="text" id="culture" name="culture" >-->
-                                            <select class="form-control">
+                                            <select class="form-control" id="cultureDrop">
                                                 <option selected value="0">None</option>
                                                 <option th:each="culture : ${cultures}" th:value="${culture}" th:text="${culture}" />
                                             </select>
@@ -612,7 +612,10 @@
         
         var measureL = $('#measureL').val();
         var measureH = $('#measureH').val();
-        var culture = $('#culture').val();
+        var culture = $('#cultureDrop').val();
+        if(culture == 0){
+            culture = "";
+        }
         var userEmail = "[[${userEmail}]]";
         
         if((dataB == null || dataB == '') && (dataF == null || dataF == '') && (measureL == null || measureL == '') && (measureH == null || measureH == '') && (culture == null || culture == '') && (sensor == null || sensor == '') && (userEmail == null || userEmail == '')){
