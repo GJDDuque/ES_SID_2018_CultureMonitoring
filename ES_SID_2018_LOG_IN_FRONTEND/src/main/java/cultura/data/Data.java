@@ -81,7 +81,7 @@ public class Data {
 		String cultureQuery = cultureQuery(culture);
 		String userQuery = userQuery(user);
 		
-		return joinQuery + whereDateQuery + whereMeasureQuery + cultureQuery + userQuery;
+		return query + joinQuery + whereDateQuery + whereMeasureQuery + cultureQuery + userQuery;
 	}
 	
 	private String joinQuery(String culture) {
