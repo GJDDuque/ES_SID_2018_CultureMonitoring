@@ -3,18 +3,26 @@ package iscte.sid.mysqlsuite.sensors;
 import java.io.IOException;
 import java.util.Date;
 
+import org.apache.http.HttpResponse;
+import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
+import org.apache.http.client.ResponseHandler;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import iscte.sid.mysqlsuite.managers.AlarmManager;
+import iscte.sid.sensorsuite.model.LightMeasure;
+import iscte.sid.sensorsuite.model.TemperatureMeasure;
 import iscte.sid.sensorsuite.model.communication.ReadingsRequest;
+import iscte.sid.sensorsuite.model.communication.ReadingsResponse;
 import iscte.sid.sensorsuite.model.events.GenericEvent;
+import iscte.sid.sensorsuite.model.exceptions.ArgumentNullExeption;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -78,11 +86,28 @@ public class SensorManagerImpl implements SensorManager, SensorConnectionListene
 					post.setHeader("Content-type", "application/json; charset=utf-8");
 					log.debug("printing lastcall value" + lastcall);
 					ObjectMapper mapper = new ObjectMapper();
+					mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 					long now = new Date().getTime();
 					try {
 
 						post.setEntity(new StringEntity(mapper.writeValueAsString(new ReadingsRequest(lastcall, now))));
-						client.execute(post);
+						client.execute(post, new ResponseHandler<ReadingsResponse>() {
+
+							@Override
+							public ReadingsResponse handleResponse(HttpResponse response)
+									throws ClientProtocolException, IOException {
+								ReadingsResponse result = mapper.readValue(response.getEntity().getContent(), ReadingsResponse.class);
+								result.getReadings().forEach(t-> {
+									try {
+										am.addMeasure(TemperatureMeasure.convertFromString(t, mapper));
+										am.addMeasure(LightMeasure.convertFromString(t, mapper));
+									} catch (IOException | ArgumentNullExeption e) {
+										
+									}
+								});
+								return null;
+							}
+						});
 						lastcall = now;
 					} catch (IOException e) {
 						log.error("Error getting the measures", e);

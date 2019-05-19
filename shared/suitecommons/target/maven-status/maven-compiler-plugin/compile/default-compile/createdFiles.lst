@@ -1,0 +1,11 @@
+iscte\sid\sensorsuite\model\communication\ReadingsRequest.class
+iscte\sid\sensorsuite\model\communication\CheckStatusRequest.class
+iscte\sid\sensorsuite\model\events\MeasuresEvent.class
+iscte\sid\sensorsuite\model\events\GenericEvent.class
+iscte\sid\sensorsuite\model\TemperatureMeasure.class
+iscte\sid\sensorsuite\model\communication\CheckStatusResponse.class
+iscte\sid\sensorsuite\model\AbstractMeasure.class
+iscte\sid\sensorsuite\model\exceptions\ArgumentNullExeption.class
+iscte\sid\sensorsuite\model\LightMeasure.class
+iscte\sid\sensorsuite\model\communication\ReadingsResponse.class
+iscte\sid\sensorsuite\model\SensorAdminError.class

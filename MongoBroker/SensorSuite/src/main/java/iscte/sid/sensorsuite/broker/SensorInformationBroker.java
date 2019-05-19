@@ -18,10 +18,10 @@ import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import iscte.sid.sensorsuite.helpers.PropertiesHelper;
 import iscte.sid.sensorsuite.model.LightMeasure;
 import iscte.sid.sensorsuite.model.MqttConfig;
 import iscte.sid.sensorsuite.model.TemperatureMeasure;
+import iscte.sid.sensorsuite.model.exceptions.ArgumentNullExeption;
 import iscte.sid.sensorsuite.mongo.MongoDb;
 import lombok.extern.slf4j.Slf4j;
 
@@ -29,19 +29,25 @@ import lombok.extern.slf4j.Slf4j;
 public class SensorInformationBroker {
 
 	private static final int MQTT_CONNECTION_TIMEOUT = 60000;
-	private static final String SID_31_2019 = "SID-31-2019";
+	public static final String SID_31_2019 = "SID-31-2019";
 	private MqttAsyncClient client;
 	@Autowired
 	private ObjectMapper mapper;
 	@Autowired
 	private MongoDb db;
 	private int configMqttQos;
+	private MqttConfig backUpConfig;
+	private boolean backup=false;
+	private MqttConfig mqttMainConfig;
+	private int counter=0;
 
-	public SensorInformationBroker(int config_mqtt_qos) {
+	public SensorInformationBroker(int config_mqtt_qos, MqttConfig mqttMainConfig, MqttConfig backUpConfig) {
 		super();
 		this.configMqttQos = config_mqtt_qos;
+		this.mqttMainConfig = mqttMainConfig;
+		this.backUpConfig = backUpConfig;
 		log.debug("created MongoBroker with UUID " + UUID.randomUUID());
-		createClient(PropertiesHelper.getInstance().getConfiguredClient());
+		createClient(mqttMainConfig);
 	}
 
 	private void createClient(MqttConfig config) {
@@ -63,6 +69,7 @@ public class SensorInformationBroker {
 		try {
 			MqttConnectOptions options = new MqttConnectOptions();
 			options.setConnectionTimeout(MQTT_CONNECTION_TIMEOUT);
+			
 			getClient().connect(options, null, new IMqttActionListener() {
 
 				public void onSuccess(IMqttToken asyncActionToken) {
@@ -91,38 +98,39 @@ public class SensorInformationBroker {
 			public void messageArrived(String topic, MqttMessage message) {
 
 				boolean temperror = false;
-				TemperatureMeasure temMeasure;
 				try {
-					temMeasure = mapper.readValue(message.toString().replace("\"\"", "\",\""),
-							TemperatureMeasure.class);
-					if (temMeasure.getCell().equals(null))
-						db.addErrorEntry(message.toString(), "temperature", "null_value");
+					TemperatureMeasure.convertFromString(message.toString(), mapper);
+
 				} catch (JsonParseException e) {
-					temperror=true;
+					temperror = true;
 					db.addErrorEntry(message.toString(), "temperature", e.getMessage());
 				} catch (JsonMappingException e) {
-					temperror=true;
+					temperror = true;
 					db.addErrorEntry(message.toString(), "temperature", e.getMessage());
 				} catch (IOException e) {
-					temperror=true;
+					temperror = true;
 					db.addErrorEntry(message.toString(), "temperature", e.getMessage());
+
+				} catch (ArgumentNullExeption e1) {
+					db.addErrorEntry(message.toString(), "temperature", "null_value");
 				}
 
 				boolean lighterror = false;
-				LightMeasure lightMeasure;
 				try {
-					lightMeasure = mapper.readValue(message.toString().replace("\"\"", "\",\""), LightMeasure.class);
-					if (lightMeasure.getCell().equals(null))
-						db.addErrorEntry(message.toString(), "light", "null_value");
+				LightMeasure.convertFromString(message.toString(), mapper);
+
+						
 				} catch (JsonParseException e) {
-					lighterror=true;
+					lighterror = true;
 					db.addErrorEntry(message.toString(), "light", e.getMessage());
 				} catch (JsonMappingException e) {
-					lighterror=true;
+					lighterror = true;
 					db.addErrorEntry(message.toString(), "light", e.getMessage());
 				} catch (IOException e) {
-					lighterror=true;
+					lighterror = true;
 					db.addErrorEntry(message.toString(), "light", e.getMessage());
+				} catch (ArgumentNullExeption e) {
+					db.addErrorEntry(message.toString(), "light", "null_value");
 				}
 
 				if (!lighterror || !temperror)
@@ -158,7 +166,15 @@ public class SensorInformationBroker {
 	 */
 	protected void tryAnotherMqtt() {
 		System.out.println("Trying another client...");
-		createClient(PropertiesHelper.getInstance().getBackupClient());
+		backup = !backup;
+		if(counter < 10)
+		if(backup) {
+		createClient(backUpConfig);
+		}else {
+			createClient(mqttMainConfig);	
+		}
+		
+		counter++;
 	}
 
 	public MqttAsyncClient getClient() {

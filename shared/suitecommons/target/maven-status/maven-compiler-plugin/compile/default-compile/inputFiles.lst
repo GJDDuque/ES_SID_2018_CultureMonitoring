@@ -1,0 +1,11 @@
+C:\Workspaces\ISCTE\suitecommons\src\main\java\iscte\sid\sensorsuite\model\TemperatureMeasure.java
+C:\Workspaces\ISCTE\suitecommons\src\main\java\iscte\sid\sensorsuite\model\communication\ReadingsResponse.java
+C:\Workspaces\ISCTE\suitecommons\src\main\java\iscte\sid\sensorsuite\model\events\GenericEvent.java
+C:\Workspaces\ISCTE\suitecommons\src\main\java\iscte\sid\sensorsuite\model\LightMeasure.java
+C:\Workspaces\ISCTE\suitecommons\src\main\java\iscte\sid\sensorsuite\model\events\MeasuresEvent.java
+C:\Workspaces\ISCTE\suitecommons\src\main\java\iscte\sid\sensorsuite\model\communication\CheckStatusRequest.java
+C:\Workspaces\ISCTE\suitecommons\src\main\java\iscte\sid\sensorsuite\model\AbstractMeasure.java
+C:\Workspaces\ISCTE\suitecommons\src\main\java\iscte\sid\sensorsuite\model\SensorAdminError.java
+C:\Workspaces\ISCTE\suitecommons\src\main\java\iscte\sid\sensorsuite\model\communication\ReadingsRequest.java
+C:\Workspaces\ISCTE\suitecommons\src\main\java\iscte\sid\sensorsuite\model\exceptions\ArgumentNullExeption.java
+C:\Workspaces\ISCTE\suitecommons\src\main\java\iscte\sid\sensorsuite\model\communication\CheckStatusResponse.java

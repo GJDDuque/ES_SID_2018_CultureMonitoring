@@ -12,6 +12,7 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import iscte.sid.sensorsuite.broker.SensorInformationBroker;
+import iscte.sid.sensorsuite.model.MqttConfig;
 import iscte.sid.sensorsuite.mongo.MongoDb;
 import lombok.extern.slf4j.Slf4j;
 
@@ -25,16 +26,21 @@ public class SensorSuiteApplication {
 		sa.run(args);
 	}
 
-	@Value("${mqtt.qos}")
-	private int config_mqtt_qos;
+	
 	
 	@Autowired
 	ApplicationEventPublisher publisher;
 
 	@Primary
 	@Bean
-	public MongoDb provideMongoDb() {
-		return new MongoDb(publisher);
+	public MongoDb provideMongoDb(@Value("${mongo.server.address}") String mongo_address,
+			@Value("${mongo.server.port}") int mongo_port, 
+			@Value("${mongo.username}") String username, 
+			@Value("${mongo.password}") String password, 
+			@Value("${mongo.database}") String database, 
+			@Value("${mongo.measurescollection}") String measures_collection,
+			@Value("${mongo.errorscollection}") String errors_collection ) {
+		return new MongoDb(publisher, mongo_address,mongo_port,username,password,database,measures_collection, errors_collection );
 	}
 
 	@Bean
@@ -45,9 +51,27 @@ public class SensorSuiteApplication {
 	}
 
 	@Bean
-	public SensorInformationBroker provideBroker() {
+	public SensorInformationBroker provideBroker(@Value("${mqtt.qos}") int config_mqtt_qos, 
+			@Value("${mqtt.to.start}") int mqtt ,
+			@Value("${mqtt.main.client}") String serverUri,
+			@Value("${mqtt.main.client}") String topic,
+			@Value("${mqtt.backup.client}") String backserverUri,
+			@Value("${mqtt.backup.client}") String backTopic,
+			@Value("${mqtt.local.client}") String localServerUri,
+			@Value("${mqtt.local.client}") String localTopic) {
 		log.debug("provider broker called " + counter++ + " time");
-		return new SensorInformationBroker(Integer.valueOf(config_mqtt_qos));
+		
+		switch(mqtt) {
+		case 0:
+		return new SensorInformationBroker(Integer.valueOf(config_mqtt_qos),
+				new MqttConfig(serverUri,topic), new MqttConfig(backserverUri,backTopic));
+		case 1:
+		return new SensorInformationBroker(Integer.valueOf(config_mqtt_qos),
+				new MqttConfig(backserverUri,backTopic),new MqttConfig(backserverUri,backTopic));
+		default:
+		return new SensorInformationBroker(Integer.valueOf(config_mqtt_qos),
+				new MqttConfig(localServerUri,localTopic),new MqttConfig(serverUri,topic));
+		}
 	}
 
 }
