@@ -9,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -77,13 +78,13 @@ public class UserController {
 
 	}
 	
-	@GetMapping("/welcome")
-	public String success(Model model) {
+	@GetMapping("/welcome/{culture}")
+	public String success(Model model,@PathVariable String culture) {
 		if (user != null) {
 			List<String> cultures = cultureServiceImpl.findByResponsible(user.getEmail());
 			
 			model.addAttribute("cultures", cultures);
-			
+			model.addAttribute("cultura", culture);
 			model.addAttribute("userEmail", user.getEmail());
 			model.addAttribute("filters", new Filters());
 			if(user.getProfessional_category().equals("Administrador"))

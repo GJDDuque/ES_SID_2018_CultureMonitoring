@@ -79,14 +79,14 @@
 					aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
 					<div class="bg-white py-2 collapse-inner rounded">
 						<h6 class="collapse-header">Utilities:</h6>
-						<a class="collapse-item" href="/addMeasure">Add Measure</a>
+						<a class="collapse-item" th:href="@{'/addMeasure/' + ${userEmail}}">Add Measure</a>
+                        <h6 class="collapse-header">Graphs by Culture:</h6>
+                        <a class="collapse-item" th:each="cultura : ${cultures}" th:href="@{'/welcome/' + ${cultura}}" th:value="${cultura}" th:text="${cultura}"></a>
 					</div>
 				</div></li>
             <!--<li class="nav-item"><a class="nav-link collapsed" href="/addmeasure">
                 <i class="fas fa-fw fa-wrench" ></i> <span>Add measure</span>
                 </a></li> -->
-            
-
 
 			<!-- Divider -->
 			<hr class="sidebar-divider d-none d-md-block">
@@ -261,21 +261,24 @@
                                             <input class="form-control" type="number" id="measureH" name="measureH">
                                         </div>
                                     </div>    
+<!--
                                     <div class="row">
                                         <div class="form-group col-12 col-md-6">
                                             <label>Culture:</label>
-                                            <!--<input class="form-control" type="text" id="culture" name="culture" >-->
+                                            <input class="form-control" type="text" id="culture" name="culture" >
                                             <select class="form-control" id="cultureDrop">
                                                 <option selected value="0">None</option>
                                                 <option th:each="culture : ${cultures}" th:value="${culture}" th:text="${culture}" />
                                             </select>
                                         </div>
                                     </div>
+-->
                                     
                                     <!--<div class="form-group col-12 col-md-6">
                                         <label>Sensor:</label>
                                         <input class="form-control" type="text" id="sensor" name="sensor" >
                                     </div>-->
+                                    <input type="hidden" id="culturaSelec" th:value="${cultura}" />
                                     
                                     <div class="row">
                                         <div class="form-group col-4" style="margin-left: 50%; transform: translateX(-50%)">
@@ -372,12 +375,15 @@
 <script>
     
     var userEmail = "[[${userEmail}]]"; 
+    var culturaSelecionada = $("#culturaSelec").val();
+    
     $.ajax({
-        type: "POST",
+        type: "GET",
         contentType: "application/json",    
-        data: JSON.stringify(userEmail),
         url: "/welcome/temperature",
+        data: {'userEmail': userEmail, 'culture': culturaSelecionada},
         cache: false,
+        dataType: 'json',
         success: function(result){
             var data = [];
             var labels = [];
@@ -391,11 +397,12 @@
     });
     
     $.ajax({
-        type: "POST",
+        type: "GET",
         contentType: "application/json",
-        data: JSON.stringify(userEmail),
         url: "/welcome/Light",
+        data: {'userEmail': userEmail, 'culture': culturaSelecionada},
         cache: false,
+        dataType: 'json',
         success: function(result){
             var data = [];
             var labels = [];

@@ -77,7 +77,9 @@
                     aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Utilities:</h6>
-                        <a class="collapse-item" href="/addMeasure">Add Measure</a>
+                        <a class="collapse-item" th:href="@{'/addMeasure/' + ${userEmail}}">Add Measure</a>
+                        <h6 class="collapse-header">Graphs by Culture:</h6>
+                        <a class="collapse-item" th:each="cultura : ${cultures}" href="@{'/welcome/' + ${cultura}}" th:value="${cultura}" th:text="${cultura}"></a>
                     </div>
                 </div></li>
             <!--<li class="nav-item"><a class="nav-link collapsed" href="/addmeasure">
@@ -169,10 +171,15 @@
                                 <form method="POST" modelAttribute="/addMeasure" th:action="@{/addMeasure}" th:object="${measureForm}">
                                     <div class="form-group">
                                         <label>Culture's name:</label>
+<!--
                                         <select name="cultures" class="form-control" th:field="*{culture}">
                                             <option value="Tomates">Tomates</option>
                                             <option value="Cebolas">Cebolas</option>
                                             <option value="Pimentos">Pimentos</option>
+                                        </select>
+-->
+                                        <select class="form-control" id="cultureDrop" th:field="*{culture}">
+                                            <option th:each="cultura : ${cultures}" th:value="${cultura}" th:text="${cultura}" />
                                         </select>
                                     </div>
                                     <div class="form-group">
