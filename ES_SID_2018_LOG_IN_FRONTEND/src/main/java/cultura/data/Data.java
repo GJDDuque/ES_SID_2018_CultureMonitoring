@@ -28,7 +28,8 @@ public class Data {
 		storedProcedureService.SetQuery(query);
 	}
 
-	public Data(String query, String dateB, String dateF, Double measureL, Double measureH, String culture, String sensor, String user) {
+	public Data(String query, String dateB, String dateF, Double measureL, Double measureH, String culture,
+			String sensor, String user) {
 		String finalQuery = setupQuery(query, dateB, dateF, measureL, measureH, culture, sensor, user);
 		storedProcedureService = new StoredProceduresService();
 		storedProcedureService.Configure("anyQuery");
@@ -71,13 +72,14 @@ public class Data {
 		return namesData;
 	}
 
+	//O sensor é desnecessário!!!
 	private String setupQuery(String query, String dateB, String dateF, Double measureL, Double measureH,
 			String culture, String sensor, String user) {
 		String joinQuery = joinQuery(culture);
 		String whereDateQuery = whereDateQuery(dateB, dateF);
 		String whereMeasureQuery = whereMeasureQuery(measureL, measureH);
 		String cultureQuery = cultureQuery(culture);
-		String userQuery = userAndSensorQuery(user, sensor);
+		String userQuery = userQuery(user);
 		
 		return query + joinQuery + whereDateQuery + whereMeasureQuery + cultureQuery + userQuery;
 	}
@@ -94,23 +96,19 @@ public class Data {
 	}
 
 	private String whereDateQuery(String dateB, String dateF) {
-		if (!dateB.isEmpty() && !dateF.isEmpty() && dateB.equals(dateF)) {
-			String newDateF = addOneDay(dateF);
+		String newDateF = addOneDay(dateF);
+
+		if (!dateB.isEmpty() && !dateF.isEmpty() && dateB.equals(dateF))
 			return " where m.date_time >= '" + dateB + "' and m.date_time < '" + newDateF + "'";
-		}
 
 		if (!dateB.isEmpty() && dateF.isEmpty())
 			return " where m.date_time >= '" + dateB + "'";
 
-		if (dateB.isEmpty() && !dateF.isEmpty()) {
-			String newDateF = addOneDay(dateF);
+		if (dateB.isEmpty() && !dateF.isEmpty())
 			return " where m.date_time < '" + newDateF + "'";
-		}
 
-		if (!dateB.isEmpty() && !dateF.isEmpty() && !dateB.equals(dateF)) {
-			String newDateF = addOneDay(dateF);
+		if (!dateB.isEmpty() && !dateF.isEmpty() && !dateB.equals(dateF))
 			return " where m.date_time >= '" + dateB + "' and m.date_time < '" + newDateF + "'";
-		}
 
 		bothDatesEmpty = true;
 		return "";
@@ -147,16 +145,17 @@ public class Data {
 		}
 		else {
 			if (bothDatesEmpty && bothMeasuresEmpty)
-				return " where c.culture_name = '" + culture + "'";
+				return " where v.culture_name = '" + culture + "'";
 
-			return " and c.culture_name = '" + culture + "'";
+			return " and v.culture_name = '" + culture + "'";
 		}
+
 	}
 
-	private String userAndSensorQuery(String user, String sensor) {
+	private String userQuery(String user) {
 		if(bothDatesEmpty && bothMeasuresEmpty && cultureEmpty)
-			return " where m.user = '" + user + "' and v.variable_name = '" + sensor + "'";
-		return " and m.user = '" + user + "' and v.variable_name = '" + sensor + "'";
+			return " where user.email = '" + user + "'";
+		return " and user.email = '" + user + "'";
 	}
 	
 	public String addOneDay(String date) {
