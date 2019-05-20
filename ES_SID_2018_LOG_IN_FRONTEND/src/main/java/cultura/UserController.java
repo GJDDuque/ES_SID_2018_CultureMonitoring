@@ -69,13 +69,21 @@ public class UserController {
 		user = userServiceImpl.findByEmail(userForm.getEmail());
 		if (user.getPassword().equals(userForm.getPassword())) {
 			atributes.addFlashAttribute("user", user);
-			return "redirect:/welcome";
+			if(user.getProfessional_category().equals("Administrador"))
+				return "redirect:/admin";
+			else
+				return "redirect:/welcome";
 
 		} else {
 			model.addAttribute("logError", "logError");
 			return "/login";
 		}
 
+	}
+	
+	@GetMapping("/admin")
+	public String adminDash(Model model) {
+		return "admin";
 	}
 	
 	@GetMapping("/welcome/{culture}")
@@ -88,7 +96,7 @@ public class UserController {
 			model.addAttribute("userEmail", user.getEmail());
 			model.addAttribute("filters", new Filters());
 			if(user.getProfessional_category().equals("Administrador"))
-				return "welcome/comAddUser";
+				return "redirect:/admin";
 			return "welcome";
 		} else {
 			return "redirect:/login";
