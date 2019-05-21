@@ -44,7 +44,7 @@ public class UserController {
 		}
 		userServiceImpl.saveUser(userForm);
 		atributes.addFlashAttribute("user", userForm);
-		return "redirect:/welcome";
+		return "redirect:/homepage";
 	}
 
 	@GetMapping({ "/", "/login" })
@@ -64,7 +64,7 @@ public class UserController {
 					return "redirect:/welcomeAdmin";
 				} else if (user.getProfessional_category().equals("Investigador")) {
 					atributes.addFlashAttribute("user", user);
-					return "redirect:/welcome";
+					return "redirect:/homepage";
 				}
 			} else {
 				model.addAttribute("logError", "logError");
@@ -74,6 +74,11 @@ public class UserController {
 		return null;
 	}
 
+	@GetMapping("/homepage")
+	public String homepage(Model model) {
+		return "homepage";
+	}
+	
 	@GetMapping("/welcome")
 	public String success(Model model) {
 		List<String> cultures = cultureServiceImpl.findByResponsible(user.getEmail());
