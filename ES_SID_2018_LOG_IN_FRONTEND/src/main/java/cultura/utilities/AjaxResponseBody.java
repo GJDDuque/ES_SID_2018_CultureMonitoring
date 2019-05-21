@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonView;
 
+import alerts.Alert;
 import cultura.user.User;
 
 public class AjaxResponseBody {
@@ -25,6 +26,17 @@ public class AjaxResponseBody {
 	
 	@JsonView(Views.Public.class)
 	private List<User> users;
+	
+	public List<Alert> getAlert() {
+		return Alert;
+	}
+
+	public void setAlert(List<Alert> alert) {
+		Alert = alert;
+	}
+
+	@JsonView(Views.Public.class)
+	private List<Alert> Alert;
 	
 
 	public List<User> getUsers() {
