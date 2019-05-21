@@ -54,7 +54,7 @@ public class UserController {
 		}
 		userServiceImpl.saveUser(userForm);
 		atributes.addFlashAttribute("user", userForm);
-		return "redirect:/welcome";
+		return "redirect:/homepage";
 	}
 
 	@GetMapping({ "/", "/login" })
@@ -72,7 +72,7 @@ public class UserController {
 			if(user.getProfessional_category().equals("Administrador"))
 				return "redirect:/admin";
 			else
-				return "redirect:/welcome";
+				return "redirect:/homepage";
 
 		} else {
 			model.addAttribute("logError", "logError");
