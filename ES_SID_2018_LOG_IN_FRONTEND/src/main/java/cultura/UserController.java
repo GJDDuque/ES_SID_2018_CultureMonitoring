@@ -86,5 +86,27 @@ public class UserController {
 	public String WelcomeLogin(Model model) {
 		model.addAttribute("userEmail", user.getEmail());
 		return "welcomeAdmin";
+	@GetMapping("/admin")
+	public String adminDash(Model model) {
+		return "admin";
 	}
+	
+	@GetMapping("/welcome/{culture}")
+	public String success(Model model,@PathVariable String culture) {
+		if (user != null) {
+			List<String> cultures = cultureServiceImpl.findByResponsible(user.getEmail());
+			
+			model.addAttribute("cultures", cultures);
+			model.addAttribute("cultura", culture);
+			model.addAttribute("userEmail", user.getEmail());
+			model.addAttribute("filters", new Filters());
+			if(user.getProfessional_category().equals("Administrador"))
+				return "redirect:/admin";
+			return "welcome";
+		} else {
+			return "redirect:/login";
+		}
+
+	}
+
 }
