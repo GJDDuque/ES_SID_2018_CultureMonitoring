@@ -81,6 +81,11 @@ public class UserController {
 
 	}
 	
+	@GetMapping("/homepage")
+	public String homepage(Model model) {
+		return "homepage";
+	}
+	
 	@GetMapping("/admin")
 	public String adminDash(Model model) {
 		return "admin";
