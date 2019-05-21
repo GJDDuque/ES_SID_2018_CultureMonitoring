@@ -218,6 +218,41 @@
             </div>
         </div>
     </div>
+    
+    <!-- Delete Modal -->
+    <div class="modal fade" id="DeleteModalCenter" tabindex="-1" role="dialog" aria-labelledby="DeleteModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="deleteModalCenterTitle">
+                        <i class="fas fa-exclamation-triangle fa-fw" style="color:red">
+                        </i> Confirm Deletion
+                    </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>
+                        <strong>The item will be permanently deleted.</strong>
+                    </p>
+                    <p>
+                        Are you sure?
+                    </p>
+                </div>
+                <div class="modal-footer">
+                    
+                    <form method="post" modelAttribute="/deleteUser" th:action="@{/deleteUser}" th:object="${deleteForm}" style="display: none">
+                        <input type="hidden" id="emailToDelete" name="emailToDelete" th:field="*{emailToDelete}"/>
+                    </form>
+                    
+                    
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-danger">Delete</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!-- Bootstrap core JavaScript-->
     <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script> -->
@@ -260,9 +295,9 @@
                 $.each(data.users, function(index, value){
                     event_data += '<tr>';
                     event_data += '<td>'+value.name+'</td>';
-                    event_data += '<td>'+value.email+'</td>';
+                    event_data += '<td class="emailTD">'+value.email+'</td>';
                     event_data += '<td>'+value.professional_category+'</td>';
-                    event_data += '<td>'+'<button type="button" onclick=productDelete(this)>X</button>'+'</td>';
+                    event_data += '<td>'+'<button type="button" onclick=productDelete(this)><i class="fas fa-trash-alt" style="color:red"></i></button>'+'</td>';
                     event_data += '</tr>';
                 });
                 $("#usersTable").append(event_data);
@@ -275,7 +310,11 @@
     });
     
     function productDelete(ctl) {
-    $(ctl).parents("tr").remove();
+        //$(ctl).parents("tr").remove();
+//        var email = $(ctl).closest('td').prevAll('td').last().find('.emailTD').val();
+        var email = $(ctl).parent().parent().children('.emailTD').first().text();
+        $("#emailToDelete").val(email);
+        $("#DeleteModalCenter").modal('show');
     }
 
 </script>

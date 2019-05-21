@@ -2,12 +2,14 @@ package cultura;
 
 import java.util.List;
 
+import org.hibernate.validator.internal.util.classhierarchy.Filters;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -91,6 +93,8 @@ public class UserController {
 	public String WelcomeLogin(Model model) {
 		model.addAttribute("userEmail", user.getEmail());
 		return "welcomeAdmin";
+	}
+	
 	@GetMapping("/admin")
 	public String adminDash(Model model) {
 		return "admin";
@@ -104,7 +108,6 @@ public class UserController {
 			model.addAttribute("cultures", cultures);
 			model.addAttribute("cultura", culture);
 			model.addAttribute("userEmail", user.getEmail());
-			model.addAttribute("filters", new Filters());
 			if(user.getProfessional_category().equals("Administrador"))
 				return "redirect:/admin";
 			return "welcome";
