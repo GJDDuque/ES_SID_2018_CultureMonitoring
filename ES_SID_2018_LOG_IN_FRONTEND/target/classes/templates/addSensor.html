@@ -152,7 +152,7 @@
                                 <h6 class="m-0 font-weight-bold text-primary">Add a new Sensor</h6>
                             </div>
                             <div class="card-body">     
-                                <form method="POST" modelAttribute="/addVariable" th:action="@{/addVariable}" th:object="${Variable}">
+                                <form method="POST" modelAttribute="/addVariable" th:action="@{/addVariable}" th:object="${variable}">
                                     <div class="form-group">
                                         <label>Variavel:</label>
                                         <input name="variables" class="form-control" th:field="*{variable_name}">
