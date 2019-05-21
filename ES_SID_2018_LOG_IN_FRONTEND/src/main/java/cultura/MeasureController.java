@@ -31,7 +31,7 @@ public class MeasureController {
 		List<String> cultures = cultureServiceImpl.findByResponsible(userEmail);
 		
 		model.addAttribute("cultures", cultures);
-		
+			
 		model.addAttribute("userEmail", userEmail);
 		model.addAttribute("measureForm", new MeasureForm());
 		return "addMeasure";
@@ -42,7 +42,6 @@ public class MeasureController {
 			Model model) {
 		measureServiceImpl.saveMeasure(measureForm);
 		return "redirect:/welcome";
-
 	}
 
 }

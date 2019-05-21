@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -76,37 +77,36 @@ public class UserController {
 
 	@GetMapping("/homepage")
 	public String homepage(Model model) {
+		List<String> cultures = cultureServiceImpl.findByResponsible(user.getEmail());
+		model.addAttribute("cultures", cultures);
+		model.addAttribute("userEmail", user.getEmail());
 		return "homepage";
 	}
-	
+
 	@GetMapping("/welcome")
 	public String success(Model model) {
 		List<String> cultures = cultureServiceImpl.findByResponsible(user.getEmail());
-		model.addAttribute("userEmail", user.getEmail());
 		model.addAttribute("cultures", cultures);
+		model.addAttribute("userEmail", user.getEmail());
 		return "welcome";
 	}
-	
+
 	@GetMapping("/welcomeAdmin")
 	public String WelcomeLogin(Model model) {
 		model.addAttribute("userEmail", user.getEmail());
 		return "welcomeAdmin";
-	@GetMapping("/admin")
-	public String adminDash(Model model) {
-		return "admin";
 	}
-	
+
 	@GetMapping("/welcome/{culture}")
-	public String success(Model model,@PathVariable String culture) {
+	public String success(Model model, @PathVariable String culture) {
 		if (user != null) {
 			List<String> cultures = cultureServiceImpl.findByResponsible(user.getEmail());
-			
+
 			model.addAttribute("cultures", cultures);
 			model.addAttribute("cultura", culture);
 			model.addAttribute("userEmail", user.getEmail());
-			model.addAttribute("filters", new Filters());
-			if(user.getProfessional_category().equals("Administrador"))
-				return "redirect:/admin";
+			if (user.getProfessional_category().equals("Administrador"))
+				return "redirect:/welcomeAdmin";
 			return "welcome";
 		} else {
 			return "redirect:/login";
