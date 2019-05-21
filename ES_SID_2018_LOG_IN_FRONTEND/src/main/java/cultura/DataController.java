@@ -1,6 +1,8 @@
 package cultura;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -8,11 +10,15 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import cultura.data.Data;
+import cultura.user.UserServiceImpl;
 import cultura.utilities.AjaxResponseBody;
 
 @RestController
 public class DataController {
 	private String userEmail;
+
+	@Autowired
+	private UserServiceImpl userServiceImpl;
 
 	@RequestMapping(method = RequestMethod.POST, path = "/welcome/temperature")
 	public AjaxResponseBody getMeasuresTemperature(@RequestBody String userEmail) {
@@ -46,7 +52,7 @@ public class DataController {
 		return response;
 	}
 
-	//O sensor é desnecessario
+	// O sensor é desnecessario
 	@RequestMapping(value = "/welcome/filters", method = RequestMethod.GET)
 	public AjaxResponseBody getFilteredMeasures(@RequestParam(name = "dataB") String dataB,
 			@RequestParam(name = "dataF") String dataF, @RequestParam(name = "measureL") Double measureL,
@@ -62,9 +68,21 @@ public class DataController {
 		return response;
 	}
 
-	@RequestMapping(value = "/addMeasure/user", method = RequestMethod.GET)
+	@RequestMapping(value = "/addMeasure/user", method = RequestMethod.POST)
 	public AjaxResponseBody getUserEmail(Model model) {
 		AjaxResponseBody response = new AjaxResponseBody(this.userEmail, "response");
+		return response;
+	}
+
+	@RequestMapping(value = "/welcomeAdmin/getUsers", method = RequestMethod.POST)
+	public AjaxResponseBody getUserDetails(Model model) {
+		AjaxResponseBody response = new AjaxResponseBody();
+		response.setMsg("response");
+//		if (profCat != null) {
+//			response.setUsers(userServiceImpl.findAllUsersByProfessionalCategory(profCat));
+//		} else {
+			response.setUsers(userServiceImpl.findAllUsers());
+//		}
 		return response;
 	}
 

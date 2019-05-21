@@ -1,8 +1,7 @@
 package cultura.user;
 
 import java.util.HashMap;
-
-import javax.sql.DataSource;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -30,6 +29,16 @@ public class UserServiceImpl implements UserService {
 		map.put("password", user.getPassword());
 		storedProcedureService.SetParams(map);
 		storedProcedureService.VoidExecute();
+	}
+
+	@Override
+	public List<User> findAllUsersByProfessionalCategory(String profCat) {
+		return userRepository.findAllByProfessionalCategory(profCat);
+	}
+
+	@Override
+	public List<User> findAllUsers() {
+		return userRepository.findAll();
 	}
 
 	@Override

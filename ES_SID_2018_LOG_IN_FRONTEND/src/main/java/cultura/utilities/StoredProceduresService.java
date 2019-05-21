@@ -25,9 +25,8 @@ public class StoredProceduresService {
 	public DataSource getDataSource() {
 		DataSourceBuilder dataSourceBuilder = DataSourceBuilder.create();
 		dataSourceBuilder.url(
-				"jdbc:mysql://localhost:3306/culturedb?serverTimezone=GMT&useSSL=false&allowPublicKeyRetrieval=true");
+				"jdbc:mysql://localhost:3306/culturesdb?serverTimezone=GMT&useSSL=false&allowPublicKeyRetrieval=true");
 		dataSourceBuilder.username("root");
-		dataSourceBuilder.password("password");
 		return dataSourceBuilder.build();
 	}
 

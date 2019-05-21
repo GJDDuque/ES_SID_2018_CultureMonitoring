@@ -1,6 +1,5 @@
 package cultura;
 
-import java.util.Collection;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,17 +9,11 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import cultura.data.Data;
-import cultura.data.Filters;
 import cultura.user.User;
 import cultura.user.UserServiceImpl;
 import cultura.user.UserValidator;
-import cultura.utilities.AjaxResponseBody;
-import culture.cultures.Culture;
 import culture.cultures.CultureServiceImpl;
 
 @Controller
@@ -34,10 +27,8 @@ public class UserController {
 
 	private User user;
 
-	private Culture culture;
-	
 	private CultureServiceImpl cultureServiceImpl = new CultureServiceImpl();
-	
+
 	@GetMapping("/registration")
 	public String registration(Model model) {
 		model.addAttribute("userForm", new User());
@@ -66,33 +57,34 @@ public class UserController {
 	public String login(@ModelAttribute("userForm") User userForm, BindingResult bindingResult, Model model,
 			RedirectAttributes atributes) {
 		user = userServiceImpl.findByEmail(userForm.getEmail());
-		if (user.getPassword().equals(userForm.getPassword())) {
-			atributes.addFlashAttribute("user", user);
-			return "redirect:/welcome";
-
-		} else {
-			model.addAttribute("logError", "logError");
-			return "/login";
+		if (user != null) {
+			if (user.getPassword().equals(userForm.getPassword())) {
+				if (user.getProfessional_category().equals("Administrador")) {
+					model.addAttribute("userEmail", user.getEmail());
+					return "redirect:/welcomeAdmin";
+				} else if (user.getProfessional_category().equals("Investigador")) {
+					atributes.addFlashAttribute("user", user);
+					return "redirect:/welcome";
+				}
+			} else {
+				model.addAttribute("logError", "logError");
+				return "/login";
+			}
 		}
-
+		return null;
 	}
-	
+
 	@GetMapping("/welcome")
 	public String success(Model model) {
-		if (user != null) {
-			List<String> cultures = cultureServiceImpl.findByResponsible(user.getEmail());
-			
-			model.addAttribute("cultures", cultures);
-			
-			model.addAttribute("userEmail", user.getEmail());
-			model.addAttribute("filters", new Filters());
-			if(user.getProfessional_category().equals("Administrador"))
-				return "welcome/comAddUser";
-			return "welcome";
-		} else {
-			return "redirect:/login";
-		}
-
+		List<String> cultures = cultureServiceImpl.findByResponsible(user.getEmail());
+		model.addAttribute("userEmail", user.getEmail());
+		model.addAttribute("cultures", cultures);
+		return "welcome";
 	}
-
+	
+	@GetMapping("/welcomeAdmin")
+	public String WelcomeLogin(Model model) {
+		model.addAttribute("userEmail", user.getEmail());
+		return "welcomeAdmin";
+	}
 }

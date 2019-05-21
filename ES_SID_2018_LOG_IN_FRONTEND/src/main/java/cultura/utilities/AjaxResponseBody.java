@@ -4,6 +4,8 @@ import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonView;
 
+import cultura.user.User;
+
 public class AjaxResponseBody {
 
 	@JsonView(Views.Public.class)
@@ -20,6 +22,18 @@ public class AjaxResponseBody {
 
 	@JsonView(Views.Public.class)
 	private String userEmail;
+	
+	@JsonView(Views.Public.class)
+	private List<User> users;
+	
+
+	public List<User> getUsers() {
+		return users;
+	}
+
+	public void setUsers(List<User> users) {
+		this.users = users;
+	}
 
 	public AjaxResponseBody() {
 
