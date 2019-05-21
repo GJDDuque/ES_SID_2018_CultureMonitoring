@@ -74,4 +74,10 @@ public class UserServiceImpl implements UserService {
 	public void setStoredProcedureService(StoredProceduresService storedProcedureService) {
 		this.storedProcedureService = storedProcedureService;
 	}
+
+	@Override
+	public void deleteUser(User user) {
+		userRepository.delete(user);
+
+	}
 }

@@ -2,7 +2,6 @@ package cultura;
 
 import java.util.List;
 
-import org.hibernate.validator.internal.util.classhierarchy.Filters;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -108,8 +107,8 @@ public class UserController {
 			model.addAttribute("cultures", cultures);
 			model.addAttribute("cultura", culture);
 			model.addAttribute("userEmail", user.getEmail());
-			if(user.getProfessional_category().equals("Administrador"))
-				return "redirect:/admin";
+			if (user.getProfessional_category().equals("Administrador"))
+				return "redirect:/welcomeAdmin";
 			return "welcome";
 		} else {
 			return "redirect:/login";

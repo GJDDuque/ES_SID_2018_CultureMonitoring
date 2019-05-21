@@ -80,6 +80,8 @@
 					<div class="bg-white py-2 collapse-inner rounded">
 						<h6 class="collapse-header">Utilities:</h6>
 						<a class="collapse-item" href="/addMeasure">Add Measure</a>
+                        <h6 class="collapse-header">Graphs by Culture:</h6>
+                        <a class="collapse-item" th:each="cultura : ${cultures}" th:href="@{'/welcome/' + ${cultura}}" th:value="${cultura}" th:text="${cultura}"></a>
 					</div>
 				</div></li>
             <!--<li class="nav-item"><a class="nav-link collapsed" href="/addmeasure">
