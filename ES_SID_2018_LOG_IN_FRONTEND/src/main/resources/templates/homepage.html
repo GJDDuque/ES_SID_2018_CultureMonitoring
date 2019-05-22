@@ -66,6 +66,7 @@
 					<div class="bg-white py-2 collapse-inner rounded">
 						<h6 class="collapse-header">Utilities:</h6>
 						<a class="collapse-item" th:href="@{'/addMeasure/' + ${userEmail}}">Add Measure</a>
+                        <a class="collapse-item" th:href="@{'/addCulture/' + ${userEmail}}">Add Culture</a>
                         <h6 class="collapse-header">Graphs by Culture:</h6>
                         <a class="collapse-item" th:each="cultura : ${cultures}" th:href="@{'/welcome/' + ${cultura}}" th:value="${cultura}" th:text="${cultura}"></a>
 					</div>
