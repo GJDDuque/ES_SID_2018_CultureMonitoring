@@ -90,6 +90,7 @@ public class UserController {
 	
 	@GetMapping("/welcomeAdmin")
 	public String WelcomeLogin(Model model) {
+		model.addAttribute("user", new User());
 		model.addAttribute("userEmail", user.getEmail());
 		return "welcomeAdmin";
 	}

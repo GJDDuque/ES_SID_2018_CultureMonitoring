@@ -2,6 +2,7 @@ package cultura;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -114,8 +115,9 @@ public class DataController {
 		this.userEmail = userEmail;
 	}
 
-	@RequestMapping(value = "/deleteUser", method = RequestMethod.POST)
-	public String deleteUser(@RequestParam(name = "emailToDelete") User user) {
+	@PostMapping(value = "/deleteUser")
+	public String deleteUser(@RequestParam(name = "user") User user) {
+		user = userServiceImpl.findByEmail(user.getEmail());
 		userServiceImpl.deleteUser(user);
 		return "welcomeAdmin";
 	}
