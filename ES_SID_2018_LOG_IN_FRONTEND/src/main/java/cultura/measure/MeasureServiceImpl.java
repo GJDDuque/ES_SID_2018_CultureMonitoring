@@ -7,14 +7,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import cultura.data.Data;
-import cultura.utilities.StoredProceduresService;
 
 @Service("measureService")
 public class MeasureServiceImpl implements MeasureService {
 
 	@Autowired
-	private MeasureRepository measureRepository;
-	private StoredProceduresService storedProcedureService;
+	private MeasureRepository measureRepository;	
 
 	@Override
 	public void saveMeasure(MeasureForm measureForm) {

@@ -32,11 +32,11 @@
             <!-- Sidebar - Brand -->
             <a
                 class="sidebar-brand d-flex align-items-center justify-content-center"
-                href="/welcome">
+                href="/welcomeAdmin">
                 <div class="sidebar-brand-icon rotate-n-15">
                     <i class="fab fa-pagelines"></i>
                 </div>
-                <div class="mx-3" href="/homepage">Culture Admin</div>
+                <div class="mx-3" href="/welcomeAdmin">Culture Admin</div>
             </a>
 
             <!-- Divider -->
@@ -44,7 +44,7 @@
 
             <!-- Nav Item - Dashboard -->
             <li class="nav-item active"><a class="nav-link"
-                href="/homepage"> <i class="fas fa-fw fa-tachometer-alt"></i> <span>Dashboard</span></a>
+                href="/welcomeAdmin"> <i class="fas fa-fw fa-tachometer-alt"></i> <span>Dashboard</span></a>
             </li>
 
             <!-- Divider -->
@@ -63,7 +63,8 @@
                     aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Utilities:</h6>
-                        <a class="collapse-item" th:href="@{/addSensor}">Add Sensor</a>
+                        <a class="collapse-item" href="/registration">Add User</a>
+                        <a class="collapse-item" href="/addVariable">Add Sensor</a>
                     </div>
                 </div></li>
             <!--<li class="nav-item"><a class="nav-link collapsed" href="/addmeasure">
@@ -152,7 +153,7 @@
                                 <h6 class="m-0 font-weight-bold text-primary">Add a new Sensor</h6>
                             </div>
                             <div class="card-body">     
-                                <form method="POST" modelAttribute="/addVariable" th:action="@{/addVariable}" th:object="${variable}">
+                                <form method="POST" modelAttribute="variable" th:action="@{/addVariable}" th:object="${variable}">
                                     <div class="form-group">
                                         <label>Variavel:</label>
                                         <input name="variables" class="form-control" th:field="*{variable_name}">
