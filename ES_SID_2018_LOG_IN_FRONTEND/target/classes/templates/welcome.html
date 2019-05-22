@@ -587,8 +587,8 @@
         
         var measureL = $('#measureL').val();
         var measureH = $('#measureH').val();
-        var culture = $('#cultureDrop').val();
-        if(culture == 0){
+        var culture = culturaSelecionada;
+        if(culture == undefined || culture == ""){
             culture = "";
         }
         var userEmail = "[[${userEmail}]]";
