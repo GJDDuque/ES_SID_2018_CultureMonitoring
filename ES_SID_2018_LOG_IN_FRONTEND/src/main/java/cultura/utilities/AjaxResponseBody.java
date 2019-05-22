@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonView;
 
-import alerts.Alert;
+import cultura.alerts.Alert;
 import cultura.user.User;
 
 public class AjaxResponseBody {

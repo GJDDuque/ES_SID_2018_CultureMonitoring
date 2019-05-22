@@ -1,4 +1,4 @@
-package alerts;
+package cultura.alerts;
 
 import java.sql.Timestamp;
 
@@ -17,7 +17,7 @@ public class Alert {
 
 	@Id
 	@Column
-	private long id_alert;
+	private long id_alerts;
 	@Column
 	private Timestamp date_time;
 	@Column
@@ -40,11 +40,11 @@ public class Alert {
 	private String description;
 
 	public long getId_alert() {
-		return id_alert;
+		return id_alerts;
 	}
 
-	public void setId_alert(long id_alert) {
-		this.id_alert = id_alert;
+	public void setId_alert(long id_alerts) {
+		this.id_alerts = id_alerts;
 	}
 
 	public Timestamp getDate_time() {

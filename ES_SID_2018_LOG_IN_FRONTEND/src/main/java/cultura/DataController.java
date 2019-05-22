@@ -2,13 +2,14 @@ package cultura;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import alerts.AlertServiceImpl;
+import cultura.alerts.AlertServiceImpl;
 import cultura.data.Data;
 import cultura.user.User;
 import cultura.user.UserServiceImpl;
@@ -115,10 +116,4 @@ public class DataController {
 		this.userEmail = userEmail;
 	}
 
-	@PostMapping(value = "/deleteUser")
-	public String deleteUser(@RequestParam(name = "user") User user) {
-		user = userServiceImpl.findByEmail(user.getEmail());
-		userServiceImpl.deleteUser(user);
-		return "welcomeAdmin";
-	}
 }

@@ -45,7 +45,7 @@ public class UserController {
 		}
 		userServiceImpl.saveUser(userForm);
 		atributes.addFlashAttribute("user", userForm);
-		return "redirect:/homepage";
+		return "redirect:/welcomeAdmin";
 	}
 
 	@GetMapping({ "/", "/login" })
@@ -64,7 +64,6 @@ public class UserController {
 					model.addAttribute("userEmail", user.getEmail());
 					return "redirect:/welcomeAdmin";
 				} else if (user.getProfessional_category().equals("Investigador")) {
-					atributes.addFlashAttribute("user", user);
 					return "redirect:/homepage";
 				}
 			} else {
@@ -77,6 +76,9 @@ public class UserController {
 
 	@GetMapping("/homepage")
 	public String homepage(Model model) {
+		List<String> cultures = cultureServiceImpl.findByResponsible(user.getEmail());
+		model.addAttribute("userEmail", user.getEmail());
+		model.addAttribute("cultures", cultures);
 		return "homepage";
 	}
 	
@@ -117,4 +119,11 @@ public class UserController {
 
 	}
 
+	@GetMapping(value = "/deleteUser/{user}")
+	public String deleteUser(@PathVariable(name = "user") String user) {
+		User userToDelete = userServiceImpl.findByEmail(user);
+		userServiceImpl.deleteUser(userToDelete);
+		return "redirect:/welcomeAdmin";
+	}
+	
 }

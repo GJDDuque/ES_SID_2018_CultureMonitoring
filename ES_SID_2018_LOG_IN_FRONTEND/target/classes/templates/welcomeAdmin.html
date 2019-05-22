@@ -229,11 +229,11 @@
                 </div>
                 <div class="modal-footer">
                     
-                    <form method="post" modelAttribute="/deleteUser" th:action="@{/deleteUser}" th:object="${user}">
-                        <input type="hidden" id="emailToDelete" name="emailToDelete" th:field="*{email}"/ style="display: none">
+                    <!--<form method="post" modelAttribute="/deleteUser" th:action="@{/deleteUser}" th:object="${user}">-->
+                        <input type="hidden" id="emailToDelete" name="emailToDelete" style="display: none">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-danger">Delete</button>
-                    </form>
+                        <button id="deleteUSer" class="btn btn-danger">Delete</button>
+                    <!--</form>-->
                     
                     
                     
@@ -304,6 +304,11 @@
         $("#emailToDelete").val(email);
         $("#DeleteModalCenter").modal('show');
     }
+    
+    $("#deleteUSer").click(function(){
+        var em = $("#emailToDelete").val();
+        window.location.href = '/deleteUser/' + em;
+   });
 
 </script>
 <style>

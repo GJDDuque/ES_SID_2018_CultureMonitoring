@@ -26,12 +26,9 @@ public class MeasureController {
 	private CultureServiceImpl cultureServiceImpl = new CultureServiceImpl();
 
 	@GetMapping("/addMeasure/{userEmail}")
-	public String addmeasure(Model model, @PathVariable String userEmail) {
-		
+	public String addmeasure(Model model, @PathVariable String userEmail) {	
 		List<String> cultures = cultureServiceImpl.findByResponsible(userEmail);
-		
 		model.addAttribute("cultures", cultures);
-			
 		model.addAttribute("userEmail", userEmail);
 		model.addAttribute("measureForm", new MeasureForm());
 		return "addMeasure";
@@ -41,7 +38,7 @@ public class MeasureController {
 	public String addmeasure(@ModelAttribute("measureForm") MeasureForm measureForm, BindingResult bindingResult,
 			Model model) {
 		measureServiceImpl.saveMeasure(measureForm);
-		return "redirect:/welcome";
+		return "redirect:/homepage";
 	}
 
 }

@@ -1,4 +1,4 @@
-package alerts;
+package cultura.alerts;
 
 import java.util.List;
 
