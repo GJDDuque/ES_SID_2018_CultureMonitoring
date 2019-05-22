@@ -2,18 +2,26 @@ package culture.cultures;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import cultura.data.Data;
 
+@Component
 @Service("cultureService")
 public class CultureServiceImpl implements CultureService {
 
-	@Autowired
-	private CultureRepository cultureRepository;
+	@Bean
+	public CultureRepository CultureRepository() {
+		return new CultureRepository();
+	}
 
-	@Override	
+	public CultureServiceImpl() {
+
+	}
+
+	@Override
 	public List<String> findByResponsible(String user) {
 		List<String> cultures = new Data("select culture_name from cultures where culture_responsible = '" + user + "'")
 				.loadCultureNames();

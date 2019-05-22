@@ -1,5 +1,7 @@
 package cultura;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -12,26 +14,32 @@ import cultura.data.Data;
 import cultura.utilities.StoredProceduresService;
 import culture.cultures.Culture;
 import culture.cultures.CultureForm;
+import culture.cultures.CultureService;
 import culture.cultures.CultureServiceImpl;
 
 @Controller
 public class CultureController {
 
-	private CultureServiceImpl cultureServiceImpl = new CultureServiceImpl();
-	private StoredProceduresService storedProcedureService = new StoredProceduresService();;
+	@Bean
+	public CultureService CultureServiceImpl() {
+		return new CultureServiceImpl();
+	}
 
-	@GetMapping("/addCulture/{userEmail}")
+	private StoredProceduresService storedProcedureService = new StoredProceduresService();
+
+	@GetMapping("/addCultures/{userEmail}")
 	public String AddCulture(Model model, @PathVariable String userEmail) {
 		model.addAttribute("userEmail", userEmail);
 		model.addAttribute("cultureForm", new CultureForm());
-		return "addCulture";
+		return "addCultures";
 	}
 
-	@PostMapping(value = "/addCulture")
+	@PostMapping(value = "/addCultures")
 	public String AddCulture(@ModelAttribute("cultureForm") CultureForm cultureForm, BindingResult bindingResult,
 			Model model) {
-		cultureServiceImpl.saveCulture(new Culture(cultureForm.getName(), cultureForm.getCulture_responsible(),
-				cultureForm.getCulture_description()));
+		Culture culture = new Culture(cultureForm.getName(), cultureForm.getCulture_responsible(),
+				cultureForm.getCulture_description());
+		CultureServiceImpl().saveCulture(culture);
 		int culture_id = new Data("select MAX(culture_id) from cultures").loadCulturesID();
 		if (cultureForm.getTemperature_lower_limit() != null || cultureForm.getTemperature_upper_limit() != null) {
 			storedProcedureService.Configure("anyQuery");
@@ -45,7 +53,8 @@ public class CultureController {
 					+ cultureForm.getLight_lower_limit() + "," + cultureForm.getLight_upper_limit());
 			storedProcedureService.VoidExecute();
 		}
-		return "redirect:/addCulture";
+		return "redirect:/addCultures";
 
 	}
+
 }

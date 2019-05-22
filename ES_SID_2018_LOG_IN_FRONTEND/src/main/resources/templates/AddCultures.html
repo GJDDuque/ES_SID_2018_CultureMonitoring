@@ -154,7 +154,7 @@
                                 <h6 class="m-0 font-weight-bold text-primary">Add a new Culture</h6>
                             </div>
                             <div class="card-body">     
-                                <form method="POST" modelAttribute="/addCulture" th:action="@{/addCulture}" th:object="${culture}">
+                                <form method="POST" modelAttribute="/addCultures" th:action="@{/addCultures}" th:object="${cultureForm}">
                                     <div class="form-group">
                                         <label>Culture's name:</label>
                                         <input type="text" id="name" name="name" class="form-control" th:field="*{name}">
@@ -206,7 +206,7 @@
                                         </div>
                                     </div>
                                     <div class="form-group text-center">
-                                        <input type="submit" class="col-5 btn btn-primary form-control" value="Adicionar" id="addCulture" name="addCulture">
+                                        <input type="submit" class="col-5 btn btn-primary form-control" value="Adicionar" id="addCultures" name="addCultures">
                                     </div>
                                 </form>
                             </div>

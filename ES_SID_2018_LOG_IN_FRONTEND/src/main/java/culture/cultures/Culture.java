@@ -3,11 +3,23 @@ package culture.cultures;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity // This tells Hibernate to make a table out of this class
 @Table(name = "cultures")
 public class Culture {
+	@Id
+	@Column
+	private long culture_id;
+	@Column
+	private String culture_name;
+	@ManyToOne
+	@JoinColumn(name = "email", table = "users")
+	private String culture_responsible;
+	@Column
+	private String culture_description;
 
 	public Culture() {
 	}
@@ -15,18 +27,8 @@ public class Culture {
 	public Culture(String name, String culture_responsible, String culture_description) {
 		this.culture_description = culture_description;
 		this.culture_responsible = culture_responsible;
-		this.name = name;
+		this.culture_name = name;
 	}
-
-	@Id
-	@Column
-	private long culture_id;
-	@Column
-	private String name;
-	@Column
-	private String culture_responsible;
-	@Column
-	private String culture_description;
 
 	public long getCulture_id() {
 		return culture_id;
@@ -37,11 +39,11 @@ public class Culture {
 	}
 
 	public String getName() {
-		return name;
+		return culture_name;
 	}
 
 	public void setName(String name) {
-		this.name = name;
+		this.culture_name = name;
 	}
 
 	public String getCulture_responsible() {
