@@ -1,5 +1,6 @@
 package cultura;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -12,11 +13,14 @@ import cultura.variable.VariableServiceImpl;
 
 @Controller
 public class VariableController {
-	private VariableServiceImpl variableServiceImpl = new VariableServiceImpl();
+	
+	@Autowired
+	private VariableServiceImpl variableServiceImpl;
 
 	@GetMapping("/addVariable")
 	public String addvariable(Model model) {
-		return "addVariable";
+		model.addAttribute("variable", new Variable());
+		return "addVariable";	
 	}
 
 	@PostMapping(value = "/addVariable")
