@@ -32,8 +32,12 @@ public class UserController {
 
 	@GetMapping("/registration")
 	public String registration(Model model) {
-		model.addAttribute("userForm", new User());
-		return "registration";
+		if (user != null) {
+			model.addAttribute("userForm", new User());
+			return "registration";
+		} else {
+			return "redirect:/login";
+		}
 	}
 
 	@PostMapping(value = "/registration")
@@ -68,7 +72,7 @@ public class UserController {
 				}
 			} else {
 				model.addAttribute("logError", "logError");
-				return "/login";
+				return "redirect:/login";
 			}
 		}
 		return null;
@@ -76,42 +80,50 @@ public class UserController {
 
 	@GetMapping("/homepage")
 	public String homepage(Model model) {
-		List<String> cultures = cultureServiceImpl.findByResponsible(user.getEmail());
-		model.addAttribute("userEmail", user.getEmail());
-		model.addAttribute("cultures", cultures);
-		return "homepage";
-	}
-	
-	@GetMapping("/welcome")
-	public String success(Model model) {
-		List<String> cultures = cultureServiceImpl.findByResponsible(user.getEmail());
-		model.addAttribute("userEmail", user.getEmail());
-		model.addAttribute("cultures", cultures);
-		return "welcome";
-	}
-	
-	@GetMapping("/welcomeAdmin")
-	public String WelcomeLogin(Model model) {
-		model.addAttribute("user", new User());
-		model.addAttribute("userEmail", user.getEmail());
-		return "welcomeAdmin";
-	}
-	
-	@GetMapping("/admin")
-	public String adminDash(Model model) {
-		return "admin";
-	}
-	
-	@GetMapping("/welcome/{culture}")
-	public String success(Model model,@PathVariable String culture) {
 		if (user != null) {
 			List<String> cultures = cultureServiceImpl.findByResponsible(user.getEmail());
-			
+			model.addAttribute("userEmail", user.getEmail());
+			model.addAttribute("cultures", cultures);
+			return "homepage";
+		} else {
+			return "redirect:/login";
+		}
+	}
+
+	@GetMapping("/welcome")
+	public String success(Model model) {
+		if (user != null) {
+			List<String> cultures = cultureServiceImpl.findByResponsible(user.getEmail());
+			model.addAttribute("userEmail", user.getEmail());
+			model.addAttribute("cultures", cultures);
+			return "welcome";
+		} else {
+			return "redirect:/login";
+		}
+	}
+
+	@GetMapping("/welcomeAdmin")
+	public String WelcomeLogin(Model model) {
+		if (user != null) {
+			model.addAttribute("user", new User());
+			model.addAttribute("userEmail", user.getEmail());
+			return "welcomeAdmin";
+		} else {
+			return "redirect:/login";
+		}
+	}
+
+	@GetMapping("/welcome/{culture}")
+	public String success(Model model, @PathVariable String culture) {
+		if (user != null) {
+			List<String> cultures = cultureServiceImpl.findByResponsible(user.getEmail());
+
 			model.addAttribute("cultures", cultures);
 			model.addAttribute("cultura", culture);
 			model.addAttribute("userEmail", user.getEmail());
-			if (user.getProfessional_category().equals("Administrador"))
+			if (user.getProfessional_category().equals("Administrador")) {
 				return "redirect:/welcomeAdmin";
+			}
 			return "welcome";
 		} else {
 			return "redirect:/login";
@@ -125,5 +137,5 @@ public class UserController {
 		userServiceImpl.deleteUser(userToDelete);
 		return "redirect:/welcomeAdmin";
 	}
-	
+
 }

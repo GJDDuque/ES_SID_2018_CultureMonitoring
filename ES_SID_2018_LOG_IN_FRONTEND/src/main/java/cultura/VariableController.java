@@ -13,19 +13,18 @@ import cultura.variable.VariableServiceImpl;
 
 @Controller
 public class VariableController {
-	
+
 	@Autowired
 	private VariableServiceImpl variableServiceImpl;
 
 	@GetMapping("/addVariable")
 	public String addvariable(Model model) {
 		model.addAttribute("variable", new Variable());
-		return "addVariable";	
+		return "addVariable";
 	}
 
 	@PostMapping(value = "/addVariable")
-	public String addvariable(@ModelAttribute("variable") Variable variable, BindingResult bindingResult,
-			Model model) {
+	public String addvariable(@ModelAttribute("variable") Variable variable, BindingResult bindingResult, Model model) {
 		variableServiceImpl.saveVariable(variable);
 		return "redirect:/addVariable";
 
