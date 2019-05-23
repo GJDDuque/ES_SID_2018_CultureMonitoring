@@ -57,7 +57,7 @@ public class Data {
 		int value = 0;
 		LinkedHashMap measuresData = (LinkedHashMap) storedProcedureService.Execute();
 		for (LinkedCaseInsensitiveMap data : (ArrayList<LinkedCaseInsensitiveMap>) measuresData.get("#result-set-1")) {
-			value = (int) data.get("culture_id");
+			value = (int) data.get("MAX(culture_id)");
 		}
 		return value;
 	}

@@ -114,29 +114,4 @@ public class UserController {
 		}
 	}
 
-	@GetMapping("/welcome/{culture}")
-	public String success(Model model, @PathVariable String culture) {
-		if (user != null) {
-			List<String> cultures = cultureServiceImpl.findByResponsible(user.getEmail());
-
-			model.addAttribute("cultures", cultures);
-			model.addAttribute("cultura", culture);
-			model.addAttribute("userEmail", user.getEmail());
-			if (user.getProfessional_category().equals("Administrador")) {
-				return "redirect:/welcomeAdmin";
-			}
-			return "welcome";
-		} else {
-			return "redirect:/login";
-		}
-
-	}
-
-	@GetMapping(value = "/deleteUser/{user}")
-	public String deleteUser(@PathVariable(name = "user") String user) {
-		User userToDelete = userServiceImpl.findByEmail(user);
-		userServiceImpl.deleteUser(userToDelete);
-		return "redirect:/welcomeAdmin";
-	}
-
 }

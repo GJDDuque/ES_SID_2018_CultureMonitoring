@@ -12,11 +12,6 @@ import cultura.data.Data;
 @Service("cultureService")
 public class CultureServiceImpl implements CultureService {
 
-	@Bean
-	public CultureRepository CultureRepository() {
-		return new CultureRepository();
-	}
-
 	public CultureServiceImpl() {
 
 	}
@@ -26,11 +21,6 @@ public class CultureServiceImpl implements CultureService {
 		List<String> cultures = new Data("select culture_name from cultures where culture_responsible = '" + user + "'")
 				.loadCultureNames();
 		return cultures;
-	}
-
-	@Override
-	public void saveCulture(Culture culture) {
-		cultureRepository.save(culture);
 	}
 
 }
