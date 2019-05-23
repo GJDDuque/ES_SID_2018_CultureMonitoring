@@ -64,8 +64,9 @@
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Utilities:</h6>
                         <a class="collapse-item" th:href="@{'/addMeasure/' + ${userEmail}}">Add Measure</a>
+                        <a class="collapse-item" th:href="@{'/addCultures/' + ${userEmail}}">Add Culture</a>
                         <h6 class="collapse-header">Graphs by Culture:</h6>
-                        <a class="collapse-item" th:each="cultura : ${cultures}" href="@{'/welcome/' + ${cultura}}" th:value="${cultura}" th:text="${cultura}"></a>
+                        <a class="collapse-item" th:each="cultura : ${cultures}" th:href="@{'/welcome/' + ${cultura}}" th:value="${cultura}" th:text="${cultura}"></a>
                     </div>
                 </div></li>
             <!--<li class="nav-item"><a class="nav-link collapsed" href="/addmeasure">
@@ -154,20 +155,59 @@
                                 <h6 class="m-0 font-weight-bold text-primary">Add a new Culture</h6>
                             </div>
                             <div class="card-body">     
-                                <form method="POST" modelAttribute="/addCulture" th:action="@{/addCulture}" th:object="${culture}">
+                                <form method="POST" modelAttribute="/addCultures" th:action="@{/addCultures}" th:object="${cultureForm}">
                                     <div class="form-group">
                                         <label>Culture's name:</label>
-                                        <input id="name" name="name" class="form-control" th:field="*{name}">
+                                        <input type="text" id="name" name="name" class="form-control" th:field="*{name}">
                                     </div>
                                     <div class="form-group">
                                         <input id="culture_responsible" type="hidden" name="culture_responsible" class="form-control" th:field="*{culture_responsible}">
                                     </div>
                                     <div class="form-group">
                                         <label>Cultures Description:</label>
-                                        <input id="culture_description" name="culture_description" class="form-control" th:field="*{culture_description}">
+                                        <textarea id="culture_description" name="culture_description" class="form-control" th:field="*{culture_description}"></textarea>
+                                    </div>
+                                    <div class="col-12 d-lg-flex" style="max-height: 100%;">
+                                        <div class="form-group col-md-6 col-12 d-inline-block">
+                                            <div class="card shadow p-0 mb-4 col-12">
+                                                <div class="col-12 card-header py-3 d-block flex-row align-items-center justify-content-between">
+                                                    <h6 class="m-0 col-12 d-inline-block font-weight-bold text-primary">Light Limits</h6>
+                                                    <label class="m-0 col-12 d-inline-block font-weight-light text-secondary" style="font-size: small">If any limit is left empty it's assumed that the Light sensor should not be accounted for.</label>
+                                                </div>
+                                                <div class="card-body">
+                                                    <div class="form-group">
+                                                        <label>Upper Limit</label>
+                                                        <input type="number" name="light_upper_limit" th:field="*{light_upper_limit}" step="0.01" class="form-control">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>Lower Limit</label>
+                                                        <input type="number" step="0.01" name="light_lower_limit" th:field="*{light_lower_limit}" class="form-control">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-md-6 col-12 d-inline-block">
+                                            <div class="card shadow p-0 mb-4 col-12">
+                                                <div class="col-12 card-header py-3 d-block flex-row align-items-center justify-content-between">
+                                                    <h6 class="m-0 col-12 d-inline-block font-weight-bold text-primary">Temperature Limits</h6>
+                                                    <label class="m-0 col-12 d-inline-block font-weight-light text-secondary" style="font-size: small">If any limit is left empty it's assumed that the Temperature sensor should not be accounted for.</label>
+                                                </div>
+                                                <div class="card-body">
+                                                    <div class="form-group">
+                                                        <label>Upper Limit</label>
+                                                        <input type="number" step="0.01" name="temperature_upper_limit" th:field="*{temperature_upper_limit}" class="form-control">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>Lower Limit</label>
+                                                        <input type="number" step="0.01" name="temperature_lower_limit" th:field="*{temperature_lower_limit}" class="form-control">
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
                                     </div>
                                     <div class="form-group text-center">
-                                        <input type="submit" class="col-5 btn btn-primary form-control" value="Adicionar" id="addCulture" name="addCulture">
+                                        <input type="submit" class="col-5 btn btn-primary form-control" value="Adicionar" id="addCultures" name="addCultures">
                                     </div>
                                 </form>
                             </div>

@@ -13,6 +13,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import cultura.data.Data;
+import cultura.user.User;
+import cultura.user.UserServiceImpl;
+import cultura.user.UserValidator;
 import cultura.utilities.StoredProceduresService;
 import culture.cultures.Culture;
 import culture.cultures.CultureForm;
@@ -20,7 +23,16 @@ import culture.cultures.CultureService;
 import culture.cultures.CultureServiceImpl;
 
 @Controller
-public class CultureController {	
+public class CultureController {
+	
+	@Autowired
+	private UserServiceImpl userServiceImpl;
+
+	@Autowired
+	private UserValidator userValidator;
+
+	private User user;
+	
 	private String userEmail;
 	private CultureServiceImpl cultureServiceImpl = new CultureServiceImpl();
 	private StoredProceduresService storedProcedureService = new StoredProceduresService();
@@ -55,22 +67,30 @@ public class CultureController {
 		return "redirect:/homepage";
 
 	}
-	@GetMapping("/addMeasure/{culture}")
-	public String AddMeasuresCultures(Model model, @PathVariable String culture) {
-			List<String> cultures = cultureServiceImpl.findByResponsible(userEmail);
-			model.addAttribute("cultures", cultures);
-			model.addAttribute("cultura", culture);
-			model.addAttribute("userEmail", userEmail);
-			return "welcome";
-		}
-	@GetMapping("/addCultures/{culture}")
-	public String AddCultureCultures(Model model, @PathVariable String culture) {
-			List<String> cultures = cultureServiceImpl.findByResponsible(userEmail);
-			model.addAttribute("cultures", cultures);
-			model.addAttribute("cultura", culture);
-			model.addAttribute("userEmail", userEmail);
-			return "welcome";
-		}
+	
+	
+	@GetMapping(value = "/deleteUser/{user}")
+	public String deleteUser(@PathVariable(name = "user") String user) {
+		User userToDelete = userServiceImpl.findByEmail(user);
+		userServiceImpl.deleteUser(userToDelete);
+		return "redirect:/welcomeAdmin";
+	}
+//	@GetMapping("/addMeasure/{culture}")
+//	public String AddMeasuresCultures(Model model, @PathVariable String culture) {
+//			List<String> cultures = cultureServiceImpl.findByResponsible(userEmail);
+//			model.addAttribute("cultures", cultures);
+//			model.addAttribute("cultura", culture);
+//			model.addAttribute("userEmail", userEmail);
+//			return "welcome";
+//		}
+//	@GetMapping("/addCultures/{culture}")
+//	public String AddCultureCultures(Model model, @PathVariable String culture) {
+//			List<String> cultures = cultureServiceImpl.findByResponsible(userEmail);
+//			model.addAttribute("cultures", cultures);
+//			model.addAttribute("cultura", culture);
+//			model.addAttribute("userEmail", userEmail);
+//			return "welcome";
+//		}
 
 
 }
