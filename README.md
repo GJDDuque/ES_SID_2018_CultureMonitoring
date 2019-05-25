@@ -6,10 +6,11 @@ Para carregar a máquina virtual fazer o seguinte percurso:
 
 1- File
 2- Import Appliance
-3- Escolher ficheiro (SID_2018_31)
+3- Escolher ficheiro (sid_es_31.ova) que está dentro da pasta OVA_VM
 
 Criámos um ficheiro StartUp.bat que é iniciado cada vez que a máquina virtual arranca.
 Este ficheiro coloca a correr todos os jar's necessários para servir a aplicação Android e a WebPage.
+Nota: vai demorar cerca de 5 minutos até que todos os componentes estejam devidamente inicializados
 
 © Copyright 2018/2019
 
